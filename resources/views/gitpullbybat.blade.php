@@ -1,0 +1,1 @@
+{{ exec(getcwd() . '\gitpull.bat') }}
