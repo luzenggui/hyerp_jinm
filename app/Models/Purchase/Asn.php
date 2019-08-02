@@ -8,7 +8,7 @@ class Asn extends Model
 {
     //
     protected $fillable = [
-        'interchange_datetime',
+        'department',
         'interchange_control_number',
         'test_indicator',
         'data_interchange_datetime',
