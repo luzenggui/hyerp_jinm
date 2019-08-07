@@ -11,13 +11,6 @@
     </div>
 </div>
 
-{{--<div class="form-group">--}}
-    {{--{!! Form::label('contactor', '联系人:', ['class' => 'col-xs-4 col-sm-2 control-label']) !!}--}}
-    {{--<div class='col-xs-4 col-sm-4'>--}}
-        {{--{!! Form::text('contactor', null, ['class' => 'form-control', $attr]) !!}--}}
-    {{--</div>--}}
-{{--</div>--}}
-
 <div class="form-group">
     {!! Form::label('contactor_tel', '联系人电话:', ['class' => 'col-xs-2 col-sm-2 control-label']) !!}
     <div class='col-xs-4 col-sm-4'>
@@ -30,12 +23,6 @@
     </div>
 </div>
 
-{{--<div class="form-group">--}}
-    {{--{!! Form::label('style', '款号:', ['class' => 'col-xs-4 col-sm-2 control-label']) !!}--}}
-    {{--<div class='col-xs-8 col-sm-10'>--}}
-        {{--{!! Form::text('style', null, ['class' => 'form-control', $attr]) !!}--}}
-    {{--</div>--}}
-{{--</div>--}}
 
 <div class="form-group">
     {!! Form::label('version', '版号:', ['class' => 'col-xs-2 col-sm-2 control-label']) !!}
@@ -49,12 +36,6 @@
     </div>
 </div>
 
-{{--<div class="form-group">--}}
-    {{--{!! Form::label('applydate', '日期:', ['class' => 'col-xs-4 col-sm-2 control-label']) !!}--}}
-    {{--<div class='col-xs-8 col-sm-10'>--}}
-        {{--{!! Form::date('applydate', null, ['class' => 'form-control', $attr]) !!}--}}
-    {{--</div>--}}
-{{--</div>--}}
 
 <div class="form-group">
     {!! Form::label('status', '时效:', ['class' => 'col-xs-2 col-sm-2 control-label']) !!}
@@ -68,13 +49,6 @@
     </div>
 </div>
 
-{{--<div class="form-group">--}}
-    {{--{!! Form::label('style_des', '款式描述:', ['class' => 'col-xs-4 col-sm-2 control-label']) !!}--}}
-    {{--<div class='col-xs-8 col-sm-10'>--}}
-        {{--{!! Form::text('style_des', null, ['class' => 'form-control', $attr]) !!}--}}
-    {{--</div>--}}
-{{--</div>--}}
-
 <div class="form-group">
     {!! Form::label('fabric_specification', '面料成分规格:', ['class' => 'col-xs-2 col-sm-2 control-label']) !!}
     <div class='col-xs-4 col-sm-4'>
@@ -87,12 +61,7 @@
     </div>
 </div>
 
-{{--<div class="form-group">--}}
-    {{--{!! Form::label('weight', '克重:', ['class' => 'col-xs-4 col-sm-2 control-label']) !!}--}}
-    {{--<div class='col-xs-8 col-sm-10'>--}}
-        {{--{!! Form::text('weight', null, ['class' => 'form-control', $attr]) !!}--}}
-    {{--</div>--}}
-{{--</div>--}}
+
 
 <div class="form-group">
     {!! Form::label('width', '有效门幅:', ['class' => 'col-xs-2 col-sm-2 control-label']) !!}
@@ -106,12 +75,6 @@
     </div>
 </div>
 
-{{--<div class="form-group">--}}
-    {{--{!! Form::label('lattice_cycle', '格子循环:', ['class' => 'col-xs-4 col-sm-2 control-label']) !!}--}}
-    {{--<div class='col-xs-8 col-sm-10'>--}}
-        {{--{!! Form::text('lattice_cycle', null, ['class' => 'form-control', $attr]) !!}--}}
-    {{--</div>--}}
-{{--</div>--}}
 
 <div class="form-group">
     {!! Form::label('requirement', '对格对条要求:', ['class' => 'col-xs-2 col-sm-2 control-label']) !!}
@@ -125,12 +88,6 @@
     </div>
 </div>
 
-{{--<div class="form-group">--}}
-    {{--{!! Form::label('fabric_shrikage_grain', '面料缩率 经向:', ['class' => 'col-xs-4 col-sm-2 control-label']) !!}--}}
-    {{--<div class='col-xs-8 col-sm-10'>--}}
-        {{--{!! Form::text('requirement', null, ['class' => 'form-control', $attr]) !!}--}}
-    {{--</div>--}}
-{{--</div>--}}
 
 <div class="form-group">
     {!! Form::label('fabric_shrikage_zonal', '面料缩率 纬向:', ['class' => 'col-xs-2 col-sm-2 control-label']) !!}
@@ -144,12 +101,6 @@
     </div>
 </div>
 
-{{--<div class="form-group">--}}
-    {{--{!! Form::label('quantity', '数量:', ['class' => 'col-xs-4 col-sm-2 control-label']) !!}--}}
-    {{--<div class='col-xs-8 col-sm-10'>--}}
-        {{--{!! Form::text('quantity', null, ['class' => 'form-control', $attr]) !!}--}}
-    {{--</div>--}}
-{{--</div>--}}
 
 <div class="form-group">
     {!! Form::label('size_allotment', '尺码搭配:', ['class' => 'col-xs-4 col-sm-2 control-label']) !!}
@@ -200,48 +151,6 @@
     </div>
 </div>
 
-{{--<div class="form-group">--}}
-    {{--{!! Form::label('XS', 'XS:', ['class' => 'col-xs-4 col-sm-2 control-label']) !!}--}}
-    {{--<div class='col-xs-8 col-sm-10'>--}}
-        {{--{!! Form::text('XS', null, ['class' => 'form-control', $attr]) !!}--}}
-    {{--</div>--}}
-{{--</div>--}}
-{{--<div class="form-group">--}}
-    {{--{!! Form::label('S', 'S:', ['class' => 'col-xs-4 col-sm-2 control-label']) !!}--}}
-    {{--<div class='col-xs-8 col-sm-10'>--}}
-        {{--{!! Form::text('S', null, ['class' => 'form-control', $attr]) !!}--}}
-    {{--</div>--}}
-{{--</div>--}}
-{{--<div class="form-group">--}}
-    {{--{!! Form::label('M', 'M:', ['class' => 'col-xs-4 col-sm-2 control-label']) !!}--}}
-    {{--<div class='col-xs-8 col-sm-10'>--}}
-        {{--{!! Form::text('M', null, ['class' => 'form-control', $attr]) !!}--}}
-    {{--</div>--}}
-{{--</div>--}}
-{{--<div class="form-group">--}}
-    {{--{!! Form::label('L', 'L:', ['class' => 'col-xs-4 col-sm-2 control-label']) !!}--}}
-    {{--<div class='col-xs-8 col-sm-10'>--}}
-        {{--{!! Form::text('L', null, ['class' => 'form-control', $attr]) !!}--}}
-    {{--</div>--}}
-{{--</div>--}}
-{{--<div class="form-group">--}}
-    {{--{!! Form::label('XL', 'XL:', ['class' => 'col-xs-4 col-sm-2 control-label']) !!}--}}
-    {{--<div class='col-xs-8 col-sm-10'>--}}
-        {{--{!! Form::text('XL', null, ['class' => 'form-control', $attr]) !!}--}}
-    {{--</div>--}}
-{{--</div>--}}
-{{--<div class="form-group">--}}
-    {{--{!! Form::label('XXL', 'XXL:', ['class' => 'col-xs-4 col-sm-2 control-label']) !!}--}}
-    {{--<div class='col-xs-8 col-sm-10'>--}}
-        {{--{!! Form::text('XXL', null, ['class' => 'form-control', $attr]) !!}--}}
-    {{--</div>--}}
-{{--</div>--}}
-{{--<div class="form-group">--}}
-    {{--{!! Form::label('XXXL', 'XXXL:', ['class' => 'col-xs-4 col-sm-2 control-label']) !!}--}}
-    {{--<div class='col-xs-8 col-sm-10'>--}}
-        {{--{!! Form::text('XXXL', null, ['class' => 'form-control', $attr]) !!}--}}
-    {{--</div>--}}
-{{--</div>--}}
 
 <div class="form-group">
     {!! Form::label('note', '排料及用料记录:', ['class' => 'col-xs-4 col-sm-2 control-label']) !!}
