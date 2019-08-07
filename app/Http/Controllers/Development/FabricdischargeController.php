@@ -19,22 +19,23 @@ class FabricdischargeController extends Controller
         //
         //$fabricdischarges = Fabricdischarge::latest('created_at')->paginate(10);
         $query = Fabricdischarge::orderBy('id', 'asc');
-        $query->where('flag','=',0);
+        $query->where('flag1','<>',1)
+              ->orwhere('flag2',"<>",1);
         $fabricdischarges = $query->select('*')->paginate(100);
 
-        $currentuser=Auth()->user()->email;
-        $minid=DB::table('fabricdischarges')->where('createname',$currentuser)
-                              ->where('flag',0)
-                              ->min('id');
-        //dd($minid);
-        if($minid==null)
-            $minid=0;
-        $query1=Fabricdischarge::orderBy('id', 'asc');
-        $query1->where('flag','=','0')
-               ->where('id','<',$minid);
-        $cntuser=$query1->count('id');
+//        $currentuser=Auth()->user()->email;
+//        $minid=DB::table('fabricdischarges')->where('createname',$currentuser)
+//                              ->where('flag',0)
+//                              ->min('id');
+//        //dd($minid);
+//        if($minid==null)
+//            $minid=0;
+//        $query1=Fabricdischarge::orderBy('id', 'asc');
+//        $query1->where('flag','=','0')
+//               ->where('id','<',$minid);
+//        $cntuser=$query1->count('id');
         //dd($cntuser);
-        return view('development.fabricdischarges.index', compact('fabricdischarges','cntuser'));
+        return view('development.fabricdischarges.index', compact('fabricdischarges'));
     }
 
     /**
@@ -125,7 +126,18 @@ class FabricdischargeController extends Controller
     {
         //
         $fabricdischarge = Fabricdischarge::findOrFail($id);
-        $fabricdischarge->update(['flag'=>1,]);
+        $fabricdischarge->update(['flag1'=>1,]);
+        return redirect('development/fabricdischarges');
+    }
+
+    public function finish2($id)
+    {
+        //
+        $fabricdischarge = Fabricdischarge::findOrFail($id);
+        if($fabricdischarge->flag1==0)
+            dd('在排料之前，先要完成制版');
+
+        $fabricdischarge->update(['flag2'=>1,]);
         return redirect('development/fabricdischarges');
     }
 
@@ -137,19 +149,19 @@ class FabricdischargeController extends Controller
         //dd($inputs);
         $fabricdischarges = $this->searchrequest($request)->paginate(10);
 
-        $currentuser=Auth()->user()->email;
-        $minid=DB::table('fabricdischarges')->where('createname',$currentuser)
-            ->where('flag',0)
-            ->min('id');
+//        $currentuser=Auth()->user()->email;
+//        $minid=DB::table('fabricdischarges')->where('createname',$currentuser)
+//            ->where('flag',0)
+//            ->min('id');
+//
+//        if($minid==null)
+//            $minid=0;
+//        $query1=Fabricdischarge::orderBy('id', 'asc');
+//        $query1->where('flag','=','0')
+//            ->where('id','<',$minid);
+//        $cntuser=$query1->count('id');
 
-        if($minid==null)
-            $minid=0;
-        $query1=Fabricdischarge::orderBy('id', 'asc');
-        $query1->where('flag','=','0')
-            ->where('id','<',$minid);
-        $cntuser=$query1->count('id');
-
-        return view('development.fabricdischarges.index', compact('fabricdischarges', 'cntuser'));
+        return view('development.fabricdischarges.index', compact('fabricdischarges'));
     }
 
     private function searchrequest($request)
@@ -157,32 +169,15 @@ class FabricdischargeController extends Controller
 
         $query = Fabricdischarge::orderBy('id', 'asc');
 
-        if ($request->has('status') && strlen($request->get('status')) > 0)
+        if ($request->has('status1') &&  strlen($request->get('status1')) > 0)
         {
-            $key = $request->get('status');
-
-            $db_driver = config('database.connections.' . env('DB_CONNECTION', 'mysql') . '.driver');
-            if ($db_driver == "sqlsrv")
-                $query->where(function ($query) use ($key) {
-                    $query->where('flag', '=', $key);
-//                        ->orWhere('invoice_number', 'like', '%' . $key . '%')
-//                        ->orWhere('contract_number', 'like', '%' . $key . '%')
-//                        ->orWhere('bill_no', 'like', '%' . $key . '%')
-//                        ->orWhere('ship_company', 'like', '%' . $key . '%')
-//                        ->orWhere('customs_no', 'like', '%' . $key . '%');
-                });
-            elseif ($db_driver == "pgsql")
-                $query->where(function ($query) use ($key) {
-                    $query->where('flag', '=',  $key);
-//                        ->orWhere('invoice_number', 'ilike', '%' . $key . '%')
-//                        ->orWhere('contract_number', 'ilike', '%' . $key . '%')
-//                        ->orWhere('bill_no', 'ilike', '%' . $key . '%')
-//                        ->orWhere('ship_company', 'ilike', '%' . $key . '%')
-//                        ->orWhere('customs_no', 'ilike', '%' . $key . '%');
-                });
+            $query->where('flag1', '=', $request->get('status1'));
         }
 
-
+        if ($request->has('status2') &&  strlen($request->get('status2')) > 0)
+        {
+            $query->where('flag2', '=', $request->get('status2'));
+        }
 
         $fabricdischarges = $query->select('*');
 
