@@ -82,7 +82,7 @@ class FabricdischargeController extends Controller
 //        $fabricdischarge->update(['createname'=>Auth()->user()->email]);
         return redirect('development/fabricdischarges');
     }
-    
+
     /**
      * Display the specified resource.
      *
