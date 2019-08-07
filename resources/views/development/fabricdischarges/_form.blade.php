@@ -84,7 +84,7 @@
 
     {!! Form::label('fabric_shrikage_grain', '面料缩率 经向:', ['class' => 'col-xs-1 col-sm-1 control-label']) !!}
     <div class='col-xs-4 col-sm-4'>
-        {!! Form::text('requirement', null, ['class' => 'form-control', $attr]) !!}
+        {!! Form::text('fabric_shrikage_grain',isset($fabricdischarge->fabric_shrikage_grain) ? $fabricdischarge->fabric_shrikage_grain: '2'  , ['class' => 'form-control', $attr]) !!}
     </div>
 </div>
 
@@ -92,7 +92,7 @@
 <div class="form-group">
     {!! Form::label('fabric_shrikage_zonal', '面料缩率 纬向:', ['class' => 'col-xs-2 col-sm-2 control-label']) !!}
     <div class='col-xs-4 col-sm-4'>
-        {!! Form::text('fabric_shrikage_zonal', null, ['class' => 'form-control', $attr]) !!}
+        {!! Form::text('fabric_shrikage_zonal', isset($fabricdischarge->fabric_shrikage_grain) ? $fabricdischarge->fabric_shrikage_grain: '2', ['class' => 'form-control', $attr]) !!}
     </div>
 
     {!! Form::label('quantity', '数量:', ['class' => 'col-xs-1 col-sm-1 control-label']) !!}
