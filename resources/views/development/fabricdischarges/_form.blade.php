@@ -7,7 +7,7 @@
 
     {!! Form::label('contactor', '联系人:', ['class' => 'col-xs-1 col-sm-1 control-label']) !!}
     <div class='col-xs-4 col-sm-4'>
-        {!! Form::text('contactor', null, ['class' => 'form-control', $attr]) !!}
+        {!! Form::text('contactor', isset($fabricdischarge->contactor) ? $fabricdischarge->contactor: Auth()->user()->name, ['class' => 'form-control', $attr]) !!}
     </div>
 </div>
 
