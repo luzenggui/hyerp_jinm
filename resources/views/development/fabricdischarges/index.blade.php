@@ -78,13 +78,16 @@
                     </td>
                     <td>
                         @can('fabricdischarge_finish')
-                        {!! Form::open(array('url' => 'development/fabricdischarges/' . $fabricdischarge->id . '/finish',  'onsubmit' => 'return confirm("确定完成此记录?");')) !!}
-                        {!! Form::submit( $fabricdischarge->flag1 == 1 ? '已制版' : '制版',['class'=>'btn btn-warning btn-sm pull-left', $fabricdischarge->flag1 == 1 ? 'disabled' : 'abled'])!!}
-                        {!! Form::close() !!}
 
-                         {!! Form::open(array('url' => 'development/fabricdischarges/' . $fabricdischarge->id . '/finish2', 'onsubmit' => 'return confirm("确定完成此记录?");')) !!}
-                         {!! Form::submit( $fabricdischarge->flag2 == 1 ? '已排料' : '排料',['class'=>'btn btn-warning btn-sm pull-left', $fabricdischarge->flag2 == 1 ? 'disabled' : 'abled'])!!}
-                         {!! Form::close() !!}
+                         {{--{!! Form::open(array('url' => 'development/fabricdischarges/' . $fabricdischarge->id . '/finish',  'onsubmit' => 'return confirm("确定完成此记录?");')) !!}--}}
+                         {!! Form::submit( $fabricdischarge->flag1 == 1 ? '已制版' : '制版',['class'=>'btn btn-warning btn-sm pull-left ','data-toggle' => 'modal', 'data-target' => '#inputNumModal','data-type'=>'num1', 'data-frabricid'=>$fabricdischarge->id,$fabricdischarge->flag1 == 1 ? 'disabled' : 'abled'])!!}
+                         {{--{!! Form::text('num1', null, ['class' => ' pull-left ','size'=>'5px','placeholder'=>'数量','id'=>'num1']) !!}--}}
+                         {{--{!! Form::close() !!}--}}
+
+                         {{--{!! Form::open(array('url' => 'development/fabricdischarges/' . $fabricdischarge->id . '/finish2', 'onsubmit' => 'return confirm("确定完成此记录?");')) !!}--}}
+                         {!! Form::submit( $fabricdischarge->flag2 == 1 ? '已排料' : '排料',['class'=>'btn btn-warning btn-sm pull-left', 'data-toggle' => 'modal', 'data-target' => '#inputNumModal','data-type'=>'num2', 'data-frabricid'=>$fabricdischarge->id,$fabricdischarge->flag2 == 1 ? 'disabled' : 'abled'])!!}
+
+                          {{--{!! Form::close() !!}--}}
                         @endcan
                         <a href="{{ URL::to('/development/fabricdischarges/'.$fabricdischarge->id.'/edit') }}" class="btn btn-success btn-sm pull-left">编辑</a>
                         {!! Form::open(array('route' => array('fabricdischarges.destroy', $fabricdischarge->id), 'method' => 'delete', 'onsubmit' => 'return confirm("确定删除此记录?");')) !!}
@@ -106,5 +109,9 @@
     @endif
 
     </div>
-
+    @include('development.fabricdischarges._inputnummodal')
 @stop
+
+@section('script')
+    @include('development.fabricdischarges._inputnumjs')
+@endsection

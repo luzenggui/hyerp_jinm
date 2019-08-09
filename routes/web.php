@@ -39,11 +39,12 @@ Route::group(['prefix' => 'development', 'namespace' => 'Development', 'middlewa
     Route::resource('fabricdischarges', 'FabricdischargeController');
 
     Route::group(['prefix' => 'fabricdischarges/{id}'], function () {
-        Route::post('finish', 'FabricdischargeController@finish');
-        Route::post('finish2', 'FabricdischargeController@finish2');
+//        Route::post('finish/{num1}', 'FabricdischargeController@finish');
+//        Route::post('finish2/{num2}', 'FabricdischargeController@finish2');
     });
     Route::group(['prefix' => 'fabricdischarges'], function () {
         Route::post('search', 'FabricdischargeController@search');
+        Route::post('finish', 'FabricdischargeController@finish');
     });
 });
 

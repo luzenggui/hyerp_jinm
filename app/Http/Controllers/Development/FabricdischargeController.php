@@ -6,6 +6,7 @@ use App\Models\Development\Fabricdischarge;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use Log;
 
 class FabricdischargeController extends Controller
 {
@@ -122,24 +123,52 @@ class FabricdischargeController extends Controller
         return redirect('development/fabricdischarges');
     }
 
-    public function finish($id)
+//    public function finish($id,$num1)
+//    {
+//        //
+//        $fabricdischarge = Fabricdischarge::findOrFail($id);
+//        $fabricdischarge->update(['flag1'=>1,'num1'=>$num1,]);
+//        return redirect('development/fabricdischarges');
+//    }
+
+    public function finish(Request $request)
     {
         //
+        $input = $request->all();
+//        Log::info($input);
+        $id=$input['frabricid'];
         $fabricdischarge = Fabricdischarge::findOrFail($id);
-        $fabricdischarge->update(['flag1'=>1,]);
-        return redirect('development/fabricdischarges');
+        if ($input['type']=='num1')
+        {
+            $retcode=$fabricdischarge->update(['flag1'=>1,'num1'=>$input['num'],]);
+        }
+
+        elseif ($input['type']=='num2')
+            $retcode=$fabricdischarge->update(['flag2'=>1,'num2'=>$input['num'],]);
+//        Log::info($retcode);
+        if($retcode >=0)
+            $data = [
+                'errorcode' => 0,
+                'errormsg' => 'success',
+            ];
+        else
+            $data = [
+                'errorcode' =>$retcode,
+                'errormsg' => '更新失败',
+            ];
+        return response()->json($data);
     }
 
-    public function finish2($id)
-    {
-        //
-        $fabricdischarge = Fabricdischarge::findOrFail($id);
-        if($fabricdischarge->flag1==0)
-            dd('在排料之前，先要完成制版');
-
-        $fabricdischarge->update(['flag2'=>1,]);
-        return redirect('development/fabricdischarges');
-    }
+//    public function finish2($id,$num2)
+//    {
+//        //
+//        $fabricdischarge = Fabricdischarge::findOrFail($id);
+//        if($fabricdischarge->flag1==0)
+//            dd('在排料之前，先要完成制版');
+//
+//        $fabricdischarge->update(['flag2'=>1,'num2'=>$num2,]);
+//        return redirect('development/fabricdischarges');
+//    }
 
     public function search(Request $request)
     {
@@ -148,18 +177,6 @@ class FabricdischargeController extends Controller
 
         //dd($inputs);
         $fabricdischarges = $this->searchrequest($request)->paginate(10);
-
-//        $currentuser=Auth()->user()->email;
-//        $minid=DB::table('fabricdischarges')->where('createname',$currentuser)
-//            ->where('flag',0)
-//            ->min('id');
-//
-//        if($minid==null)
-//            $minid=0;
-//        $query1=Fabricdischarge::orderBy('id', 'asc');
-//        $query1->where('flag','=','0')
-//            ->where('id','<',$minid);
-//        $cntuser=$query1->count('id');
 
         return view('development.fabricdischarges.index', compact('fabricdischarges'));
     }

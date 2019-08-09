@@ -36,6 +36,8 @@ class Fabricdischarge extends Model
         'note',
         'flag1',
         'flag2',
+        'num1',
+        'num2',
         'createname',
     ];
 
