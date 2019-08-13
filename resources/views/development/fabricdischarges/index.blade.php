@@ -21,6 +21,7 @@
             {!! Form::submit('Search', ['class' => 'btn btn-default btn-sm']) !!}
         </div>
         {!! Form::close() !!}
+
     @if ($fabricdischarges->count())
 
     <table class="table table-striped table-hover table-condensed">
@@ -93,6 +94,7 @@
                         {!! Form::open(array('route' => array('fabricdischarges.destroy', $fabricdischarge->id), 'method' => 'delete', 'onsubmit' => 'return confirm("确定删除此记录?");')) !!}
                             {!! Form::submit('删除', ['class' => 'btn btn-danger btn-sm pull-left']) !!}
                         {!! Form::close() !!}
+                        <a href="{{ URL::to('/development/fabricdischarges/'.$fabricdischarge->id . '/export') }}" class="btn btn-success btn-sm pull-left">导出</a>
                     </td>
                 </tr>
             @endforeach

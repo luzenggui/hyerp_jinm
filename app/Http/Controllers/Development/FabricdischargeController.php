@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Development;
 
 use App\Models\Development\Fabricdischarge;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Log;
+use Excel;
 
 class FabricdischargeController extends Controller
 {
@@ -82,6 +84,68 @@ class FabricdischargeController extends Controller
         Fabricdischarge::create($input);
 //        $fabricdischarge->update(['createname'=>Auth()->user()->email]);
         return redirect('development/fabricdischarges');
+    }
+
+    public function export($id)
+    {
+        Excel::load('exceltemplate/fabricapply.xlsx', function ($reader) use ($id) {
+            $objExcel = $reader->getExcel();
+            $sheet = $objExcel->getSheet(0);
+//            $highestRow = $sheet->getHighestRow();
+//            $highestColumn = $sheet->getHighestColumn();
+
+            $fabricdischarge = Fabricdischarge::find($id);
+
+            if (isset($fabricdischarge))
+            {
+                $sheet->setCellValue('B3',  $fabricdischarge->department);
+                $sheet->setCellValue('C3',  "联系人：".$fabricdischarge->contactor);
+                $sheet->setCellValue('C4',  $fabricdischarge->contactor_tel);
+                $sheet->setCellValue('G3',  $fabricdischarge->style);
+                $sheet->setCellValue('K3',  $fabricdischarge->version);
+
+                $orderdate = Carbon::parse($fabricdischarge->applydate);
+                $sheet->setCellValue('N3',  $orderdate->format('Y-m-d'));
+
+                if($fabricdischarge->status=='正常')
+                    $sheet->setCellValue('B5',  "正常（√）");
+                elseif($fabricdischarge->status=='紧急')
+                    $sheet->setCellValue('C5',  "紧急（√）");
+
+                $sheet->setCellValue('A8',  $fabricdischarge->style_des);
+                $sheet->setCellValue('C7',  $fabricdischarge->fabric_specification);
+                $sheet->setCellValue('C8',  $fabricdischarge->weight);
+                $sheet->setCellValue('C9',  $fabricdischarge->width);
+                $sheet->setCellValue('C10',  $fabricdischarge->lattice_cycle);
+                $sheet->setCellValue('C11',  $fabricdischarge->requirement);
+
+                if($fabricdischarge->fabric_shrikage_grain==2 && $fabricdischarge->fabric_shrikage_zonal==2)
+                {
+                    $sheet->setCellValue('F8',  $fabricdischarge->fabric_shrikage_grain/100);
+                    $sheet->setCellValue('F9',  $fabricdischarge->fabric_shrikage_zonal/100);
+                }
+                else
+                {
+                    $sheet->setCellValue('F10',  $fabricdischarge->fabric_shrikage_grain/100);
+                    $sheet->setCellValue('F11',  $fabricdischarge->fabric_shrikage_zonal/100);
+                }
+
+                $sheet->setCellValue('G8',  $fabricdischarge->quantity);
+                $sheet->setCellValue('H8',  $fabricdischarge->size_allotment);
+
+                $sheet->setCellValue('I9',  $fabricdischarge->XXS);
+                $sheet->setCellValue('J9',  $fabricdischarge->XS);
+                $sheet->setCellValue('K9',  $fabricdischarge->S);
+                $sheet->setCellValue('L9',  $fabricdischarge->M);
+                $sheet->setCellValue('M9',  $fabricdischarge->L);
+                $sheet->setCellValue('N9',  $fabricdischarge->XL);
+                $sheet->setCellValue('O9',  $fabricdischarge->XXL);
+                $sheet->setCellValue('P9',  $fabricdischarge->XXXL);
+
+                $sheet->setCellValue('A13',  $fabricdischarge->note);
+            }
+
+        })->export('xlsx');
     }
 
     /**

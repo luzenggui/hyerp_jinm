@@ -41,6 +41,7 @@ Route::group(['prefix' => 'development', 'namespace' => 'Development', 'middlewa
     Route::group(['prefix' => 'fabricdischarges/{id}'], function () {
 //        Route::post('finish/{num1}', 'FabricdischargeController@finish');
 //        Route::post('finish2/{num2}', 'FabricdischargeController@finish2');
+        Route::get('export', 'FabricdischargeController@export');
     });
     Route::group(['prefix' => 'fabricdischarges'], function () {
         Route::post('search', 'FabricdischargeController@search');
