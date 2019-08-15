@@ -63,18 +63,18 @@ class FabricdischargeController extends Controller
         //
         $messages=[
             'department.required' => '部门字段是必须的',
-            'contactor_tel.required' => '联系人电话字段是必须的',
             'contactor.required' => '联系人字段是必须的',
             'style.required' => '款号字段是必须的',
             'version.required' => '版号字段是必须的',
+            'applydate.required'=>'申请日期是必须的',
         ];
 
         $this->validate($request, [
             'department' => 'required',
-            'contactor_tel' => 'required',
             'contactor' => 'required',
             'style' => 'required',
             'version' => 'required',
+            'applydate'=>'required',
         ],$messages);
 
         $input = $request->all();
