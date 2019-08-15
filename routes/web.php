@@ -43,10 +43,21 @@ Route::group(['prefix' => 'development', 'namespace' => 'Development', 'middlewa
 //        Route::post('finish2/{num2}', 'FabricdischargeController@finish2');
         Route::get('export', 'FabricdischargeController@export');
     });
+    Route::get('report', '\App\Http\Controllers\System\ReportController@indexfabricdata');
     Route::group(['prefix' => 'fabricdischarges'], function () {
         Route::post('search', 'FabricdischargeController@search');
         Route::post('finish', 'FabricdischargeController@finish');
+
     });
+});
+
+Route::group(['prefix' => 'my', 'namespace' => 'My', 'middleware' => ['web', 'auth']], function() {
+    Route::group(['prefix' => 'report'], function() {
+          Route::get('fabricdata', 'MyController@index_fabricdata');
+    });
+//    Route::group(['prefix' => 'bonusbyorder'], function() {
+//        Route::get('', 'MyController@bonusbyorder');
+//    });
 });
 
 Route::group(['prefix' => 'purchaseorderc', 'namespace' => 'Purchaseorderc', 'middleware' => ['web', 'auth']], function() {

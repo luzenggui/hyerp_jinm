@@ -22,46 +22,11 @@
         {!! Form::open(['url' => '/system/reports/' . $report->id . '/statistics', 'class' => 'pull-right form-inline']) !!}
         <div class="form-group-sm">
             {{-- 根据不同报表设置不同搜索条件 --}}
-            @if ($report->name == "po_warehouse_percent")
-                {!! Form::label('arrivaldatelabel', '到货时间:', ['class' => 'control-label']) !!}
-                {!! Form::date('datearravalfrom', null, ['class' => 'form-control']) !!}
-                {!! Form::label('arrivaldatelabelto', '-', ['class' => 'control-label']) !!}
-                {!! Form::date('datearravalto', null, ['class' => 'form-control']) !!}
-
-                {!! Form::text('key', null, ['class' => 'form-control', 'placeholder' => '对应项目名称']) !!}
-            @elseif ($report->name == "so_factory_analysis")
-            @elseif ($report->name == "so_height_statistics_detail")
-                {!! Form::select('orderid', $poheadList_hxold, null, ['class' => 'form-control', 'placeholder' => '--请选择--']) !!}
-            @elseif ($report->name == "po_statistics")
-                {!! Form::label('signdatelabel', '签订日期:', ['class' => 'control-label']) !!}
-                {!! Form::date('signdatefrom', null, ['class' => 'form-control']) !!}
-                {!! Form::label('signdatelabelto', '-', ['class' => 'control-label']) !!}
-                {!! Form::date('signdateto', null, ['class' => 'form-control']) !!}
-                {!! Form::select('arrivalstatus', array(0 => '未到货', 1 => '部分到货', 2 => '全部到货'), null, ['class' => 'form-control', 'placeholder' => '--到货状态--']) !!}
-                {!! Form::select('paidstatus', array(0 => '未付款', 1 => '部分付款', 2 => '全部付款'), null, ['class' => 'form-control', 'placeholder' => '--付款状态--']) !!}
-                {!! Form::select('ticketedstatus', array(0 => '未开票', 1 => '部分开票', 2 => '全部开票'), null, ['class' => 'form-control', 'placeholder' => '--开票状态--']) !!}
-            @elseif ($report->name == "in_batch")
-                {!! Form::text('batch', null, ['class' => 'form-control', 'placeholder' => '批号']) !!}
-            @elseif ($report->name == "so_cost_statistics")
-                {!! Form::select('orderid', $poheadList_hxold, null, ['class' => 'form-control', 'placeholder' => '--请选择--']) !!}
-            @elseif ($report->name == "so_amount_statistics")
-                {!! Form::select('dateyear', $poheadOrderDateyearList_hxold, null, ['class' => 'form-control', 'placeholder' => '--年份--']) !!}
-            @elseif ($report->name == "so_projectengineeringlist_statistics")
-                {!! Form::select('orderid', $myprojectListByProjectengineer, null, ['class' => 'form-control', 'placeholder' => '--项目--']) !!}
-            @elseif ($report->name == "so_amountstatistics_forfinancedept")
-                {!! Form::select('dateyear', $soheadOrderDateyearList_hxold, null, ['class' => 'form-control', 'placeholder' => '--年份--']) !!}
-            @elseif ($report->name == "po_statistics_byproject")
-                {!! Form::select('project_id', $projectList, null, ['class' => 'form-control', 'placeholder' => '--项目--']) !!}
-            @elseif ($report->name == "shipment_pvh")
-                {!! Form::label('etdstartlabel', 'ETD:', ['class' => 'control-label']) !!}
-                {!! Form::date('etdstart', null, ['class' => 'form-control']) !!}
-                {!! Form::label('etdlabelto', '-', ['class' => 'control-label']) !!}
-                {!! Form::date('etdend', null, ['class' => 'form-control']) !!}
-
-                {{--{!! Form::label('amount_for_customer', 'Amount for Customer:', ['class' => 'control-label']) !!}--}}
-                {{--{!! Form::select('amount_for_customer_opt', ['>=' => '>=', '<=' => '<=', '=' => '='], null, ['class' => 'form-control']) !!}--}}
-                {{--{!! Form::text('amount_for_customer', null, ['class' => 'form-control', 'placeholder' => 'Amount for Customer']) !!}--}}
-                {!! Form::text('key', null, ['class' => 'form-control', 'placeholder' => 'Invoice No.,Contact No.,Customer']) !!}
+            @if ($report->name == "p_frabicdata")
+                {!! Form::label('applydatelabel', '申请日期:', ['class' => 'control-label']) !!}
+                {!! Form::date('bdate', null, ['class' => 'form-control']) !!}
+                {!! Form::label('applydatelabelto', '-', ['class' => 'control-label']) !!}
+                {!! Form::date('edate', null, ['class' => 'form-control']) !!}
             @endif
 
             {!! Form::submit('查找(Search)', ['class' => 'btn btn-default btn-sm']) !!}

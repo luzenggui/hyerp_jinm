@@ -3,11 +3,9 @@
 namespace App\Http\Controllers\System;
 
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\System\Report;
-use App\Models\Purchase\Purchaseorder_hxold;
 use App\Http\Controllers\HelperController;
 use DB, Excel, Gate, Auth;
 
@@ -79,9 +77,9 @@ class ReportController extends Controller
 //        return view('system.reports.index', compact('reports', 'readonly'));
     }
 
-    public function indexshipment()
+    public function indexfabricdata()
     {
-        return $this->indexmodule('出运单');
+        return $this->indexmodule('排料');
 //        $reports = Report::latest('created_at')->where('module', '审批')->where('active', 1)->paginate(10);
 //        $readonly = true;
 //        return view('system.reports.index', compact('reports', 'readonly'));
@@ -174,10 +172,11 @@ class ReportController extends Controller
     {
         //
         $report = Report::findOrFail($id);
-
+//        dd($report);
         $request = Request();
 
         $input = $request->all();
+//        dd($input);
         $input = HelperController::skipEmptyValue($input);
         $input = array_except($input, '_token');
         $input = array_except($input, 'page');
@@ -299,7 +298,7 @@ class ReportController extends Controller
         $input = HelperController::skipEmptyValue($input);
         $input = array_except($input, '_token');
         $input = array_except($input, 'page');
-
+//        dd($input);
         $db_driver = config('database.connections.' . env('DB_CONNECTION', 'mysql') . '.driver');
         if ($db_driver == "sqlsrv")
         {
@@ -310,7 +309,9 @@ class ReportController extends Controller
                     $param .= "@" . $key . "='" . $value . "',";
             }
             $param = count($input) > 0 ? substr($param, 0, strlen($param) - 1) : $param;
+//            dd($report->statement . ' ' . $param);
             $items_t = DB::connection('sqlsrv')->select($report->statement . ' ' . $param);
+//            dd($items_t);
         }
         elseif ($db_driver == "pgsql")
         {
