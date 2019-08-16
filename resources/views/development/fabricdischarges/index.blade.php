@@ -37,6 +37,8 @@
                 <th style="width: 50px">时效</th>
                 <th style="width: 100px">提交日期</th>
                 <th style="width: 150px">创建人</th>
+                <th>制版状态</th>
+                <th>排料状态</th>
                 <th>操作</th>
             </tr>
         </thead>
@@ -76,6 +78,20 @@
                     </td>
                     <td>
                         {{ $fabricdischarge->createname }}
+                    </td>
+                    <td>
+                        @if($fabricdischarge->flag1==0)
+                            {{"未制版"}}
+                        @elseif($fabricdischarge->flag1==1)
+                            {{"已制版"}}
+                        @endif
+                    </td>
+                    <td>
+                        @if($fabricdischarge->flag2==0)
+                            {{"未排料"}}
+                        @elseif($fabricdischarge->flag2==1)
+                            {{"已排料"}}
+                        @endif
                     </td>
                     <td>
                         @can('fabricdischarge_finish')
