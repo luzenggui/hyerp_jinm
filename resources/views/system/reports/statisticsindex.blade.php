@@ -48,7 +48,9 @@
             <?php $hasright = true; ?>
         @endcan
     @elseif ($report->name == "p_frabicdata")
+        @can('fabricdischarge_finish')
             <?php $hasright = true; ?>
+        @endcan
     @else
         @if (Auth::user()->isSuperAdmin())
             <?php $hasright = true; ?>
