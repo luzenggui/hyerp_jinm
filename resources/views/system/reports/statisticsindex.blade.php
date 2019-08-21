@@ -47,6 +47,8 @@
         @can('system_report_sh_shipment_pvh')
             <?php $hasright = true; ?>
         @endcan
+    @elseif ($report->name == "p_frabicdata")
+            <?php $hasright = true; ?>
     @else
         @if (Auth::user()->isSuperAdmin())
             <?php $hasright = true; ?>
