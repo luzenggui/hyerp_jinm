@@ -67,6 +67,8 @@ class FabricdischargeController extends Controller
             'style.required' => '款号字段是必须的',
             'version.required' => '版号字段是必须的',
             'applydate.required'=>'申请日期是必须的',
+            'weight.integer'=>'克重必须是数字型',
+            'width.integer'=>'有效门幅必须是数字型',
         ];
 
         $this->validate($request, [
@@ -75,6 +77,8 @@ class FabricdischargeController extends Controller
             'style' => 'required',
             'version' => 'required',
             'applydate'=>'required',
+            'weight'=>'integer',
+            'width'=>'integer',
         ],$messages);
 
         $input = $request->all();
