@@ -264,6 +264,15 @@ class FabricdischargeController extends Controller
             $query->where('flag2', '=', $request->get('status2'));
         }
 
+        if ($request->has('key') && strlen($request->get('key')) > 0)
+        {
+            $key = $request->get('key');
+            $query->where(function ($query) use ($key) {
+                $query->where('style', 'like', '%' . $key . '%')
+                    ->orWhere('version', 'like', '%' . $key . '%');
+            });
+        }
+
         $fabricdischarges = $query->select('*');
 
         return $fabricdischarges;

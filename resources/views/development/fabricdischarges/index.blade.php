@@ -18,6 +18,7 @@
         <div class="form-group-sm">
             {!! Form::select('status1', [0 => '未制版', 1 => '已制版'], null, ['class' => 'form-control', 'placeholder' => '--制版状态--']) !!}
             {!! Form::select('status2', [0 => '未排料', 1 => '已排料'], null, ['class' => 'form-control', 'placeholder' => '--排料状态--']) !!}
+            {!! Form::text('key', null, ['class' => 'form-control', 'placeholder' => '版号,款号','id'=>'key']) !!}
             {!! Form::submit('Search', ['class' => 'btn btn-default btn-sm']) !!}
         </div>
         {!! Form::close() !!}
