@@ -17,14 +17,15 @@ class FabricdischargeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
         //$fabricdischarges = Fabricdischarge::latest('created_at')->paginate(10);
+        $inputs = $request->all();
         $query = Fabricdischarge::orderBy('id', 'asc');
         $query->where('flag1','<>',1)
               ->orwhere('flag2',"<>",1);
-        $fabricdischarges = $query->select('*')->paginate(100);
+        $fabricdischarges = $query->select('*')->paginate(10);
 
 //        $currentuser=Auth()->user()->email;
 //        $minid=DB::table('fabricdischarges')->where('createname',$currentuser)
@@ -38,7 +39,7 @@ class FabricdischargeController extends Controller
 //               ->where('id','<',$minid);
 //        $cntuser=$query1->count('id');
         //dd($cntuser);
-        return view('development.fabricdischarges.index', compact('fabricdischarges'));
+        return view('development.fabricdischarges.index', compact('fabricdischarges','inputs'));
     }
 
     /**
@@ -246,7 +247,7 @@ class FabricdischargeController extends Controller
         //dd($inputs);
         $fabricdischarges = $this->searchrequest($request)->paginate(10);
 
-        return view('development.fabricdischarges.index', compact('fabricdischarges'));
+        return view('development.fabricdischarges.index', compact('fabricdischarges','inputs'));
     }
 
     private function searchrequest($request)
