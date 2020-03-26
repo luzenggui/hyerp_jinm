@@ -48,6 +48,11 @@ class ComposerServiceProvider extends ServiceProvider
         view()->composer(array('purchase.uservendors.create', 'purchase.uservendors.edit'), function($view) {
             $view->with('vendorList', \App\Models\Purchase\Vendor::orderby('name')->pluck('name', 'id'));
         });
+
+        // oadepartmentList
+        view()->composer(array('system.reports.statisticsindex'), function($view) {
+            $view->with('oadepartmentList', \App\Models\Personal\OrgUnit::orderby('code')->pluck('name', 'name'));
+        });
     }
 
     /**

@@ -73,16 +73,37 @@
                             {{--@endcan--}}
                         {{--</ul>--}}
                     {{--</li>--}}
+                    {{--<li class="dropdown">--}}
+                        {{--<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">发展部<span class="caret"></span></a>--}}
+                        {{--<ul class="dropdown-menu">--}}
+                            {{--@can('module_fabricdischarge')--}}
+                                {{--<li><a href="/development/fabricdischarges">排料申请单</a></li>--}}
+                                {{--<li><a href="/development/report">报表</a></li>--}}
+                            {{--@endcan--}}
+                        {{--</ul>--}}
+                    {{--</li>--}}
+
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">发展部<span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">行政部<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            @can('module_fabricdischarge')
-                                <li><a href="/development/fabricdischarges">排料申请单</a></li>
-                                <li><a href="/development/report">报表</a></li>
+                            @can('module_personal')
+                                <li><a href="/personal/checkrecords">移动端考勤信息</a></li>
+                                <li><a href="/personal/orgmembers">员工信息</a></li>
+                                <li><a href="/personal/report">报表</a></li>
                             @endcan
                         </ul>
                     </li>
 
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">财务部<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            @can('module_finance')
+                                <li><a href="/finance/shipmentinfo">出运明细信息维护</a></li>
+                                <li><a href="/finance/packinfo">装箱信息维护</a></li>
+                                <li><a href="/finance/report">报表</a></li>
+                            @endcan
+                        </ul>
+                    </li>
                 {{--<li class="dropdown">--}}
                     {{--<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">采购<span class="caret"></span></a>--}}
                     {{--<ul class="dropdown-menu">--}}

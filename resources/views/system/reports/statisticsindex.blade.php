@@ -28,8 +28,19 @@
                 {!! Form::label('applydatelabelto', '-', ['class' => 'control-label']) !!}
                 {!! Form::date('edate', null, ['class' => 'form-control']) !!}
             @endif
-
-            {!! Form::submit('查找(Search)', ['class' => 'btn btn-default btn-sm']) !!}
+            @if ($report->name == "pgenkqrport")
+                {!! Form::label('applydatelabel', '年份', ['class' => 'control-label']) !!}
+                {!! Form::text('yr', date('Y',time()), ['class' => 'form-control','id'=>'txtYr']) !!}
+                {!! Form::label('applydatelabel', '月份', ['class' => 'control-label']) !!}
+                {!! Form::text('mon', date('m',time()), ['class' => 'form-control','id'=>'txtMon']) !!}
+                {!! Form::label('applylabel_depart', '部门', ['class' => 'control-label']) !!}
+                {!! Form::select('depart', $oadepartmentList, null,['class' => 'form-control','placeholder' => '--请选择--']) !!}
+            @endif
+            @if ($report->name == "pgetbudgetdata")
+                {!! Form::text('contractno', null, ['class' => 'form-control','placeholder'=>'合同号']) !!}
+                {!! Form::text('shipno', null, ['class' => 'form-control','placeholder'=>'运编号']) !!}
+            @endif
+            {!! Form::submit('查找(Search)', ['class' => 'btn btn-default btn-sm','id'=>'btnSearch']) !!}
         </div>
         {!! Form::close() !!}
     </div>
@@ -152,3 +163,16 @@
         无权限。
     @endif
 @stop
+
+@section('script')
+    <script type="text/javascript">
+        jQuery(document).ready(function(e) {
+            $("#btnSearch").click(function() {
+                if($("#txtYr").val() == "" || $("#txtMon").val() == "") {
+                    alert('年份、月份都不能为空');
+                    return false;
+                }
+                });
+        });
+    </script>
+@endsection

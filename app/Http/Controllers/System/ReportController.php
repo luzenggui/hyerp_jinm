@@ -85,6 +85,21 @@ class ReportController extends Controller
 //        return view('system.reports.index', compact('reports', 'readonly'));
     }
 
+    public function indexpersonal()
+    {
+        return $this->indexmodule('人事');
+//        $reports = Report::latest('created_at')->where('module', '审批')->where('active', 1)->paginate(10);
+//        $readonly = true;
+//        return view('system.reports.index', compact('reports', 'readonly'));
+    }
+
+    public function indexfinance()
+    {
+        return $this->indexmodule('财务');
+//        $reports = Report::latest('created_at')->where('module', '审批')->where('active', 1)->paginate(10);
+//        $readonly = true;
+//        return view('system.reports.index', compact('reports', 'readonly'));
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -325,7 +340,7 @@ class ReportController extends Controller
             $items_t = DB::select($report->statement . '( ' . $param . ')');
         }
 
-
+//        dd($items_t);
         return $items_t;
     }
 

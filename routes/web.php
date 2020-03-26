@@ -51,9 +51,59 @@ Route::group(['prefix' => 'development', 'namespace' => 'Development', 'middlewa
     });
 });
 
+Route::group(['prefix' => 'personal', 'namespace' => 'Personal', 'middleware' => ['web', 'auth']], function() {
+
+    Route::get('report', '\App\Http\Controllers\System\ReportController@indexpersonal');
+    Route::group(['prefix' => 'checkrecords'], function () {
+        Route::post('search', 'CheckRecordController@search');
+        Route::get('import', 'CheckRecordController@import');
+        Route::post('importstore', 'CheckRecordController@importstore');
+        Route::get('datasync', 'CheckRecordController@datasync');
+        Route::post('synchronization', 'CheckRecordController@synchronization');
+        Route::post('export', 'CheckRecordController@export');
+    });
+    Route::group(['prefix' => 'orgmembers'], function () {
+        Route::post('search', 'OrgMemberController@search');
+        Route::post('import', 'OrgMemberController@import');
+        Route::post('export', 'OrgMemberController@export');
+    });
+    Route::resource('orgmembers', 'OrgMemberController');
+    Route::resource('checkrecords', 'CheckRecordController');
+});
+
+
 Route::group(['prefix' => 'my', 'namespace' => 'My', 'middleware' => ['web', 'auth']], function() {
     Route::group(['prefix' => 'report'], function() {
           Route::get('fabricdata', 'MyController@index_fabricdata');
+    });
+//    Route::group(['prefix' => 'bonusbyorder'], function() {
+//        Route::get('', 'MyController@bonusbyorder');
+//    });
+});
+
+Route::group(['prefix' => 'finance', 'namespace' => 'Finance', 'middleware' => ['web', 'auth']], function() {
+
+    Route::get('report', '\App\Http\Controllers\System\ReportController@indexfinance');
+    Route::group(['prefix' => 'packinfo'], function () {
+        Route::post('search', 'PackinfoController@search');
+        Route::get('import', 'PackinfoController@import');
+        Route::post('importstore', 'PackinfoController@importstore');
+        Route::post('export', 'PackinfoController@export');
+    });
+    Route::group(['prefix' => 'shipmentinfo'], function () {
+        Route::post('search', 'ShipmentinfoController@search');
+        Route::get('import', 'ShipmentinfoController@import');
+        Route::post('importstore', 'ShipmentinfoController@importstore');
+        Route::post('export', 'ShipmentinfoController@export');
+    });
+    Route::resource('shipmentinfo', 'ShipmentinfoController');
+    Route::resource('packinfo', 'PackinfoController');
+});
+
+
+Route::group(['prefix' => 'my', 'namespace' => 'My', 'middleware' => ['web', 'auth']], function() {
+    Route::group(['prefix' => 'report'], function() {
+        Route::get('fabricdata', 'MyController@index_fabricdata');
     });
 //    Route::group(['prefix' => 'bonusbyorder'], function() {
 //        Route::get('', 'MyController@bonusbyorder');
