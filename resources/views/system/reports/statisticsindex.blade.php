@@ -62,6 +62,14 @@
         @can('fabricdischarge_finish')
             <?php $hasright = true; ?>
         @endcan
+    @elseif ($report->name == "pgenkqrport")
+        @can('module_personal')
+            <?php $hasright = true; ?>
+        @endcan
+    @elseif ($report->name == "pgetbudgetdata")
+        @can('module_finance')
+            <?php $hasright = true; ?>
+        @endcan
     @else
         @if (Auth::user()->isSuperAdmin())
             <?php $hasright = true; ?>
