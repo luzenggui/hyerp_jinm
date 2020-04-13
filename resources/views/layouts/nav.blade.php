@@ -73,15 +73,15 @@
                             {{--@endcan--}}
                         {{--</ul>--}}
                     {{--</li>--}}
-                    {{--<li class="dropdown">--}}
-                        {{--<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">发展部<span class="caret"></span></a>--}}
-                        {{--<ul class="dropdown-menu">--}}
-                            {{--@can('module_fabricdischarge')--}}
-                                {{--<li><a href="/development/fabricdischarges">排料申请单</a></li>--}}
-                                {{--<li><a href="/development/report">报表</a></li>--}}
-                            {{--@endcan--}}
-                        {{--</ul>--}}
-                    {{--</li>--}}
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">发展部<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            @can('module_fabricdischarge')
+                                <li><a href="/development/fabricdischarges">排料申请单</a></li>
+                                <li><a href="/development/report">报表</a></li>
+                            @endcan
+                        </ul>
+                    </li>
 
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">行政部<span class="caret"></span></a>
