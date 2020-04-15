@@ -100,6 +100,14 @@ class ReportController extends Controller
 //        $readonly = true;
 //        return view('system.reports.index', compact('reports', 'readonly'));
     }
+
+    public function indexshipment()
+    {
+        return $this->indexmodule('出运单');
+//        $reports = Report::latest('created_at')->where('module', '审批')->where('active', 1)->paginate(10);
+//        $readonly = true;
+//        return view('system.reports.index', compact('reports', 'readonly'));
+    }
     /**
      * Show the form for creating a new resource.
      *

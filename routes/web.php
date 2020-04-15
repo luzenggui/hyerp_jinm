@@ -249,6 +249,7 @@ Route::group(['prefix' => 'shipment', 'namespace' => 'Shipment', 'middleware' =>
         Route::get('shipmenttracking', 'ShipmentController@shipmenttracking');
         Route::post('searchshipmenttracking', 'ShipmentController@searchshipmenttracking');
         Route::post('exportshipmenttracking', 'ShipmentController@exportshipmenttracking');
+        Route::get('updatefinished', 'ShipmentController@updatefinished');
     });
     Route::group(['prefix' => 'shipments/{shipment}'], function () {
         Route::get('shipmentitems', 'ShipmentController@shipmentitems');

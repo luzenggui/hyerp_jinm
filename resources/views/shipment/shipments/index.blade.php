@@ -4,8 +4,10 @@
 
 @section('main')
     <div class="panel-heading">
-        <a href="shipments/create" class="btn btn-sm btn-success">新建(New)</a>
-        <a href="shipments/import" class="btn btn-sm btn-success">导入(Import)</a>
+        <a href="/shipment/shipments/create" class="btn btn-sm btn-success">新建(New)</a>
+        <a href="/shipment/shipments/import" class="btn btn-sm btn-success">导入(Import)</a>
+        {!! Form::button('保存收汇完成', ['class' => 'btn btn-sm btn-success', 'id' => 'btnFinishedFinance']) !!}
+        {!! Form::close() !!}
     </div>
 
     <div class="panel-body">
@@ -34,6 +36,7 @@
             {{--{!! Form::select('paymentstatus', ['0' => '已付款', '-1' => '未付款'], null, ['class' => 'form-control', 'placeholder' => '--付款状态--']); !!}--}}
             {{--{!! Form::select('approvalstatus', ['1' => '审批中', '0' => '已通过', '-2' => '未通过'], null, ['class' => 'form-control', 'placeholder' => '--审批状态--']); !!}--}}
             {!! Form::text('key', null, ['class' => 'form-control', 'placeholder' => 'Invoice No.,Contact No.,Customer']) !!}
+            {!! Form::select('finished_fininace', ['unfinished' => '未完成', 'finished' => '完成'], null, ['class' => 'form-control', 'placeholder' => '--收汇完成--']) !!}
             {!! Form::submit('Search', ['class' => 'btn btn-default btn-sm']) !!}
             {!! Form::button('Export', ['class' => 'btn btn-default btn-sm', 'id' => 'btnExport']) !!}
             {{--{!! Form::button('Export PVH', ['class' => 'btn btn-default btn-sm', 'id' => 'btnExportPVH']) !!}--}}
@@ -41,7 +44,7 @@
         {!! Form::close() !!}
 
         @if ($shipments->count())
-            <table class="table table-striped table-hover table-condensed">
+            <table class="table table-striped table-hover table-condensed" id="tbMain">
                 <thead>
                 <tr>
                     <th>Dept</th>
@@ -53,6 +56,8 @@
                     {{--<th>目的地</th>--}}
                     {{--<th>供应商名称</th>--}}
                     <th>Create Time</th>
+                    <th>Amount for Customer</th>
+                    <th>Finished Finance</th>
                     <th>Detail</th>
                     <th>Operation</th>
                 </tr>
@@ -70,7 +75,7 @@
                             {{ $shipment->invoice_number }}
                         </td>
                         <td title="@if (isset($shipment->contract_number)) {{ $shipment->contract_number }} @else @endif">
-                            {{ str_limit($shipment->contract_number, 60) }}
+                            {{ str_limit($shipment->contract_number, 30) }}
                         </td>
                         {{--<td>--}}
                         {{--{{ $purchaseorder->product_type }}--}}
@@ -86,6 +91,16 @@
                         {{--</td>--}}
                         <td>
                             {{ $shipment->created_at }}
+                        </td>
+                        <td>
+                            {{ $shipment->amount_for_customer }}
+                        </td>
+                        <td>
+                            @if(!empty($shipment->receive_finished)  or $shipment->receive_finished >=1)
+                                <input type="checkbox" class="qx" checked="true" disabled="true">
+                            @else
+                                <input type="checkbox" class="qx" disabled_value=1 value="{{ $shipment->id }}" data-id="{{ $shipment->id }}">
+                            @endif
                         </td>
                         <td>
                             <a href="{{ URL::to('/shipment/shipments/' . $shipment->id . '/shipmentitems') }}" target="_blank">Detail</a>
@@ -147,6 +162,39 @@
                         location.href = result;
 //                        alert("导出成功.");
                     },
+                });
+            });
+            $("#btnFinishedFinance").click(function(e) {
+
+                var checkvalues = [];
+                var checknumbers = [];
+                var ids="";
+                $("#tbMain").find("input[type='checkbox']:checked").each(function (i) {
+                    if($(this).attr('disabled_value') ==1 )
+                    {
+                        checkvalues[i] =$(this).val();
+                        checknumbers[i] = $(this).attr('data-id');
+                    }
+                });
+
+                // alert(checkvalues.join(","));
+
+                {{--window.open("{{ url('/shipment/shipments/updatefinished') }}" + "?ids=" + checkvalues.join(","));--}}
+                $.ajax({
+                type: "GET",
+                url: "{{ url('/shipment/shipments/updatefinished') }}",
+                data: "ids=" + checkvalues.join(","),
+                // contentType: false,
+                // processData: false,
+                //                    dataType: "json",
+                error:function(xhr, ajaxOptions, thrownError){
+                    alert('thrownError');
+                },
+                success:function(result){
+                    alert("保存成功。");
+                    window.location.reload();
+                //                        $('#sendAsnModal').modal('toggle');
+                },
                 });
             });
         });

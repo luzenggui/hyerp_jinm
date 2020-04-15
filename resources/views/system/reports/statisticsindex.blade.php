@@ -40,6 +40,13 @@
                 {!! Form::text('contractno', null, ['class' => 'form-control','placeholder'=>'合同号']) !!}
                 {!! Form::text('shipno', null, ['class' => 'form-control','placeholder'=>'运编号']) !!}
             @endif
+            @if ($report->name == "pgetfinancedata")
+                {!! Form::label('etdstartlabel', 'ETD:', ['class' => 'control-label']) !!}
+                {!! Form::date('etdstart', null, ['class' => 'form-control']) !!}
+                {!! Form::label('etdlabelto', '-', ['class' => 'control-label']) !!}
+                {!! Form::date('etdend', null, ['class' => 'form-control']) !!}
+                {!! Form::select('finishedfinance', ['0' => '未完成', '1' => '完成'], null, ['class' => 'form-control', 'placeholder' => '--收汇完成--']) !!}
+             @endif
             {!! Form::submit('查找(Search)', ['class' => 'btn btn-default btn-sm','id'=>'btnSearch']) !!}
         </div>
         {!! Form::close() !!}
@@ -66,7 +73,7 @@
         @can('module_personal')
             <?php $hasright = true; ?>
         @endcan
-    @elseif ($report->name == "pgetbudgetdata")
+    @elseif ($report->name == "pgetbudgetdata" or $report->name == "pgetfinancedata")
         @can('module_finance')
             <?php $hasright = true; ?>
         @endcan

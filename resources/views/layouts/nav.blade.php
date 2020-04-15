@@ -119,24 +119,24 @@
                         {{--@endcan--}}
                     {{--</ul>--}}
                 {{--</li>--}}
-                    {{--<li class="dropdown">--}}
-                        {{--<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">出运单(Shipment Management)<span class="caret"></span></a>--}}
-                        {{--<ul class="dropdown-menu">--}}
-                            {{--@can('module_shipment')--}}
-                                {{--<li><a href="/shipment/shipments">出运跟踪(Shipment Tracking)</a></li>--}}
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">出运单(Shipment Management)<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            @can('module_shipment')
+                                <li><a href="/shipment/shipments">出运跟踪(Shipment Tracking)</a></li>
                                 {{--<li><a href="/shipment/shipments/filemonitor">文件监控(File Monitor)</a></li>--}}
-                            {{--@endcan--}}
+                            @endcan
                             {{--@can('forwarder')--}}
                                 {{--<li><a href="/shipment/shipments/shipmenttracking">货代跟踪(Forwarder Tracking)</a></li>--}}
                             {{--@endcan--}}
-                                {{--@can('module_shipment')--}}
-                                {{--<li role="separator" class="divider"></li>--}}
-                                {{--<li><a href="/shipment/report">报表(Report)</a></li>--}}
+                                @can('module_shipment')
+                                <li role="separator" class="divider"></li>
+                                <li><a href="/shipment/report">报表(Report)</a></li>
                                 {{--<li role="separator" class="divider"></li>--}}
                                 {{--<li><a href="/shipment/userforwarders">设置货代(Setting Forwarder)</a></li>--}}
-                            {{--@endcan--}}
-                        {{--</ul>--}}
-                    {{--</li>--}}
+                            @endcan
+                        </ul>
+                    </li>
                 {{--<li class="dropdown">--}}
                     {{--<a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">客户关系<span class="caret"></span></a>--}}
                     {{--<ul class="dropdown-menu">--}}

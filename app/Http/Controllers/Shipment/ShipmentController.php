@@ -25,8 +25,9 @@ class ShipmentController extends Controller
     {
         //
         $inputs = $request->all();
-        $shipments = $this->searchrequest($request)->paginate(10);
+        $shipments = $this->searchrequest($request)->paginate(50);
 //        $shipments = Shipment::latest('created_at')->paginate(15);
+//        dd($shipments);
         return view('shipment.shipments.index', compact('shipments', 'inputs'));
     }
 
@@ -34,7 +35,7 @@ class ShipmentController extends Controller
     {
         //
         $inputs = $request->all();
-        $shipments = $this->searchrequest($request)->paginate(10);
+        $shipments = $this->searchrequest($request)->paginate(50);
 //        $shipments = Shipment::latest('created_at')->paginate(15);
         return view('shipment.shipments.filemonitor', compact('shipments', 'inputs'));
     }
@@ -43,7 +44,7 @@ class ShipmentController extends Controller
     {
         //
         $inputs = $request->all();
-        $shipments = $this->searchrequest($request)->paginate(10);
+        $shipments = $this->searchrequest($request)->paginate(50);
 //        $shipments = Shipment::latest('created_at')->paginate(15);
         return view('shipment.shipments.shipmenttracking', compact('shipments', 'inputs'));
     }
@@ -86,7 +87,7 @@ class ShipmentController extends Controller
 
         $key = $request->input('key');
         $inputs = $request->all();
-        $shipments = $this->searchrequest($request)->paginate(10);
+        $shipments = $this->searchrequest($request)->paginate(50);
 //        $purchaseorders = Purchaseorder_hxold::whereIn('id', $paymentrequests->pluck('pohead_id'))->get();
 
         return view('shipment.shipments.index', compact('shipments', 'inputs'));
@@ -95,7 +96,7 @@ class ShipmentController extends Controller
     public function searchfilemonitor(Request $request)
     {
         $inputs = $request->all();
-        $shipments = $this->searchrequest($request)->paginate(10);
+        $shipments = $this->searchrequest($request)->paginate(50);
 //        $purchaseorders = Purchaseorder_hxold::whereIn('id', $paymentrequests->pluck('pohead_id'))->get();
 
         return view('shipment.shipments.filemonitor', compact('shipments', 'inputs'));
@@ -104,7 +105,7 @@ class ShipmentController extends Controller
     public function searchshipmenttracking(Request $request)
     {
         $inputs = $request->all();
-        $shipments = $this->searchrequest($request)->paginate(10);
+        $shipments = $this->searchrequest($request)->paginate(50);
 //        $purchaseorders = Purchaseorder_hxold::whereIn('id', $paymentrequests->pluck('pohead_id'))->get();
 
         return view('shipment.shipments.shipmenttracking', compact('shipments', 'inputs'));
@@ -126,8 +127,7 @@ class ShipmentController extends Controller
                         ->orWhere('invoice_number', 'like', '%' . $key . '%')
                         ->orWhere('contract_number', 'like', '%' . $key . '%')
                         ->orWhere('bill_no', 'like', '%' . $key . '%')
-                        ->orWhere('ship_company', 'like', '%' . $key . '%')
-                        ->orWhere('customs_no', 'like', '%' . $key . '%');
+                        ->orWhere('ship_company', 'like', '%' . $key . '%');
                 });
             elseif ($db_driver == "pgsql")
                 $query->where(function ($query) use ($key) {
@@ -135,8 +135,7 @@ class ShipmentController extends Controller
                         ->orWhere('invoice_number', 'ilike', '%' . $key . '%')
                         ->orWhere('contract_number', 'ilike', '%' . $key . '%')
                         ->orWhere('bill_no', 'ilike', '%' . $key . '%')
-                        ->orWhere('ship_company', 'ilike', '%' . $key . '%')
-                        ->orWhere('customs_no', 'ilike', '%' . $key . '%');
+                        ->orWhere('ship_company', 'ilike', '%' . $key . '%');
                 });
         }
 
@@ -171,7 +170,13 @@ class ShipmentController extends Controller
             $query->whereIn('forwarder', $forwarders);
         }
 
-
+        if ($request->has('finished_fininace') && strlen($request->get('finished_fininace')) > 0)
+        {
+            if($request->get('finished_fininace')=='unfinished')
+                $query->where('receive_finished','=','0');
+            if($request->get('finished_fininace')=='finished')
+                $query->where('receive_finished','=','1');
+        }
 
         $shipments = $query->select('*');
 //        dd($shipments);
@@ -226,7 +231,7 @@ class ShipmentController extends Controller
 //        $file = array_get($input,'file');
         $excel = [];
 //        Log::info($file->getPathName());
-//        Log::info($file->getRealPath());
+        Log::info($file->getRealPath());
 //        dd($file->public_path());
 //        Log::info($request->getSession().getServletContext()->getReadPath("/xx"));
 
@@ -240,14 +245,16 @@ class ShipmentController extends Controller
                 $shipment = null;
                 $sheet->each(function ($row) use (&$rowindex, &$shipment, &$reader) {
                     Log::info($row);
-                    if ($rowindex > 3)
+                    if ($rowindex >= 3)
                     {
                         Log::info($rowindex);
                         Log::info($row);
                         $input = array_values($row->toArray());
 //                        dd($input);
-                        if (count($input) >= 74)
+//                        Log::info(count($input));
+                        if (count($input) >= 83)
                         {
+
                             if (!empty($input[3]))
                             {
                                 $shipment = Shipment::where('invoice_number', $input[3])->first();
@@ -261,7 +268,7 @@ class ShipmentController extends Controller
                                     $input['contract_number'] = $input[5];
                                     $input['type'] = $input[6];
                                     $input['purchaseorder_number'] = $input[7];
-                                    $input['buyer_po_no'] = $input[8];
+                                    $input['depart_port'] = $input[8];
                                     $input['cargo_description'] = $input[9];
                                     $input['hs_code'] = $input[10];
                                     $input['processing_plant'] = $input[11];
@@ -272,19 +279,19 @@ class ShipmentController extends Controller
                                     $input['ship_by'] = $input[16];
                                     $input['crd'] = $input[17];
                                     $input['dcd_date'] = $input[18];
-                                    $input['shipment_no'] = $input[19];
+                                    $input['container'] = $input[19];
                                     $input['forwarder'] = $input[20];
                                     $input['etd'] = $input[21];
                                     $input['eta'] = $input[22];
                                     $input['deliver_no'] = $input[23];
-                                    $input['arrived_wh_date'] = $input[24];
-                                    $input['customs_no'] = $input[25];
+                                    $input['declaration_date'] = $input[24];
+                                    $input['customs_declaratipages'] = $input[25];
                                     $input['customs_declaration_no'] = $input[26];
                                     $input['customs_declaration_return'] = $input[27];
                                     $input['bill_no'] = $input[28];
-                                    $input['issue_blank'] = $input[29];
-                                    $input['issue_blank_address'] = $input[30];
-                                    $input['issue_blank_swift'] = $input[31];
+                                    $input['issue_bank'] = $input[29];
+                                    $input['issue_bank_address'] = $input[30];
+                                    $input['issue_bank_swift'] = $input[31];
                                     $input['negotiation_ci_date'] = $input[32];
                                     $input['negotiation_date'] = $input[33];
                                     $input['tradecard_login_date'] = $input[34];
@@ -306,31 +313,125 @@ class ShipmentController extends Controller
                                     $input['finance_amount'] = $input[50];
                                     $input['freight_charge_usd'] = $input[51];
                                     $input['freight_charge_rmb'] = $input[52];
-                                    $input['volume'] = $input[53];
-                                    $input['insurance_charge'] = $input[54];
-                                    $input['tariff'] = $input[55];
-                                    $input['reparations_charge'] = $input[56];
-                                    $input['commission1'] = $input[57];
-                                    $input['commission2'] = $input[58];
-                                    $input['commission3'] = $input[59];
-                                    $input['credit_insurance_customers'] = $input[60];
-                                    $input['credit_insurance_account_period'] = $input[61];
-                                    $input['credit_insurance_limited'] = $input[62];
-                                    $input['bill_of_draft_date'] = $input[63];
-                                    $input['bill_of_draft_blank'] = $input[64];
-                                    $input['fob_amount'] = $input[65];
-                                    $input['cc_date'] = $input[66];
-                                    $input['sale_date'] = $input[67];
-                                    $input['gw_for_pl'] = $input[68];
-                                    $input['nw_for_pl'] = $input[69];
-                                    $input['cm_rate'] = $input[70];
-                                    $input['ship_company'] = $input[71];
-                                    $input['container_number'] = $input[72];
-                                    $input['memo'] = $input[73];
+                                    $input['freight_payment_date'] = $input[53];
+                                    $input['volume'] = $input[54];
+                                    $input['insurance_charge'] = $input[55];
+                                    $input['tariff'] = $input[56];
+                                    $input['reparations_charge'] = $input[57];
+                                    $input['commission1'] = $input[58];
+                                    $input['commission2'] = $input[59];
+                                    $input['commission3'] = $input[60];
+                                    $input['credit_insurance_customers'] = $input[61];
+                                    $input['credit_insurance_account_period'] = $input[62];
+                                    $input['credit_insurance_limited'] = $input[63];
+                                    $input['bill_of_draft_date'] = $input[64];
+                                    $input['bill_of_draft_bank'] = $input[65];
+                                    $input['fob_amount'] = $input[66];
+                                    $input['cc_date'] = $input[67];
+                                    $input['sale_date'] = $input[68];
+                                    $input['gw_for_pl'] = $input[69];
+                                    $input['nw_for_pl'] = $input[70];
+                                    $input['cm_rate'] = $input[71];
+                                    $input['ship_company'] = $input[72];
+                                    $input['container_number'] = $input[73];
+                                    $input['memo'] = $input[74];
+                                    $input['protocol_pages'] = $input[75];
+                                    $input['rma_pages'] = $input[76];
+                                    $input['rma_no'] = $input[77];
+                                    $input['cr_date'] = $input[78];
+                                    $input['bp_pages'] = $input[79];
+                                    $input['bp_no'] = $input[80];
+                                    $input['bpcm_cost'] = $input[81];
+                                    $input['bpfob_cost'] = $input[82];
                                     $shipment = Shipment::create($input);
                                 }
                                 else
-                                    $shipment = null;
+                                {
+                                    $shipment->dept = $input[0];
+                                    $shipment->customer_name = $input[1];
+                                    $shipment->customer_address = $input[2];
+                                    $shipment->invoice_number = $input[3];
+                                    $shipment->oversea_fty_ci_no = $input[4];
+                                    $shipment->contract_number = $input[5];
+                                    $shipment->type = $input[6];
+                                    $shipment->purchaseorder_number = $input[7];
+                                    $shipment->depart_port = $input[8];
+                                    $shipment->cargo_description = $input[9];
+                                    $shipment->hs_code = $input[10];
+                                    $shipment->processing_plant = $input[11];
+                                    $shipment->trade_type = $input[12];
+                                    $shipment->dest_country = $input[13];
+                                    $shipment->dest_port = $input[14];
+                                    $shipment->incoterm = $input[15];
+                                    $shipment->ship_by = $input[16];
+                                    $shipment->crd = $input[17];
+                                    $shipment->dcd_date = $input[18];
+                                    $shipment->container = $input[19];
+                                    $shipment->forwarder = $input[20];
+                                    $shipment->etd = $input[21];
+                                    $shipment->eta = $input[22];
+                                    $shipment->deliver_no = $input[23];
+                                    $shipment->declaration_date = $input[24];
+                                    $shipment->customs_declaratipages = $input[25];
+                                    $shipment->customs_declaration_no = $input[26];
+                                    $shipment->customs_declaration_return = $input[27];
+                                    $shipment->bill_no = $input[28];
+                                    $shipment->issue_bank = $input[29];
+                                    $shipment->issue_bank_address = $input[30];
+                                    $shipment->issue_bank_swift = $input[31];
+                                    $shipment->negotiation_ci_date = $input[32];
+                                    $shipment->negotiation_date = $input[33];
+                                    $shipment->tradecard_login_date = $input[34];
+                                    $shipment->tradecard_confirmation_date = $input[35];
+                                    $shipment->payment_by = $input[36];
+                                    $shipment->qty_for_customs = $input[37];
+                                    $shipment->amount_for_customs = $input[38];
+                                    $shipment->qty_for_customer = $input[39];
+                                    $shipment->amount_for_customer = $input[40];
+                                    $shipment->amount_customer_payment = $input[41];
+                                    $shipment->customer_payment_date = $input[42];
+                                    $shipment->different_column_ao_vs_am = $input[43];
+                                    $shipment->percent_different_column_ao_vs_am = $input[44];
+                                    $shipment->first_sale = $input[45];
+                                    $shipment->wuxi_obtain_amount = $input[46];
+                                    $shipment->pmj_obtain_amount = $input[47];
+                                    $shipment->account_period = $input[48];
+                                    $shipment->payment_schedule = $input[49];
+                                    $shipment->finance_amount = $input[50];
+                                    $shipment->freight_charge_usd = $input[51];
+                                    $shipment->freight_charge_rmb = $input[52];
+                                    $shipment->freight_payment_date = $input[53];
+                                    $shipment->volume = $input[54];
+                                    $shipment->insurance_charge = $input[55];
+                                    $shipment->tariff = $input[56];
+                                    $shipment->reparations_charge = $input[57];
+                                    $shipment->commission1 = $input[58];
+                                    $shipment->commission2 = $input[59];
+                                    $shipment->commission3 = $input[60];
+                                    $shipment->credit_insurance_customers = $input[61];
+                                    $shipment->credit_insurance_account_period = $input[62];
+                                    $shipment->credit_insurance_limited = $input[63];
+                                    $shipment->bill_of_draft_date = $input[64];
+                                    $shipment->bill_of_draft_bank = $input[65];
+                                    $shipment->fob_amount = $input[66];
+                                    $shipment->cc_date = $input[67];
+                                    $shipment->sale_date = $input[68];
+                                    $shipment->gw_for_pl = $input[69];
+                                    $shipment->nw_for_pl = $input[70];
+                                    $shipment->cm_rate = $input[71];
+                                    $shipment->ship_company = $input[72];
+                                    $shipment->container_number = $input[73];
+                                    $shipment->memo = $input[74];
+                                    $shipment->protocol_pages = $input[75];
+                                    $shipment->rma_pages = $input[76];
+                                    $shipment->rma_no = $input[77];
+                                    $shipment->cr_date = $input[78];
+                                    $shipment->bp_pages = $input[79];
+                                    $shipment->bp_no = $input[80];
+                                    $shipment->bpcm_cost = $input[81];
+                                    $shipment->bpfob_cost = $input[82];
+                                    $shipment->save();
+                                }
                             }
                             else
                             {
@@ -522,10 +623,31 @@ class ShipmentController extends Controller
 
     public function shipmentitems($shipment_id)
     {
-        $shipmentitems = Shipmentitem::where('shipment_id', $shipment_id)->paginate(10);
+        $shipmentitems = Shipmentitem::where('shipment_id', $shipment_id)->paginate(50);
         return view('shipment.shipmentitems.index', compact('shipmentitems', 'shipment_id'));
     }
 
+    public function updatefinished(Request $request)
+    {
+//        log::info(111);
+        log::info($request->input('ids'));
+        $ids = [];
+        if ($request->has('ids'))
+            $ids = explode(",", $request->input('ids'));
+        if (count($ids) < 1)
+            dd('未选择Invoice No');
+        log::info($ids);
+        foreach ($ids as $id)
+        {
+           if(is_numeric($id))
+           {
+               $shipment = Shipment::find($id);
+               $shipment->receive_finished = 1;
+               $shipment->save();
+           }
+        }
+        return redirect('shipment/shipments');
+    }
     public function export(Request $request)
     {
         Log::info('export');
