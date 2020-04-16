@@ -27,18 +27,6 @@ class FabricdischargeController extends Controller
               ->orwhere('flag2',"<>",1);
         $fabricdischarges = $query->select('*')->paginate(10);
 
-//        $currentuser=Auth()->user()->email;
-//        $minid=DB::table('fabricdischarges')->where('createname',$currentuser)
-//                              ->where('flag',0)
-//                              ->min('id');
-//        //dd($minid);
-//        if($minid==null)
-//            $minid=0;
-//        $query1=Fabricdischarge::orderBy('id', 'asc');
-//        $query1->where('flag','=','0')
-//               ->where('id','<',$minid);
-//        $cntuser=$query1->count('id');
-        //dd($cntuser);
         return view('development.fabricdischarges.index', compact('fabricdischarges','inputs'));
     }
 
@@ -164,6 +152,63 @@ class FabricdischargeController extends Controller
         //
     }
 
+    public function updatefinishedpl(Request $request)
+    {
+//        log::info(111);
+//        log::info($request->input('ids'));
+        $ids = [];
+        $nums=[];
+        if ($request->has('ids'))
+            $ids = explode(",", $request->input('ids'));
+        if (count($ids) < 1)
+            dd('未选择排料单');
+        if ($request->has('num2'))
+            $nums = explode(",", $request->input('num2'));
+//        log::info($ids);
+        for ($x=0; $x< count($ids,0); $x++)
+        {
+            if(is_numeric($ids[$x]))
+            {
+                $id=$ids[$x];
+                $num=$nums[$x];
+                $fabricdischarge = Fabricdischarge::find($id);
+                $fabricdischarge->flag2 = 1;
+                $fabricdischarge->num2 = $num;
+                $fabricdischarge->save();
+            }
+        }
+        return redirect('development/fabricdischarges');
+    }
+
+    public function updatefinishedzb(Request $request)
+    {
+//        log::info(111);
+//        log::info($request->input('ids'));
+//        dd($request->all());
+        $ids = [];
+        $nums=[];
+        if ($request->has('ids'))
+            $ids = explode(",", $request->input('ids'));
+        if (count($ids) < 1)
+            dd('未选择排料单');
+        if ($request->has('num1'))
+            $nums = explode(",", $request->input('num1'));
+//        log::info($ids);
+
+        for ($x=0; $x< count($ids,0); $x++)
+        {
+            if(is_numeric($ids[$x]))
+            {
+                $id=$ids[$x];
+                $num=$nums[$x];
+                $fabricdischarge = Fabricdischarge::find($id);
+                $fabricdischarge->flag1 = 1;
+                $fabricdischarge->num1 = $num;
+                $fabricdischarge->save();
+            }
+        }
+        return redirect('development/fabricdischarges');
+    }
     /**
      * Show the form for editing the specified resource.
      *

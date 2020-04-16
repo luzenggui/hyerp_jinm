@@ -36,8 +36,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('changeuser_store', 'HelperController@changeuser_store');
 });
 Route::group(['prefix' => 'development', 'namespace' => 'Development', 'middleware' => ['web', 'auth']], function() {
-    Route::resource('fabricdischarges', 'FabricdischargeController');
-
     Route::group(['prefix' => 'fabricdischarges/{id}'], function () {
 //        Route::post('finish/{num1}', 'FabricdischargeController@finish');
 //        Route::post('finish2/{num2}', 'FabricdischargeController@finish2');
@@ -47,8 +45,10 @@ Route::group(['prefix' => 'development', 'namespace' => 'Development', 'middlewa
     Route::group(['prefix' => 'fabricdischarges'], function () {
         Route::post('search', 'FabricdischargeController@search');
         Route::post('finish', 'FabricdischargeController@finish');
-
+        Route::get('updatefinishedpl', 'FabricdischargeController@updatefinishedpl');
+        Route::get('updatefinishedzb', 'FabricdischargeController@updatefinishedzb');
     });
+    Route::resource('fabricdischarges', 'FabricdischargeController');
 });
 
 Route::group(['prefix' => 'personal', 'namespace' => 'Personal', 'middleware' => ['web', 'auth']], function() {

@@ -177,7 +177,7 @@
                     }
                 });
 
-                // alert(checkvalues.join(","));
+               // alert(checkvalues.join(","));
 
                 {{--window.open("{{ url('/shipment/shipments/updatefinished') }}" + "?ids=" + checkvalues.join(","));--}}
                 $.ajax({

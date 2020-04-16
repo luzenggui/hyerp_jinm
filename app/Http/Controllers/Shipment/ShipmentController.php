@@ -630,13 +630,13 @@ class ShipmentController extends Controller
     public function updatefinished(Request $request)
     {
 //        log::info(111);
-        log::info($request->input('ids'));
+//        log::info($request->input('ids'));
         $ids = [];
         if ($request->has('ids'))
             $ids = explode(",", $request->input('ids'));
         if (count($ids) < 1)
             dd('未选择Invoice No');
-        log::info($ids);
+//        log::info($ids);
         foreach ($ids as $id)
         {
            if(is_numeric($id))

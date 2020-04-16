@@ -4,15 +4,11 @@
 
     <div class="panel-heading">
         <a href="/development/fabricdischarges/create" class="btn btn-sm btn-success">新建</a>
+        {!! Form::button('保存制版完成', ['class' => 'btn btn-sm btn-success', 'id' => 'btnFinishedZb']) !!}
+        {!! Form::button('保存排料完成', ['class' => 'btn btn-sm btn-success', 'id' => 'btnFinishedPl']) !!}
     </div>
 
     <div class="panel-body">
-        {{--{!! Form::label('cntuserlabel1', '在你前面还有', ['class' => 'control-label h3']) !!}--}}
-        {{--{!! Form::label('0', $cntuser, ['class' => 'control-label h1']) !!}--}}
-        {{--<label for="cntuserlabel2" class="control-label h1">{{ $cntuser }}</label>--}}
-{{--        {{ Form::label('cntuserlabel4', "0", ['class' => 'control-label h1']) }}--}}
-        {{--{!! Form::label('cntuserlabel3', '位排队,请耐心等待', ['class' => 'control-label h3']) !!}--}}
-
         {!! Form::open(['url' => '/development/fabricdischarges/search', 'class' => 'pull-right form-inline', 'id' => 'frmSearch']) !!}
 
         <div class="form-group-sm">
@@ -25,9 +21,10 @@
 
     @if ($fabricdischarges->count())
 
-    <table class="table table-striped table-hover table-condensed">
+    <table class="table table-striped table-hover table-condensed" id="tbMain">
         <thead>
             <tr>
+                <th></th>
                 <th style="width:100px">等待数</th>
                 <th>编号</th>
                 <th>部门</th>
@@ -40,12 +37,17 @@
                 <th style="width: 150px">创建人</th>
                 <th>制版状态</th>
                 <th>排料状态</th>
+                <th>制版数量</th>
+                <th>排料数量</th>
                 <th>操作</th>
             </tr>
         </thead>
         <tbody>
             @foreach($fabricdischarges as $fabricdischarge)
                 <tr>
+                    <td>
+                        <input type="checkbox" class="qx"  value="{{ $fabricdischarge->id }}" data-id="{{ $fabricdischarge->id }}">
+                    </td>
                     <td>
                         @if($fabricdischarge->flag2<>0)
                             {{""}}
@@ -95,6 +97,20 @@
                         @endif
                     </td>
                     <td>
+                        @if(isset($fabricdischarge->num1) and $fabricdischarge->num1 >0)
+                            {{ $fabricdischarge->num1 }}
+                        @else
+                            {!! Form::text('', null, ['class' => 'form-control','style'=>'width: 50px','id'=>'txtnum1']) !!}
+                        @endif
+                    </td>
+                    <td>
+                        @if(isset($fabricdischarge->num2) and $fabricdischarge->num2 >0)
+                            {{ $fabricdischarge->num2 }}
+                        @else
+                            {!! Form::text('', null, ['class' => 'form-control','style'=>'width: 50px','id'=>'txtnum2']) !!}
+                        @endif
+                    </td>
+                    <td>
                         @can('fabricdischarge_finish')
 
                          {{--{!! Form::open(array('url' => 'development/fabricdischarges/' . $fabricdischarge->id . '/finish',  'onsubmit' => 'return confirm("确定完成此记录?");')) !!}--}}
@@ -133,4 +149,85 @@
 
 @section('script')
     @include('development.fabricdischarges._inputnumjs')
+    <script type="text/javascript">
+        jQuery(document).ready(function(e) {
+                $("#btnFinishedZb").click(function(e) {
+
+                var checkvalues = [];
+                var textvalues = [];
+                var ids="";
+                $("#tbMain").find("input[type='checkbox']:checked").each(function (i) {
+                    var rownum=$(this).parents("tr").index();
+                    var textvalue=$(this).parents("tr").find("td:eq(13)").find("#txtnum1").val();
+                    if(textvalue==0 || typeof(textvalue)=="undefined" || textvalue=='' || textvalue==null)
+                    {
+                        alert("第" + rownum + "行的制版数量请输入值！");
+                        return;
+                    }
+
+                    checkvalues[i] =$(this).val();
+                    textvalues[i] = textvalue;
+                });
+
+                 // alert(checkvalues.join(","));
+
+                {{--window.open("{{ url('/shipment/shipments/updatefinished') }}" + "?ids=" + checkvalues.join(","));--}}
+                $.ajax({
+                type: "GET",
+                url: "{{ url('/development/fabricdischarges/updatefinishedzb') }}",
+                data: "ids=" + checkvalues.join(",") + "&num1=" + textvalues.join(","),
+                // contentType: false,
+                // processData: false,
+                //                    dataType: "json",
+                error:function(xhr, ajaxOptions, thrownError){
+                    alert('thrownError');
+                },
+                success:function(result){
+                    // alert(request.url.toString());
+                    alert("保存成功。");
+                    window.location.reload();
+                //                        $('#sendAsnModal').modal('toggle');
+                    }
+                    });
+                });
+
+            $("#btnFinishedPl").click(function(e) {
+
+                var checkvalues = [];
+                var checknumbers = [];
+                var ids="";
+                $("#tbMain").find("input[type='checkbox']:checked").each(function (i) {
+                    var rownum=$(this).parents("tr").index();
+                    var textvalue=$(this).parents("tr").find("td:eq(13)").find("#txtnum2").val();
+                    if(textvalue==0 || typeof(textvalue)=="undefined" || textvalue=='' || textvalue==null)
+                    {
+                        alert("第" + rownum + "行的排版数量请输入值！");
+                        return;
+                    }
+                    checkvalues[i] =$(this).val();
+                    checknumbers[i] = $(this).attr('data-id');
+                });
+
+                alert(checkvalues.join(","));
+
+                {{--window.open("{{ url('/shipment/shipments/updatefinished') }}" + "?ids=" + checkvalues.join(","));--}}
+                $.ajax({
+                    type: "GET",
+                    url: "{{ url('/development/fabricdischarges/updatefinishedpl') }}",
+                    data: "ids=" + checkvalues.join(",")+ "&num2=" + textvalues.join(","),
+                    // contentType: false,
+                    // processData: false,
+                    //                    dataType: "json",
+                    error:function(xhr, ajaxOptions, thrownError){
+                        alert('thrownError');
+                    },
+                    success:function(result){
+                        alert("保存成功。");
+                        window.location.reload();
+                        //                        $('#sendAsnModal').modal('toggle');
+                    }
+                });
+            });
+        });
+    </script>
 @endsection
