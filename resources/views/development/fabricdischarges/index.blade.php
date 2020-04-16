@@ -157,7 +157,7 @@
                 var textvalues = [];
                 var ids="";
                 $("#tbMain").find("input[type='checkbox']:checked").each(function (i) {
-                    var rownum=$(this).parents("tr").index();
+                    var rownum=$(this).parents("tr").index() +1;
                     var textvalue=$(this).parents("tr").find("td:eq(13)").find("#txtnum1").val();
                     if(textvalue==0 || typeof(textvalue)=="undefined" || textvalue=='' || textvalue==null)
                     {
@@ -197,11 +197,11 @@
                 var checknumbers = [];
                 var ids="";
                 $("#tbMain").find("input[type='checkbox']:checked").each(function (i) {
-                    var rownum=$(this).parents("tr").index();
+                    var rownum=$(this).parents("tr").index() +1;
                     var textvalue=$(this).parents("tr").find("td:eq(13)").find("#txtnum2").val();
                     if(textvalue==0 || typeof(textvalue)=="undefined" || textvalue=='' || textvalue==null)
                     {
-                        alert("第" + rownum + "行的排版数量请输入值！");
+                        alert("第" + rownum  + "行的排版数量请输入值！");
                         return;
                     }
                     checkvalues[i] =$(this).val();
