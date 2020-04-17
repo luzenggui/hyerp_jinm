@@ -4,8 +4,10 @@
 
     <div class="panel-heading">
         <a href="/development/fabricdischarges/create" class="btn btn-sm btn-success">新建</a>
+        @can('fabricdischarge_finish')
         {!! Form::button('保存制版完成', ['class' => 'btn btn-sm btn-success', 'id' => 'btnFinishedZb']) !!}
         {!! Form::button('保存排料完成', ['class' => 'btn btn-sm btn-success', 'id' => 'btnFinishedPl']) !!}
+        @endcan
     </div>
 
     <div class="panel-body">
@@ -37,8 +39,10 @@
                 <th style="width: 150px">创建人</th>
                 <th>制版状态</th>
                 <th>排料状态</th>
+                @can('fabricdischarge_finish')
                 <th>制版数量</th>
                 <th>排料数量</th>
+                @endcan
                 <th>操作</th>
             </tr>
         </thead>
@@ -96,6 +100,7 @@
                             {{"已排料"}}
                         @endif
                     </td>
+                    @can('fabricdischarge_finish')
                     <td>
                         @if(isset($fabricdischarge->num1) and $fabricdischarge->num1 >0)
                             {{ $fabricdischarge->num1 }}
@@ -110,6 +115,7 @@
                             {!! Form::text('', null, ['class' => 'form-control','style'=>'width: 50px','id'=>'txtnum2']) !!}
                         @endif
                     </td>
+                    @endcan
                     <td>
                         @can('fabricdischarge_finish')
 
