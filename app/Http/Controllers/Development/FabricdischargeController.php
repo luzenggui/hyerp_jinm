@@ -56,6 +56,7 @@ class FabricdischargeController extends Controller
             'style.required' => '款号字段是必须的',
             'version.required' => '版号字段是必须的',
             'applydate.required'=>'申请日期是必须的',
+            'contactor_tel.required'=>'联系人电话是必须的',
             'weight.integer'=>'克重必须是数字型',
             'width.integer'=>'有效门幅必须是数字型',
         ];
@@ -68,6 +69,7 @@ class FabricdischargeController extends Controller
             'applydate'=>'required',
             'weight'=>'integer',
             'width'=>'integer',
+            'contactor_tel'=>'required',
         ],$messages);
 
         $input = $request->all();
