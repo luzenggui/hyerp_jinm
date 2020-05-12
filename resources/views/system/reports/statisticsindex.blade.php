@@ -45,7 +45,7 @@
                 {!! Form::date('etdstart', null, ['class' => 'form-control']) !!}
                 {!! Form::label('etdlabelto', '-', ['class' => 'control-label']) !!}
                 {!! Form::date('etdend', null, ['class' => 'form-control']) !!}
-                {!! Form::select('finishedfinance', ['0' => '未完成', '1' => '完成'], null, ['class' => 'form-control', 'placeholder' => '--收汇完成--']) !!}
+                {!! Form::select('finishedfinance', ['-1' => '未完成', '1' => '完成'], null, ['class' => 'form-control', 'placeholder' => '--收汇完成--']) !!}
              @endif
             {!! Form::submit('查找(Search)', ['class' => 'btn btn-default btn-sm','id'=>'btnSearch']) !!}
         </div>

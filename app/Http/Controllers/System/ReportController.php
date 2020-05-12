@@ -7,7 +7,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\System\Report;
 use App\Http\Controllers\HelperController;
-use DB, Excel, Gate, Auth;
+use DB, Excel, Gate, Auth,Log;
 
 class ReportController extends Controller
 {
@@ -261,8 +261,9 @@ class ReportController extends Controller
 //                }
 //                $param = count($input) > 0 ? substr($param, 0, strlen($param) - 1) : $param;
 //                $items_t = DB::connection('sqlsrv')->select($report->statement . $param);
-
+//                dd(Request()->all());
                 $items_t = $this->search(Request(), $report);
+//                dd($items_t);
 
 //                $items_t = DB::connection('sqlsrv')->select("select * from vpurchaseorder");
 //                dd($items_t);
@@ -330,8 +331,10 @@ class ReportController extends Controller
             {
                 if (!empty($value))
                     $param .= "@" . $key . "='" . $value . "',";
+//                Log::info(empty($value));
             }
             $param = count($input) > 0 ? substr($param, 0, strlen($param) - 1) : $param;
+//            dd($param);
 //            dd($report->statement . ' ' . $param);
             $items_t = DB::connection('sqlsrv')->select($report->statement . ' ' . $param);
 //            dd($items_t);
