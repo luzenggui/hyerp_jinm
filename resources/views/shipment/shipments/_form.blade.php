@@ -326,7 +326,7 @@
 <br>
 
 <div class="form-group">
-    {!! Form::label('issue_bank', '开证银行(Issue Bank)(*):', ['class' => 'col-xs-4 col-sm-2 control-label']) !!}
+    {!! Form::label('issue_bank', '开证银行(Issue Bank):', ['class' => 'col-xs-4 col-sm-2 control-label']) !!}
     <div class='col-xs-8 col-sm-10'>
         {!! Form::text('issue_blank', null, ['class' => 'form-control', $attr]) !!}
     </div>
@@ -418,6 +418,13 @@
     {!! Form::label('memo', '备注(Memo):', ['class' => 'col-xs-4 col-sm-2 control-label']) !!}
     <div class='col-xs-8 col-sm-10'>
         {!! Form::text('memo', null, ['class' => 'form-control', $attr]) !!}
+    </div>
+</div>
+
+<div class="form-group">
+    {!! Form::label('receive_finished', '收汇完成', ['class' => 'col-xs-4 col-sm-2 control-label']) !!}
+    <div class='col-xs-8 col-sm-10'>
+        {!! Form::text('receive_finished', null, ['class' => 'form-control', $attr]) !!}
     </div>
 </div>
 

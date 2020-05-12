@@ -99,7 +99,7 @@
                             @if(!empty($shipment->receive_finished)  or $shipment->receive_finished >=1)
                                 <input type="checkbox" class="qx" checked="true" disabled="true">
                             @else
-                                <input type="checkbox" class="qx" disabled_value=1 value="{{ $shipment->id }}" data-id="{{ $shipment->id }}">
+                                <input type="checkbox" class="qx" disabled_value=1 value="{{ $shipment->id }}" data-id="{{ $shipment->id }}" >
                             @endif
                         </td>
                         <td>

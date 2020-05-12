@@ -207,9 +207,9 @@ class ShipmentController extends Controller
     public function store(Request $request)
     {
         //
-        $this->validate($request, [
-            'issue_blank' => 'required',
-        ]);
+//        $this->validate($request, [
+//            'issue_blank' => 'required',
+//        ]);
         $input = $request->all();
         $shipment = Shipment::create($input);
 
@@ -519,9 +519,9 @@ class ShipmentController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $this->validate($request, [
-            'issue_blank' => 'required',
-        ]);
+//        $this->validate($request, [
+//            'issue_blank' => 'required',
+//        ]);
 
         $shipment = Shipment::findOrFail($id);
         $shipment->update($request->all());
