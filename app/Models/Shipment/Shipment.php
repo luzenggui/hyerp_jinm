@@ -83,6 +83,7 @@ class Shipment extends Model
         'ship_company',
         'container_number',
         'memo',
+        'packinglist_pages',
         'protocol_pages',
         'rma_pages',
         'rma_no',

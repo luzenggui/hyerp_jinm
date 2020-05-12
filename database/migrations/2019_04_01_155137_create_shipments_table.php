@@ -91,6 +91,7 @@ class CreateShipmentsTable extends Migration
             $table->string('ship_company')->nullable();
             $table->string('container_number')->nullable();
             $table->string('memo')->nullable();
+            $table->string('packinglist_pages')->nullable();
             $table->string('protocol_pages')->nullable();
             $table->string('rma_pages')->nullable();
             $table->string('rma_no')->nullable();
