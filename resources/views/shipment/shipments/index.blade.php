@@ -58,6 +58,7 @@
                     <th>Create Time</th>
                     <th>Amount for Customer</th>
                     <th>Finished Finance</th>
+                    <th>Amount Payment</th>
                     <th>Detail</th>
                     <th>Operation</th>
                 </tr>
@@ -68,8 +69,8 @@
                         <td>
                             {{ $shipment->dept }}
                         </td>
-                        <td>
-                            {{ $shipment->customer_name }}
+                        <td title="@if (isset($shipment->customer_name)) {{ $shipment->customer_name }} @else @endif">
+                            {{ str_limit($shipment->customer_name, 20) }}
                         </td>
                         <td>
                             {{ $shipment->invoice_number }}
@@ -101,6 +102,9 @@
                             @else
                                 <input type="checkbox" class="qx" disabled_value=1 value="{{ $shipment->id }}" data-id="{{ $shipment->id }}" >
                             @endif
+                        </td>
+                        <td>
+                            {{ empty($shipment->amount_customer_payment)? 0.00:$shipment->amount_customer_payment }}
                         </td>
                         <td>
                             <a href="{{ URL::to('/shipment/shipments/' . $shipment->id . '/shipmentitems') }}" target="_blank">Detail</a>
