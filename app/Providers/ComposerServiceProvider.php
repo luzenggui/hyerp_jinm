@@ -53,6 +53,21 @@ class ComposerServiceProvider extends ServiceProvider
         view()->composer(array('system.reports.statisticsindex'), function($view) {
             $view->with('oadepartmentList', \App\Models\Personal\OrgUnit::orderby('code')->pluck('name', 'name'));
         });
+
+        //partList
+        view()->composer(array('department6.inquiry_sheets.mcreate'), function($view) {
+            $view->with('partList', \App\Models\Department6\Part::orderby('name')->pluck('name', 'id'));
+        });
+
+        //ingredientList
+        view()->composer(array('department6.inquiry_sheets.mcreate'), function($view) {
+            $view->with('ingredientList', \App\Models\Department6\Ingredient::orderby('name')->pluck('name', 'id'));
+        });
+
+        //processList
+        view()->composer(array('department6.inquiry_sheets.mcreate'), function($view) {
+            $view->with('processList', \App\Models\Department6\Process::orderby('name')->pluck('name', 'id'));
+        });
     }
 
     /**

@@ -82,7 +82,18 @@
                             @endcan
                         </ul>
                     </li>
-
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">第六分公司<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            @can('module_department6')
+                                <li><a href="/department6/ingredient">辅料资料维护</a></li>
+                                <li><a href="/department6/part">部位资料维护</a></li>
+                                <li><a href="/department6/process">加工资料维护</a></li>
+                                <li><a href="/department6/inquiry_sheets">询价单</a></li>
+                                <li><a href="/department6/report">报表</a></li>
+                            @endcan
+                        </ul>
+                    </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">行政部<span class="caret"></span></a>
                         <ul class="dropdown-menu">

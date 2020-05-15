@@ -1,0 +1,392 @@
+<?php
+
+namespace App\Http\Controllers\Department6;
+
+use App\Models\Department6\Ingredient;
+use App\Models\Department6\Inquiry_sheets;
+use App\Models\Department6\Part;
+use App\Models\Department6\Process;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Log;
+
+class Inquiry_sheetsController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        //
+        $request = request();
+        $inputs = $request->all();
+        $inquiry_sheets = $this->searchrequest($request);
+
+        return view('department6.inquiry_sheets.index', compact('inquiry_sheets', 'inputs'));
+
+    }
+
+    public function searchrequest($request)
+    {
+        $key = $request->input('key');
+
+
+        $query = Inquiry_sheets::latest('created_at');
+
+        if (strlen($key) > 0)
+        {
+            $query->where('supplier_stock_number', 'like', '%'.$key.'%');
+        }
+
+
+
+        $inquiry_sheets = $query->select('*')
+            ->paginate(10);
+
+        // $purchaseorders = Purchaseorder_hxold::whereIn('id', $paymentrequests->pluck('pohead_id'))->get();
+        // dd($purchaseorders->pluck('id'));
+
+        return $inquiry_sheets;
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function mcreate()
+    {
+        //
+        $parts=Part::select('*')->get();
+        $processes=Process::select('*')->get();
+        $ingredients=Ingredient::select('*')->get();
+//        dd($parts->count('*'));
+        return view('department6/inquiry_sheets/mcreate',compact('parts','processes','ingredients'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function mstore(Request $request)
+    {
+        //
+        $input = $request->all();
+        Log::info($input);
+//        dd($input);
+//        $itemsArray = json_decode($input['items_string']);
+//        if (is_array(json_decode($input['items_string2'])) && is_array(json_decode($input['items_string'])))
+//            $itemsArray = array_merge(json_decode($input['items_string2']), json_decode($input['items_string']));
+//        elseif (is_array(json_decode($input['items_string2'])) && !is_array(json_decode($input['items_string'])))
+//            $itemsArray = json_decode($input['items_string2']);
+//        $input['items_string'] = json_encode($itemsArray);
+//
+//
+////        $input = array(
+////            '_token' => 'MXvSgAhoJ7JkDQ1f5zJvjbtMzdfZ4pePk9xE74Ud', 'manufacturingcenter' => '无锡制造中心机械车间', 'itemtype' => '消耗品类－如焊条', 'expirationdate' => '2018-04-16',
+////            'project_name' => '厂部管理费用', 'sohead_id' => '7550', 'sohead_number' => 'JS-GC-00E-2016-04-0025', 'issuedrawing_numbers' => '', 'issuedrawing_values' => '', 'item_name' => '保温条',
+////            'item_id' => '14818', 'item_spec' => 'φ32', 'unit' => 'm', 'unitprice' => '', 'quantity' => '12', 'weight' => '',
+////            'items_string' => '[{"item_id":"14806","item_name":"PPR管","item_spec":"φ32","unit":"根","unitprice":0,"quantity":"3","weight":0},{"item_id":"14807","item_name":"PPR内丝直接","item_spec":"φ32 DN15","unit":"只","unitprice":0,"quantity":"5","weight":0},{"item_id":"14808","item_name":"PPR内丝直接","item_spec":"φ32 DN25","unit":"只","unitprice":0,"quantity":"5","weight":0},{"item_id":"14809","item_name":"PPR直接","item_spec":"φ32","unit":"只","unitprice":0,"quantity":"5","weight":0},{"item_id":"14810","item_name":"PPR大小头","item_spec":"φ32xφ22","unit":"只","unitprice":0,"quantity":"5","weight":0},{"item_id":"14811","item_name":"PPR球阀","item_spec":"φ32","unit":"只","unitprice":0,"quantity":"5","weight":0},{"item_id":"14812","item_name":"PPR弯头","item_spec":"","unit":"只","unitprice":0,"quantity":"5","weight":0},{"item_id":"14813","item_name":"PPR三通","item_spec":"φ32","unit":"只","unitprice":0,"quantity":"5","weight":0},{"item_id":"14814","item_name":"PPR三通","item_spec":"φ32xφ22","unit":"只","unitprice":0,"quantity":"5","weight":0},{"item_id":"14817","item_name":"PPR内丝直接","item_spec":"φ22","unit":"只","unitprice":0,"quantity":"5","weight":0},{"item_id":"14816","item_name":"管卡","item_spec":"φ32","unit":"只","unitprice":0,"quantity":"20","weight":0},{"item_id":"14818","item_name":"保温条","item_spec":"φ32","unit":"m","unitprice":0,"quantity":"12","weight":0}]',
+//////            'items_string' => '[{"item_id":"14806","item_name":"PPR管","item_spec":"φ32","unit":"根","unitprice":0,"quantity":"3","weight":0},{"item_id":"14807","item_name":"PPR内丝直接","item_spec":"φ32 DN15","unit":"只","unitprice":0,"quantity":"5","weight":0},{"item_id":"14808","item_name":"PPR内丝直接","item_spec":"φ32 DN25","unit":"只","unitprice":0,"quantity":"5","weight":0},{"item_id":"14809","item_name":"PPR直接","item_spec":"φ32","unit":"只","unitprice":0,"quantity":"5","weight":0},{"item_id":"14810","item_name":"PPR大小头","item_spec":"φ32xφ22","unit":"只","unitprice":0,"quantity":"5","weight":0},{"item_id":"14811","item_name":"PPR球阀","item_spec":"φ32","unit":"只","unitprice":0,"quantity":"5","weight":0},{"item_id":"14812","item_name":"PPR弯头","item_spec":"","unit":"只","unitprice":0,"quantity":"5","weight":0},{"item_id":"14813","item_name":"PPR三通","item_spec":"φ32","unit":"只","unitprice":0,"quantity":"5","weight":0},{"item_id":"14814","item_name":"PPR三通","item_spec":"φ32xφ22","unit":"只","unitprice":0,"quantity":"5","weight":0},{"item_id":"14817","item_name":"PPR内丝直接","item_spec":"φ22","unit":"只","unitprice":0,"quantity":"5","weight":0},{"item_id":"14816","item_name":"管卡","item_spec":"φ32","unit":"只","unitprice":0,"quantity":"20","weight":0},{"item_id":"14818","item_name":"保温条","item_spec":"φ32","unit":"m","unitprice":0,"quantity":"12","weight":0}]',
+////            'totalprice' => '0', 'detailuse' => '上述材料问雾化器研发中心用', 'applicant_id' => '38', 'approversetting_id' => '-1', 'images' => array(null),
+////            'approvers' => 'manager1200');
+//
+//        $this->validate($request, [
+//            'productioncompany'         => 'required',
+//            'designdepartment'          => 'required',
+//            'paymentreason'              => 'required',
+//            'items_string'               => 'required',
+////            'drawingattachments.*'  => 'required|file',
+////            'images.*'                => 'required|image',
+//            'paymentdate'             => 'required',
+//            'supplier_id'             => 'required',
+//        ]);
+////        $input = HelperController::skipEmptyValue($input);
+//
+//
+//        // valid
+//        $totaltonnage = 0.0;
+//        $pppayment_items = json_decode($input['items_string']);
+//        foreach ($pppayment_items as $value) {
+//            if ($value->sohead_id > 0)
+//            {
+//                $totaltonnage += $value->tonnage;
+//            }
+//        }
+//        $input['totaltonnage'] = $totaltonnage;
+////
+////        if ($input['sohead_id'] <> "7550")
+////        {
+////            $weight_issuedrawing = 0.0;
+////            $issuedrawing_values = $input['issuedrawing_values'];
+////            foreach (explode(",", $issuedrawing_values) as $value) {
+////                if ($value > 0)
+////                {
+////                    $issuedrawing = Issuedrawing::where('id', $value)->first();
+////                    if (isset($issuedrawing))
+////                        $weight_issuedrawing += $issuedrawing->tonnage;
+////                }
+////            }
+////            if ($totaltonnage > $weight_issuedrawing * 1.3)
+////                dd('申购重量超过了图纸重量');
+////            $weight_sohead_issuedrawing = 0.0;
+////            $weight_sohead_purchase = 0.0;
+////            $issuedrawings = Issuedrawing::where('sohead_id', $input['sohead_id'])->get();
+////            foreach ($issuedrawings as $issuedrawing)
+////            {
+////                $weight_sohead_issuedrawing += $issuedrawing->tonnage;
+////            }
+////            $mcitempurchases = Mcitempurchase::where('sohead_id', $input['sohead_id'])->where('status', '>=', 0)->get();
+////            foreach ($mcitempurchases as $mcitempurchase)
+////            {
+////                $weight_sohead_purchase += $mcitempurchase->mcitempurchaseitems->sum('tonnage');
+////            }
+////            if (($weight_sohead_purchase + $totaltonnage)  > $weight_sohead_issuedrawing * 1.2)
+////                dd('该订单的申购重量之和超过了图纸重量之和');
+////        }
+//
+//        if ($input['totalpaid'] == "")
+//            $input['totalpaid'] = 0.0;
+//        if ($input['amount'] == "")
+//            $input['amount'] = 0.0;
+//        $input['applicant_id'] = Auth::user()->id;
+//
+//        // set approversetting_id
+//        $approvaltype_id = self::typeid();
+//        if ($approvaltype_id > 0)
+//        {
+//            $approversettingFirst = Approversetting::where('approvaltype_id', $approvaltype_id)->orderBy('level')->first();
+//            if ($approversettingFirst)
+//                $input['approversetting_id'] = $approversettingFirst->id;
+//            else
+//                $input['approversetting_id'] = -1;
+//        }
+//        else
+//            $input['approversetting_id'] = -1;
+//
+//        $pppayment = Pppayment::create($input);
+////        dd($mcitempurchase);
+//
+//        // create mcitempurchaseitems
+//        $pppayment_items = json_decode($input['items_string']);
+//        $totaltotalprice = 0.0;
+//        foreach ($pppayment_items as $pppayment_item) {
+//            if ($pppayment_item->sohead_id > 0)
+//            {
+//                $item_array = json_decode(json_encode($pppayment_item), true);
+//                $item_array['pppayment_id'] = $pppayment->id;
+//                $pppaymentitem = Pppaymentitem::create($item_array);
+//
+//                // create issuedrawings
+//                if (isset($pppaymentitem))
+//                {
+//                    $issuedrawing_values = $pppayment_item->issuedrawing_values;
+//                    foreach (explode(",", $issuedrawing_values) as $value) {
+//                        if ($value > 0)
+//                        {
+//                            Pppaymentitemissuedrawing::create(array('pppaymentitem_id' => $pppaymentitem->id, 'issuedrawing_id' => $value));
+//                        }
+//                    }
+//
+//
+//                    $image_urls = [];
+//                    // create images in the desktop
+//                    if ($pppaymentitem && isset($pppayment_item->imagesname))
+//                    {
+//                        $files = array_get($input, $pppayment_item->imagesname);
+////                        $files = array_get($input,'images');
+//                        $destinationPath = 'uploads/approval/pppayment/' . $pppayment->id . '/images/';
+//                        if ($files)
+//                        {
+//                            foreach ($files as $key => $file) {
+//                                if ($file)
+//                                {
+//                                    $originalName = $file->getClientOriginalName();
+//                                    $extension = $file->getClientOriginalExtension();       // .xlsx
+//                                    $filename = date('YmdHis').rand(100, 200) . '.' . $extension;
+//                                    Storage::put($destinationPath . $filename, file_get_contents($file->getRealPath()));
+//
+//                                    $extension = $file->getClientOriginalExtension();
+//                                    $filename = date('YmdHis').rand(100, 200) . '.' . $extension;
+//                                    // $fileName = rand(11111, 99999) . '.' . $extension;
+//                                    $upload_success = $file->move($destinationPath, $filename);
+//
+//                                    // add database record
+//                                    $pppaymentitemeattachment = new Pppaymentitemattachment();
+//                                    $pppaymentitemeattachment->pppaymentitem_id = $pppaymentitem->id;
+//                                    $pppaymentitemeattachment->type = "image";
+//                                    $pppaymentitemeattachment->filename = $originalName;
+//                                    $pppaymentitemeattachment->path = "/$destinationPath$filename";     // add a '/' in the head.
+//                                    $pppaymentitemeattachment->save();
+//
+//                                    array_push($image_urls, url($destinationPath . $filename));
+//                                }
+//                            }
+//                        }
+//                    }
+//
+//                    // create images from dingtalk mobile
+//                    if ($pppaymentitem && isset($pppayment_item->imagesname_mobile))
+//                    {
+//                        $imagesname_mobile = $pppayment_item->imagesname_mobile;
+//
+////                        $images = array_where($input, function($key, $value) {
+////                            if (substr_compare($key, 'image_', 0, 6) == 0)
+////                                return $value;
+////                        });
+//
+//                        $destinationPath = 'uploads/approval/pppayment/' . $pppayment->id . '/images/';
+//                        foreach (explode(",", $imagesname_mobile) as $imagesname_mobile_item) {
+//                            # code...
+//                            if (strlen(trim($imagesname_mobile_item)) == 0) continue;
+//
+//                            // save image file.
+//                            $sExtension = substr($imagesname_mobile_item, strrpos($imagesname_mobile_item, '.') + 1);
+//                            $dir = 'images/approval/pppayment/' . $pppayment->id . '/' . date('YmdHis').rand(100, 200) . '.' . $sExtension;
+//                            $parts = explode('/', $dir);
+//                            $filename = array_pop($parts);
+//                            $dir = '';
+//                            foreach ($parts as $part) {
+//                                # code...
+//                                $dir .= "$part/";
+//                                if (!is_dir($dir)) {
+//                                    mkdir($dir);
+//                                }
+//                            }
+//
+//                            Storage::put($destinationPath . $filename, file_get_contents($imagesname_mobile_item));
+//
+//                            file_put_contents("$dir/$filename", file_get_contents($imagesname_mobile_item));
+//
+//
+//                            // add image record
+//                            $pppaymentitemattachment = new Pppaymentitemattachment;
+//                            $pppaymentitemattachment->pppaymentitem_id = $pppaymentitem->id;
+//                            $pppaymentitemattachment->type = "image";     // add a '/' in the head.
+//                            $pppaymentitemattachment->path = "/$dir$filename";     // add a '/' in the head.
+//                            $pppaymentitemattachment->save();
+//
+//                            array_push($image_urls, $imagesname_mobile_item);
+//                        }
+//                    }
+//
+//                    $input[$pppayment_item->imagesname] = json_encode($image_urls);
+//
+//                    // create pppaymentitem unitprices
+//                    $strunitprices = $pppayment_item->unitprice_array;
+//                    $dtunitpricedetail = [];
+//                    $totalprice = 0.0;
+//                    foreach ($strunitprices as $unitprice_item) {
+//                        $unitprice_array = json_decode(json_encode($unitprice_item), true);
+//                        $unitprice_array['pppaymentitem_id'] = $pppaymentitem->id;
+//                        $pppaymentitemunitprice = Pppaymentitemunitprice::create($unitprice_array);
+//
+//                        if (isset($pppaymentitemunitprice))
+//                        {
+//                            $price = $pppaymentitemunitprice->unitprice * $pppaymentitemunitprice->tonnage;
+//                            $totalprice += $price;
+//                            array_push($dtunitpricedetail, $pppaymentitemunitprice->name . ':' . $pppaymentitemunitprice->tonnage . '吨*' . $pppaymentitemunitprice->unitprice . '元=' . $price . '元');
+//                        }
+//                    }
+//                    $totaltotalprice += $totalprice;
+//                    $input[$pppayment_item->unitprice_inputname] = implode("\n", $dtunitpricedetail);
+//                    $input[$pppayment_item->totalprice_inputname] = $totalprice;
+//                }
+//            }
+//        }
+//        $input['amount'] = $totaltotalprice;
+//
+//        $pppayment->amount = $totaltotalprice;
+//        $pppayment->save();
+//
+//
+//
+//        if (isset($pppayment))
+//        {
+//            $input['image_urls'] = json_encode($image_urls);
+//            $input['approvers'] = $pppayment->approvers();
+////            Log::info('amount2:' . $input['amount']);
+//            $response = ApprovalController::pppayment($input);
+////            Log::info($response);
+////            dd($response);
+//            $responsejson = json_decode($response);
+//            if ($responsejson->result->ding_open_errcode <> 0)
+//            {
+//                $pppayment->forceDelete();
+//                Log::info(json_encode($input));
+//                dd('钉钉端创建失败: ' . $responsejson->result->error_msg);
+//            }
+//            else
+//            {
+//                // save process_instance_id and business_id
+//                $process_instance_id = $responsejson->result->process_instance_id;
+//
+//                if ($input['syncdtdesc'] == "许昌")
+//                    $response = DingTalkController::processinstance_get2($process_instance_id);
+//                else
+//                    $response = DingTalkController::processinstance_get($process_instance_id);
+//                $responsejson = json_decode($response);
+//                $business_id = '';
+//                if ($responsejson->dingtalk_smartwork_bpms_processinstance_get_response->result->ding_open_errcode == 0)
+//                    $business_id = $responsejson->dingtalk_smartwork_bpms_processinstance_get_response->result->process_instance->business_id;
+//
+//                $pppayment->process_instance_id = $process_instance_id;
+//                $pppayment->business_id = $business_id;
+//                $pppayment->save();
+//            }
+//        }
+
+
+        dd('创建成功.');
+        return redirect('department6/inquiry_sheets');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
+    }
+}

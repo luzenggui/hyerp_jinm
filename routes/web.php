@@ -51,6 +51,22 @@ Route::group(['prefix' => 'development', 'namespace' => 'Development', 'middlewa
     Route::resource('fabricdischarges', 'FabricdischargeController');
 });
 
+
+
+
+Route::group(['prefix' => 'department6', 'namespace' => 'Department6', 'middleware' => ['web', 'auth']], function() {
+
+    Route::group(['prefix' => 'inquiry_sheets'], function () {
+        Route::get('mcreate', 'Inquiry_sheetsController@mcreate');
+        Route::post('mstore', 'Inquiry_sheetsController@mstore');
+        Route::post('upload_images','\App\Http\Controllers\ArticlesController@uploadImage')->name('upload.images');
+    });
+    Route::resource('inquiry_sheets', 'Inquiry_sheetsController');
+    Route::resource('process', 'ProcessController');
+    Route::resource('part', 'PartController');
+    Route::resource('ingredient', 'IngredientController');
+});
+
 Route::group(['prefix' => 'personal', 'namespace' => 'Personal', 'middleware' => ['web', 'auth']], function() {
 
     Route::get('report', '\App\Http\Controllers\System\ReportController@indexpersonal');
