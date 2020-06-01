@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateInquirySheetsTables extends Migration
+class CreateOrdersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateInquirySheetsTables extends Migration
      */
     public function up()
     {
-        Schema::create('inquiry_sheets', function (Blueprint $table) {
+        Schema::create('orders', function (Blueprint $table) {
             $table->increments('id');
             $table->string('customername');
             $table->string('prod_description')->nullable();
@@ -58,6 +58,6 @@ class CreateInquirySheetsTables extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('inquiry_sheets');
+        Schema::dropIfExists('orders');
     }
 }

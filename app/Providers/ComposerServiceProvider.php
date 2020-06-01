@@ -55,17 +55,17 @@ class ComposerServiceProvider extends ServiceProvider
         });
 
         //partList
-        view()->composer(array('department6.inquiry_sheets.mcreate'), function($view) {
+        view()->composer(array('department6.inquiry_sheets.mcreate','department6.orders.mcreate'), function($view) {
             $view->with('partList', \App\Models\Department6\Part::orderby('name')->pluck('name', 'id'));
         });
 
         //ingredientList
-        view()->composer(array('department6.inquiry_sheets.mcreate'), function($view) {
+        view()->composer(array('department6.inquiry_sheets.mcreate','department6.orders.mcreate'), function($view) {
             $view->with('ingredientList', \App\Models\Department6\Ingredient::orderby('name')->pluck('name', 'id'));
         });
 
         //processList
-        view()->composer(array('department6.inquiry_sheets.mcreate'), function($view) {
+        view()->composer(array('department6.inquiry_sheets.mcreate','department6.orders.mcreate'), function($view) {
             $view->with('processList', \App\Models\Department6\Process::orderby('name')->pluck('name', 'id'));
         });
     }

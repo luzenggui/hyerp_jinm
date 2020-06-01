@@ -14,10 +14,12 @@ class Ingredientdetail extends Model
             'price',
             'total_price',
             'total_qty',
+            'ingredient_desc',
+            'remark_factory',
         ];
 
     public function ingredientpart() {
-        return $this->hasMany('App\Models\Department6\Ingredient', 'id', 'ingredientid');
+        return $this->hasOne('App\Models\Department6\Ingredient', 'id', 'ingredientid');
     }
 
     public function inquirysheet() {

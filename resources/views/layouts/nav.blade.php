@@ -90,6 +90,7 @@
                                 <li><a href="/department6/part">部位资料维护</a></li>
                                 <li><a href="/department6/process">加工资料维护</a></li>
                                 <li><a href="/department6/inquiry_sheets">询价单</a></li>
+                                <li><a href="/department6/orders">大货订单</a></li>
                                 <li><a href="/department6/report">报表</a></li>
                             @endcan
                         </ul>

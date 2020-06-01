@@ -156,8 +156,8 @@
     <h3><strong>部位面料:</strong></h3>
     <hr />
     <div id="sortable1">
-     @if(isset($inquiry_sheet->purchasedetail))
-         @foreach($inquiry_sheet->purchasedetail as $purchasedetail)
+     @if(isset($order->orderpart))
+         @foreach($order->orderpart as $orderpart)
 
                 <div class="item-row margin-top-5">
                     <div name="container_item_purchasedetail">
@@ -169,14 +169,14 @@
                                         <div class="col-xs-12">
                                                 <select class="form-control" name="partid" >
                                                     @foreach($parts as $part)
-                                                        @if($part->id==$purchasedetail->partid)
+                                                        @if($part->id==$orderpart->partid)
                                                         <option  value="{{ $part->id }} " selected >{{ $part->name }}</option>
                                                         @else
                                                             <option  value="{{ $part->id }} ">{{ $part->name }}</option>
                                                         @endif
                                                     @endforeach
                                                 </select>
-                                            {!! Form::hidden('purchasedetailid', $purchasedetail->id ) !!}
+                                            {!! Form::hidden('orderpartid', $orderpart->id ) !!}
                                         </div>
                                     </div>
                                 </div>
@@ -187,7 +187,7 @@
                                     {!! Form::label('fabric_desc', '面料', ['class' => ' control-label']) !!}
                                     <div class="row">
                                         <div class="col-xs-12">
-                                            {!! Form::text('fabric_desc', $purchasedetail->fabric_desc, ['class' => 'form-control',  $attr]) !!}
+                                            {!! Form::text('fabric_desc', $orderpart->fabric_desc, ['class' => 'form-control',  $attr]) !!}
                                         </div>
                                     </div>
                                 </div>
@@ -198,7 +198,7 @@
                                     {!! Form::label('composition', '成分', ['class' => 'control-label']) !!}
                                     <div class="row">
                                         <div class="col-xs-12">
-                                            {!! Form::text('composition', $purchasedetail->composition, ['class' => 'form-control', $attr]) !!}
+                                            {!! Form::text('composition', $orderpart->composition, ['class' => 'form-control', $attr]) !!}
                                         </div>
                                     </div>
                                 </div>
@@ -209,7 +209,7 @@
                                     {!! Form::label('valid_width', '有效门幅', ['class' => 'control-label']) !!}
                                     <div class="row">
                                         <div class="col-xs-10">
-                                            {!! Form::text('valid_width', $purchasedetail->valid_width, ['class' => 'form-control', $attr]) !!}
+                                            {!! Form::text('valid_width', $orderpart->valid_width, ['class' => 'form-control', $attr]) !!}
                                         </div>
 
                                         <div class="col-xs-1 text-right ">
@@ -228,7 +228,7 @@
                                     {!! Form::label('edge_to_edge_width', '边到边门幅', ['class' => 'control-label']) !!}
                                     <div class="row">
                                         <div class="col-xs-12">
-                                            {!! Form::text('edge_to_edge_width', $purchasedetail->edge_to_edge_width, ['class' => 'form-control', $attr]) !!}
+                                            {!! Form::text('edge_to_edge_width', $orderpart->edge_to_edge_width, ['class' => 'form-control', $attr]) !!}
                                         </div>
                                     </div>
                                 </div>
@@ -239,7 +239,7 @@
                                     {!! Form::label('qty', '用料', ['class' => 'control-label']) !!}
                                     <div class="row">
                                         <div class="col-xs-12">
-                                            {!! Form::text('qty', $purchasedetail->qty, ['class' => 'form-control qty', $attr]) !!}
+                                            {!! Form::text('qty', $orderpart->qty, ['class' => 'form-control qty', $attr]) !!}
                                         </div>
                                     </div>
                                 </div>
@@ -250,7 +250,7 @@
                                     {!! Form::label('price', '面料单价', ['class' => 'control-label']) !!}
                                     <div class="row">
                                         <div class="col-xs-12">
-                                            {!! Form::text('price', $purchasedetail->price, ['class' => 'form-control price', $attr]) !!}
+                                            {!! Form::text('price', $orderpart->price, ['class' => 'form-control price', $attr]) !!}
                                         </div>
                                     </div>
                                 </div>
@@ -261,7 +261,7 @@
                                     {!! Form::label('total_price', '费用合计', ['class' => 'control-label' ]) !!}
                                     <div class="row">
                                         <div class="col-xs-12">
-                                            {!! Form::text('total_price', $purchasedetail->total_price, ['class' => 'form-control total_price', $attr,$attrdisable]) !!}
+                                            {!! Form::text('total_price', $orderpart->total_price, ['class' => 'form-control total_price', $attr,$attrdisable]) !!}
                                         </div>
                                     </div>
                                 </div>
@@ -275,7 +275,7 @@
                                     {!! Form::label('total_qty', '用料合计', ['class' => 'control-label' ]) !!}
                                     <div class="row">
                                         <div class="col-xs-12">
-                                            {!! Form::text('total_qty', $purchasedetail->total_qty, ['class' => 'form-control total_qty', $attr,$attrdisable]) !!}
+                                            {!! Form::text('total_qty', $orderpart->total_qty, ['class' => 'form-control total_qty', $attr,$attrdisable]) !!}
                                         </div>
                                     </div>
                                 </div>
@@ -286,7 +286,7 @@
                                     {!! Form::label('factoryname', '工厂', ['class' => 'control-label' ]) !!}
                                     <div class="row">
                                         <div class="col-xs-12">
-                                            {!! Form::text('factoryname', $purchasedetail->factoryname, ['class' => 'form-control', $attr]) !!}
+                                            {!! Form::text('factoryname', $orderpart->factoryname, ['class' => 'form-control', $attr]) !!}
                                         </div>
                                     </div>
                                 </div>
@@ -431,8 +431,8 @@
     <hr />
 
     <div id="sortable2">
-    @if(isset($inquiry_sheet->ingredientdetail))
-        @foreach($inquiry_sheet->ingredientdetail as $ingredientdetail)
+    @if(isset($order->orderingredient))
+        @foreach($order->orderingredient as $orderingredient)
           <div class="item-row margin-top-5">
             <div name="container_item_ingredientdetail">
                 <div class="row">
@@ -443,14 +443,14 @@
                                 <div class="col-xs-12">
                                         <select class="form-control" name="ingredientid" >
                                             @foreach($ingredients as $ingredient)
-                                                @if($ingredient->id==$ingredientdetail->ingredientid)
+                                                @if($ingredient->id==$orderingredient->ingredientid)
                                                     <option  value="{{ $ingredient->id }}"  selected >{{ $ingredient->name }}</option>
                                                 @else
                                                     <option  value="{{ $ingredient->id }} ">{{ $ingredient->name }}</option>
                                                 @endif
                                             @endforeach
                                         </select>
-                                    {!! Form::hidden('ingredientdetailid', $ingredientdetail->id ) !!}
+                                    {!! Form::hidden('orderingredientid', $orderingredient->id ) !!}
                                 </div>
                             </div>
                         </div>
@@ -461,7 +461,7 @@
                             {!! Form::label('qty', '用料', ['class' => 'control-label']) !!}
                             <div class="row">
                                 <div class="col-xs-12">
-                                    {!! Form::text('qty', $ingredientdetail->qty, ['class' => 'form-control qty', $attr]) !!}
+                                    {!! Form::text('qty', $orderingredient->qty, ['class' => 'form-control qty', $attr]) !!}
                                 </div>
                             </div>
                         </div>
@@ -472,7 +472,7 @@
                             {!! Form::label('price', '单价', ['class' => 'control-label' ]) !!}
                             <div class="row">
                                 <div class="col-xs-12">
-                                    {!! Form::text('price', $ingredientdetail->price, ['class' => 'form-control price', $attr]) !!}
+                                    {!! Form::text('price', $orderingredient->price, ['class' => 'form-control price', $attr]) !!}
                                 </div>
                             </div>
                         </div>
@@ -483,7 +483,7 @@
                             {!! Form::label('total_price', '费用合计', ['class' => 'control-label' ]) !!}
                             <div class="row">
                                 <div class="col-xs-10">
-                                    {!! Form::text('total_price', $ingredientdetail->total_price, ['class' => 'form-control total_price', $attr,$attrdisable]) !!}
+                                    {!! Form::text('total_price', $orderingredient->total_price, ['class' => 'form-control total_price', $attr,$attrdisable]) !!}
                                 </div>
 
                                 <div class="col-xs-1 text-right ">
@@ -501,7 +501,7 @@
                             {!! Form::label('total_qty', '用料合计', ['class' => 'control-label' ]) !!}
                             <div class="row">
                                 <div class="col-xs-12">
-                                    {!! Form::text('total_qty', $ingredientdetail->total_qty, ['class' => 'form-control total_qty', $attr,$attrdisable]) !!}
+                                    {!! Form::text('total_qty', $orderingredient->total_qty, ['class' => 'form-control total_qty', $attr,$attrdisable]) !!}
                                 </div>
                             </div>
                         </div>
@@ -512,7 +512,7 @@
                             {!! Form::label('remark_factory', '工厂提供', ['class' => 'control-label']) !!}
                             <div class="row">
                                 <div class="col-xs-12">
-                                    {!! Form::text('remark_factory',  $ingredientdetail->remark_factory, ['class' => 'form-control',  $attr]) !!}
+                                    {!! Form::text('remark_factory',  $orderingredient->remark_factory, ['class' => 'form-control',  $attr]) !!}
                                 </div>
                             </div>
                         </div>
@@ -523,7 +523,7 @@
                             {!! Form::label('ingredient_desc', '辅料说明', ['class' => 'control-label']) !!}
                             <div class="row">
                                 <div class="col-xs-12">
-                                    {!! Form::text('ingredient_desc',  $ingredientdetail->ingredient_desc, ['class' => 'form-control',  $attr]) !!}
+                                    {!! Form::text('ingredient_desc',  $orderingredient->ingredient_desc, ['class' => 'form-control',  $attr]) !!}
                                 </div>
                             </div>
                         </div>
@@ -634,9 +634,9 @@
     <h3><strong>加工明细:</strong></h3>
     <hr />
     <div id="sortable3">
-     @if(isset($inquiry_sheet->processdetail))
+     @if(isset($order->orderprocess))
 
-    @foreach($inquiry_sheet->processdetail as $processdetail)
+    @foreach($order->orderprocess as $orderprocess)
                 <div class="item-row margin-top-5">
                       <div name="container_item_processdetail">
                           <div class="row">
@@ -647,14 +647,14 @@
                                           <div class="col-xs-12">
                                                   <select class="form-control" name="processid" >
                                                       @foreach($processes as $process)
-                                                          @if($process->id==$processdetail->processid)
+                                                          @if($process->id==$orderprocess->processid)
                                                               <option  value="{{ $process->id }} " selected>{{ $process->name }}</option>
                                                           @else
                                                               <option  value="{{ $process->id }} ">{{ $process->name }}</option>
                                                           @endif
                                                       @endforeach
                                                   </select>
-                                              {!! Form::hidden('processdetailid', $processdetail->id ) !!}
+                                              {!! Form::hidden('orderprocessid', $orderprocess->id ) !!}
                                           </div>
                                       </div>
                                   </div>
@@ -665,7 +665,7 @@
                                       {!! Form::label('price', '费用价格', ['class' => 'control-label' ]) !!}
                                       <div class="row">
                                           <div class="col-xs-12">
-                                              {!! Form::text('price', $processdetail->price, ['class' => 'form-control price', $attr]) !!}
+                                              {!! Form::text('price', $orderprocess->price, ['class' => 'form-control price', $attr]) !!}
                                           </div>
                                       </div>
                                   </div>
@@ -676,7 +676,7 @@
                                       {{--{!! Form::label('total_price', '费用合计', ['class' => 'control-label' ]) !!}--}}
                                       {{--<div class="row">--}}
                                           {{--<div class="col-xs-11">--}}
-                                              {{--{!! Form::text('total_price', $processdetail->total_price, ['class' => 'form-control total_price', $attr,$attrdisable]) !!}--}}
+                                              {{--{!! Form::text('total_price', $orderprocess->total_price, ['class' => 'form-control total_price', $attr,$attrdisable]) !!}--}}
                                           {{--</div>--}}
                                           {{--<div class="col-xs-1 text-right ">--}}
                                               {{--<button type="button" class="btn btn-circle remove-item" aria-label="Close"><span aria-hidden="true">&times;</span></button>--}}
@@ -963,6 +963,7 @@
                   </div>
               </div>
           </div>
+
           <div class='col-xs-3'>
               <div class="form-group">
                   {!! Form::label('total_costs', '合计总价', ['class' => 'control-label']) !!}

@@ -4,11 +4,11 @@ namespace App\Models\Department6;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Purchasedetail extends Model
+class Orderpart extends Model
 {
     //
     protected $fillable = [
-        'inquiry_sheetid',
+        'orderid',
         'partid',
         'fabric_desc',
         'composition',
@@ -25,7 +25,7 @@ class Purchasedetail extends Model
         return $this->hasOne('App\Models\Department6\Part', 'id', 'partid');
     }
 
-    public function inquirysheet() {
-        return $this->hasOne('App\Models\Department6\Inquiry_sheets', 'id', 'inquiry_sheetid');
+    public function order() {
+        return $this->hasOne('App\Models\Department6\Order', 'id', 'orderid');
     }
 }

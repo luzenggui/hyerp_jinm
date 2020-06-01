@@ -4,7 +4,7 @@ namespace App\Models\Department6;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Inquiry_sheets extends Model
+class Order extends Model
 {
     //
     protected $fillable = [
@@ -40,16 +40,16 @@ class Inquiry_sheets extends Model
         'arlington_ldp',
         'atc_ldp',
         'process_tax',
-        ];
+    ];
 
-    public function purchasedetail() {
+    public function orderpart() {
 
-        return $this->hasMany('App\Models\Department6\Purchasedetail','inquiry_sheetid');
+        return $this->hasMany('App\Models\Department6\Orderpart','orderid');
     }
-    public function ingredientdetail() {
-        return $this->hasMany('App\Models\Department6\Ingredientdetail','inquiry_sheetid');
+    public function orderingredient() {
+        return $this->hasMany('App\Models\Department6\Orderingredient','orderid');
     }
-    public function processdetail() {
-        return $this->hasMany('App\Models\Department6\Processdetail','inquiry_sheetid');
+    public function orderprocess() {
+        return $this->hasMany('App\Models\Department6\Orderprocess','orderid');
     }
 }

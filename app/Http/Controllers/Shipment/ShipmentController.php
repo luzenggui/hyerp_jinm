@@ -173,7 +173,7 @@ class ShipmentController extends Controller
         if ($request->has('finished_fininace') && strlen($request->get('finished_fininace')) > 0)
         {
             if($request->get('finished_fininace')=='unfinished')
-                $query->where('receive_finished','=','0');
+                $query->where('receive_finished','=','-1');
             if($request->get('finished_fininace')=='finished')
                 $query->where('receive_finished','=','1');
         }

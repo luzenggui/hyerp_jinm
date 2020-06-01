@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Handlers\ImageUploadHandler;
 use Illuminate\Http\Request;
+use Log;
 
 class ArticlesController extends Controller
 {
@@ -21,6 +22,7 @@ class ArticlesController extends Controller
         } else {
             $data['error'] = 'Error while uploading file';
         }
+//        Log::info($result['path']);
         return $data;
     }
 }

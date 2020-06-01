@@ -4,20 +4,20 @@ namespace App\Models\Department6;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Processdetail extends Model
+class Orderprocess extends Model
 {
     //
     protected $fillable = [
-        'inquiry_sheetid',
+        'orderid',
         'processid',
         'price',
-        ];
+    ];
 
     public function process() {
         return $this->hasOne('App\Models\Department6\Process', 'id', 'processid');
     }
 
-    public function inquirysheet() {
-        return $this->hasOne('App\Models\Department6\Inquiry_sheets', 'id', 'inquiry_sheetid');
+    public function order() {
+        return $this->hasOne('App\Models\Department6\Order', 'id', 'orderid');
     }
 }

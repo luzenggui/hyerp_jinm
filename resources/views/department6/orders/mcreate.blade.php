@@ -1,13 +1,13 @@
 @extends('navbarerp')
 
-@section('title', '创建询价单')
+@section('title', '创建大货订单')
 
 @section('main')
 	<h2>添加询价信息</h2>
 	<hr/>
-@can('inquiry_sheets_create')
-    {!! Form::open(array('url' => 'department6/inquiry_sheets/mstore', 'class'=>'panel-wrapper collapse in container-fluid', 'id' => 'formMain', 'files' => true)) !!}
-        @include('department6.inquiry_sheets._form',
+@can('orders_create')
+    {!! Form::open(array('url' => 'department6/orders/mstore', 'class'=>'panel-wrapper collapse in container-fluid', 'id' => 'formMain', 'files' => true)) !!}
+        @include('department6.orders._form',
         	[
         		'submitButtonText' => '提交',
 				'attr' => '',
@@ -93,77 +93,77 @@
 			});
 
 
-			 $("#btnSubmit").click(function() {
-                 var itemArray1 = new Array();
-				 var itemArray2 = new Array();
-				 var itemArray3 = new Array();
-				 var isok=true;
+			$("#btnSubmit").click(function() {
+				var itemArray1 = new Array();
+				var itemArray2 = new Array();
+				var itemArray3 = new Array();
+				var isok=true;
 				if( $('#FOB_SH_price').val().trim() !="" && !$.isNumeric($('#FOB_SH_price').val()))
 				{
 					alert('大价格必须数字类型');
 					return false;
 				}
-				 if( $('#customername').val().trim() =="" )
-				 {
-					 alert('客户不能为空');
-					 return false;
-				 }
-				 if( $('#prod_photo').val().trim() =="" )
-				 {
-					 alert('产品照片不能为空');
-					 return false;
-				 }
-				 if( $('#supplier_stock_number').val().trim() =="" )
-				 {
-					 alert('供应商编号不能为空');
-					 return false;
-				 }
-				 if( $('#prod_size').val().trim() =="" )
-				 {
-					 alert('产品尺寸不能为空');
-					 return false;
-				 }
-				 if( $('#prod_qty').val().trim() !="" && !$.isNumeric($('#prod_qty').val()))
-				 {
-					 alert('产品数量必须数字类型');
-					 return false;
-				 }
-				 if( $('#process_tax').val().trim() !="" && !$.isNumeric($('#process_tax').val()))
-				 {
-					 alert('加工税必须数字类型');
-					 return false;
-				 }
-				 if( $('#length_carton').val().trim() !="" && !$.isNumeric($('#length_carton').val()))
-				 {
-					 alert('L(箱长度)必须数字类型');
-					 return false;
-				 }
-				 if( $('#width_carton').val().trim() !="" && !$.isNumeric($('#width_carton').val()))
-				 {
-					 alert('W(箱宽度)必须数字类型');
-					 return false;
-				 }
-				 if( $('#high_carton').val().trim() !="" && !$.isNumeric($('#high_carton').val()))
-				 {
-					 alert('H(箱高度)必须数字类型');
-					 return false;
-				 }
-				 if( $('#qty_percarton').val().trim() !="" && !$.isNumeric($('#qty_percarton').val()))
-				 {
-					 alert('每箱数量必须整形类型');
-					 return false;
-				 }
-				 // if( $('#import_rate').val().trim() !="" && !$.isNumeric($('#import_rate').val()))
-				 if( !validationNumber(document.getElementById("import_rate"),4,2))
-				 {
-					 // alert('进口税率必须数字类型');
-					 return false;
-				 }
+				if( $('#customername').val().trim() =="" )
+				{
+					alert('客户不能为空');
+					return false;
+				}
+				if( $('#prod_photo').val().trim() =="" )
+				{
+					alert('产品照片不能为空');
+					return false;
+				}
+				if( $('#supplier_stock_number').val().trim() =="" )
+				{
+					alert('供应商编号不能为空');
+					return false;
+				}
+				if( $('#prod_size').val().trim() =="" )
+				{
+					alert('产品尺寸不能为空');
+					return false;
+				}
+				if( $('#prod_qty').val().trim() !="" && !$.isNumeric($('#prod_qty').val()))
+				{
+					alert('产品数量必须数字类型');
+					return false;
+				}
+				if( $('#process_tax').val().trim() !="" && !$.isNumeric($('#process_tax').val()))
+				{
+					alert('加工税必须数字类型');
+					return false;
+				}
+				if( $('#length_carton').val().trim() !="" && !$.isNumeric($('#length_carton').val()))
+				{
+					alert('L(箱长度)必须数字类型');
+					return false;
+				}
+				if( $('#width_carton').val().trim() !="" && !$.isNumeric($('#width_carton').val()))
+				{
+					alert('W(箱宽度)必须数字类型');
+					return false;
+				}
+				if( $('#high_carton').val().trim() !="" && !$.isNumeric($('#high_carton').val()))
+				{
+					alert('H(箱高度)必须数字类型');
+					return false;
+				}
+				if( $('#qty_percarton').val().trim() !="" && !$.isNumeric($('#qty_percarton').val()))
+				{
+					alert('每箱数量必须整形类型');
+					return false;
+				}
+				// if( $('#import_rate').val().trim() !="" && !$.isNumeric($('#import_rate').val()))
+				if( !validationNumber(document.getElementById("import_rate"),4,2))
+				{
+					// alert('进口税率必须数字类型');
+					return false;
+				}
 
-                $("div[name='container_item_purchasedetail").each(function(i){
-                    var itemObject = new Object();
-                    var container = $(this);
-                    // alert(container.find("select[name='partid']").val());
+				$("div[name='container_item_purchasedetail").each(function(i){
+					var itemObject = new Object();
+					var container = $(this);
+					// alert(container.find("select[name='partid']").val());
 					if ((container.find("select[name='partid']").val() =="" || container.find("select[name='partid']").val() == null )&& isok)
 					{
 						var j=i+1;
@@ -171,81 +171,74 @@
 						alert('部位面料信息第'+ j + '行中的部位不能为空!');
 						return ;
 					}
-                    itemObject.partid = container.find("select[name='partid']").val();
-                    itemObject.fabric_desc = container.find("input[name='fabric_desc']").val();
-                    itemObject.composition = container.find("input[name='composition']").val();
-                    itemObject.valid_width = container.find("input[name='valid_width']").val();
-                    itemObject.edge_to_edge_width = container.find("input[name='edge_to_edge_width']").val();
-                    itemObject.qty = container.find("input[name='qty']").val();
-                    itemObject.price = container.find("input[name='price']").val();
-                    itemObject.total_qty = container.find("input[name='total_qty']").val();
-                    itemObject.total_price = container.find("input[name='total_price']").val();
-                    itemObject.factoryname = container.find("input[name='factoryname']").val();
+					itemObject.partid = container.find("select[name='partid']").val();
+					itemObject.fabric_desc = container.find("input[name='fabric_desc']").val();
+					itemObject.composition = container.find("input[name='composition']").val();
+					itemObject.valid_width = container.find("input[name='valid_width']").val();
+					itemObject.edge_to_edge_width = container.find("input[name='edge_to_edge_width']").val();
+					itemObject.qty = container.find("input[name='qty']").val();
+					itemObject.price = container.find("input[name='price']").val();
+					itemObject.total_qty = container.find("input[name='total_qty']").val();
+					itemObject.total_price = container.find("input[name='total_price']").val();
+					itemObject.factoryname = container.find("input[name='factoryname']").val();
 
-                    itemArray1.push(itemObject);
+					itemArray1.push(itemObject);
 
-                });
+				});
 
-				 $("div[name='container_item_ingredientdetail']").each(function(i){
-					 var itemObject = new Object();
-					 var container = $(this);
+				$("div[name='container_item_ingredientdetail']").each(function(i){
+					var itemObject = new Object();
+					var container = $(this);
 
-					 if ((container.find("select[name='ingredientid']").val() =="" ||  container.find("select[name='ingredientid']").val() == null) && isok)
-					 {
+					if ((container.find("select[name='ingredientid']").val() =="" ||  container.find("select[name='ingredientid']").val() == null) && isok)
+					{
 						var j=i+1;
-						 isok=false;
-					 	alert('辅料信息中第'+ j + '行的辅料不能为空!');
-						 return ;
-					 }
-					 itemObject.ingredientid = container.find("select[name='ingredientid']").val();
-					 itemObject.qty = container.find("input[name='qty']").val();
-					 itemObject.price = container.find("input[name='price']").val();
-					 itemObject.total_qty = container.find("input[name='total_qty']").val();
-					 itemObject.total_price = container.find("input[name='total_price']").val();
-					 itemObject.remark_factory = container.find("input[name='remark_factory']").val();
-					 itemObject.ingredient_desc = container.find("input[name='ingredient_desc']").val();
+						isok=false;
+						alert('辅料信息中第'+ j + '行的辅料不能为空!');
+						return ;
+					}
+					itemObject.ingredientid = container.find("select[name='ingredientid']").val();
+					itemObject.qty = container.find("input[name='qty']").val();
+					itemObject.price = container.find("input[name='price']").val();
+					itemObject.total_qty = container.find("input[name='total_qty']").val();
+					itemObject.total_price = container.find("input[name='total_price']").val();
+					itemObject.remark_factory = container.find("input[name='remark_factory']").val();
+					itemObject.ingredient_desc = container.find("input[name='ingredient_desc']").val();
 
-					 itemArray2.push(itemObject);
-				 });
+					itemArray2.push(itemObject);
+				});
 
-				 $("div[name='container_item_processdetail']").each(function(i){
-					 var itemObject = new Object();
-					 var container = $(this);
+				$("div[name='container_item_processdetail']").each(function(i){
+					var itemObject = new Object();
+					var container = $(this);
 
-					 if ((container.find("select[name='processid']").val() =="" || container.find("select[name='processid']").val() == null) && isok)
-					 {
-						 var j=i+1;
-						 isok=false;
-						 alert('加工信息中第'+ j + '行的加工不能为空!');
-						 return ;
-					 }
+					if ((container.find("select[name='processid']").val() =="" || container.find("select[name='processid']").val() == null) && isok)
+					{
+						var j=i+1;
+						isok=false;
+						alert('加工信息中第'+ j + '行的加工不能为空!');
+						return ;
+					}
 
-					 itemObject.processid = container.find("select[name='processid']").val();
-					 itemObject.price = container.find("input[name='price']").val();
-					 itemObject.total_price = container.find("input[name='total_price']").val();
+					itemObject.processid = container.find("select[name='processid']").val();
+					itemObject.price = container.find("input[name='price']").val();
+					itemObject.total_price = container.find("input[name='total_price']").val();
 
-					 itemArray3.push(itemObject);
+					itemArray3.push(itemObject);
 
-				 });
+				});
 
-                $("#items_string1").val(JSON.stringify(itemArray1));
+				$("#items_string1").val(JSON.stringify(itemArray1));
 				$("#items_string2").val(JSON.stringify(itemArray2));
 				$("#items_string3").val(JSON.stringify(itemArray3));
 
-				 // alert(isok);
+				// alert(isok);
 				if(isok)
 				{
 					$("form#formMain").submit();
 				}
 				else { return false;}
-				// else
-				// {
-				// 	alert('数据有问题，无法提交');
-				// 	return false;
-				// }
-				//
-
-			 });
+			});
 
 			function validationNumber(e, len,num) {
 				var regu = /^[0-9]+\.?[0-9]*$/;
@@ -278,6 +271,7 @@
 				}
 				return true;
 			};
+
 
             $('#btnAddPurchasedetialItem').click(function() {
 				item_num1++;
@@ -610,7 +604,7 @@
 				vpurchaseCost=$('#purchase_costs').val();
 				vtotalCost=parseFloat(vprocessCost) + parseFloat(vpurchaseCost);
 				if(isNaN(vtotalCost )|| vtotalCost=="" || vtotalCost=="Infinity" )
-				$('#total_costs').val(vtotalCost.toFixed(2));
+					$('#total_costs').val(vtotalCost.toFixed(2));
 
 				var processtax=$('#process_tax').val();
 				if(isNaN(processtax )|| processtax=="" || processtax=="Infinity" )
