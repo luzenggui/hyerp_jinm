@@ -56,6 +56,7 @@ Route::group(['prefix' => 'development', 'namespace' => 'Development', 'middlewa
 
 Route::group(['prefix' => 'department6', 'namespace' => 'Department6', 'middleware' => ['web', 'auth']], function() {
 
+    Route::get('report', '\App\Http\Controllers\System\ReportController@indexdepartment6');
     Route::group(['prefix' => 'inquiry_sheets'], function () {
         Route::get('mcreate', 'Inquiry_sheetsController@mcreate');
         Route::post('mstore', 'Inquiry_sheetsController@mstore');

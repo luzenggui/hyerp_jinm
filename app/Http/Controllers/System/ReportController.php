@@ -72,41 +72,31 @@ class ReportController extends Controller
     public function indexapproval()
     {
         return $this->indexmodule('审批');
-//        $reports = Report::latest('created_at')->where('module', '审批')->where('active', 1)->paginate(10);
-//        $readonly = true;
-//        return view('system.reports.index', compact('reports', 'readonly'));
     }
 
     public function indexfabricdata()
     {
         return $this->indexmodule('排料');
-//        $reports = Report::latest('created_at')->where('module', '审批')->where('active', 1)->paginate(10);
-//        $readonly = true;
-//        return view('system.reports.index', compact('reports', 'readonly'));
     }
 
     public function indexpersonal()
     {
         return $this->indexmodule('人事');
-//        $reports = Report::latest('created_at')->where('module', '审批')->where('active', 1)->paginate(10);
-//        $readonly = true;
-//        return view('system.reports.index', compact('reports', 'readonly'));
     }
 
     public function indexfinance()
     {
         return $this->indexmodule('财务');
-//        $reports = Report::latest('created_at')->where('module', '审批')->where('active', 1)->paginate(10);
-//        $readonly = true;
-//        return view('system.reports.index', compact('reports', 'readonly'));
     }
 
     public function indexshipment()
     {
         return $this->indexmodule('出运单');
-//        $reports = Report::latest('created_at')->where('module', '审批')->where('active', 1)->paginate(10);
-//        $readonly = true;
-//        return view('system.reports.index', compact('reports', 'readonly'));
+    }
+
+    public function indexdepartment6()
+    {
+        return $this->indexmodule('第六分公司');
     }
     /**
      * Show the form for creating a new resource.
