@@ -382,8 +382,7 @@ class OrderController extends Controller
                         ->setError('您输入的值不在下拉框列表内.')
                         ->setPromptTitle('')
                         ->setPrompt('')
-                        ->setFormula1('"米,公斤"')
-                        ->setDefault(0);
+                        ->setFormula1('"米,公斤"');
 
                     $sheet->setCellValue('I' . $detail_row, "=G".$detail_row."*H". $detail_row );
                     $sheet->setCellValue('J' . $detail_row, "=I".($detail_row+18)."+15");

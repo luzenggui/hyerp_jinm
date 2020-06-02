@@ -584,10 +584,6 @@
                 $('#process_costs').val(vamount.toFixed(2));
                 $('#purchase_costs').val(vamountCost.toFixed(2));
                 vprocessCost=$('#process_costs').val();
-                vpurchaseCost=$('#purchase_costs').val();
-                vtotalCost=parseFloat(vprocessCost) + parseFloat(vpurchaseCost);
-                if(isNaN(vtotalCost )|| vtotalCost=="" || vtotalCost=="Infinity" )
-                    $('#total_costs').val(vtotalCost.toFixed(2));
 
                 var processtax=$('#process_tax').val();
                 if(isNaN(processtax )|| processtax=="" || processtax=="Infinity" )
@@ -596,6 +592,14 @@
                 if(isNaN(process_taxcosts )|| process_taxcosts=="" || process_taxcosts=="Infinity" )
                     process_taxcosts=0
                 $('#process_taxcosts').val(process_taxcosts.toFixed(2));
+
+                vpurchaseCost=$('#purchase_costs').val();
+                vtotalCost=parseFloat(process_taxcosts) + parseFloat(vpurchaseCost);
+                if(isNaN(vtotalCost )|| vtotalCost=="" || vtotalCost=="Infinity" )
+                    vtotalCost=0
+                $('#total_costs').val(vtotalCost.toFixed(2));
+
+
 
                 var volL=$('#length_carton').val();
                 var volW=$('#width_carton').val();

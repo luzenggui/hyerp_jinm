@@ -96,7 +96,7 @@
                     <td>
                         <a href="{{ URL::to('/department6/orders/'.$order->id.'/edit') }}" class="btn btn-success btn-sm pull-left">编辑</a>
                         <a href="{{ URL::to('/department6/orders/'.$order->id.'/byprocessexport') }}" class="btn btn-success btn-sm pull-left">导出加工合同</a>
-                        <a href="{{ URL::to('/department6/orders/'.$order->id.'/byfabircexport') }}" class="btn btn-success btn-sm pull-left">面导出料合同</a>
+                        <a href="{{ URL::to('/department6/orders/'.$order->id.'/byfabircexport') }}" class="btn btn-success btn-sm pull-left">导出面料合同</a>
                         <a href="{{ URL::to('/department6/orders/'.$order->id.'/byingredientexport') }}" class="btn btn-success btn-sm pull-left">导出辅料合同</a>
                         {!! Form::open(array('route' => array('orders.destroy', $order->id), 'method' => 'delete', 'onsubmit' => 'return confirm("确定删除此记录(Delete this record)?");')) !!}
                             {!! Form::submit('删除', ['class' => 'btn btn-danger btn-sm pull-left']) !!}
