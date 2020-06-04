@@ -73,11 +73,11 @@
         @can('fabricdischarge_finish')
             <?php $hasright = true; ?>
         @endcan
-    @elseif ($report->name == "pgenkqrport")
+    @elseif ($report->name == "pgenkqrport" or $report->name =="pgenleavedata")
         @can('module_personal')
             <?php $hasright = true; ?>
         @endcan
-    @elseif ($report->name == "pgetbudgetdata" or $report->name == "pgetfinancedata" or $report->name =="pgenleavedata")
+    @elseif ($report->name == "pgetbudgetdata" or $report->name == "pgetfinancedata" )
         @can('module_finance')
             <?php $hasright = true; ?>
         @endcan
