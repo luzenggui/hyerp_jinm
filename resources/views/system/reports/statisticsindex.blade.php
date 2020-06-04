@@ -47,6 +47,10 @@
                 {!! Form::date('etdend', null, ['class' => 'form-control']) !!}
                 {!! Form::select('finishedfinance', ['-1' => '未完成', '1' => '完成'], null, ['class' => 'form-control', 'placeholder' => '--收汇完成--']) !!}
              @endif
+            @if ($report->name == "pgenleavedata")
+                {!! Form::label('applydatelabel', '缺勤日期:', ['class' => 'control-label']) !!}
+                {!! Form::date('missday', date('Y-m-d',time()), ['class' => 'form-control']) !!}
+            @endif
             {!! Form::submit('查找(Search)', ['class' => 'btn btn-default btn-sm','id'=>'btnSearch']) !!}
         </div>
         {!! Form::close() !!}
@@ -73,7 +77,7 @@
         @can('module_personal')
             <?php $hasright = true; ?>
         @endcan
-    @elseif ($report->name == "pgetbudgetdata" or $report->name == "pgetfinancedata")
+    @elseif ($report->name == "pgetbudgetdata" or $report->name == "pgetfinancedata" or $report->name =="pgenleavedata")
         @can('module_finance')
             <?php $hasright = true; ?>
         @endcan
