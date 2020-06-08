@@ -159,7 +159,8 @@
 					 return false;
 				 }
 				 // if( $('#import_rate').val().trim() !="" && !$.isNumeric($('#import_rate').val()))
-				 if( !validationNumber(document.getElementById("import_rate"),6,3))
+				 // if( !validationNumber(document.getElementById("import_rate"),6,3))
+				 if ($('#import_rate').val().trim() !="" && !$.isNumeric($('#import_rate').val()))
 				 {
 					 // alert('进口税率必须数字类型');
 					 return false;
