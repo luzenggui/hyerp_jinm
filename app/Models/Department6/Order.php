@@ -40,6 +40,7 @@ class Order extends Model
         'arlington_ldp',
         'atc_ldp',
         'process_tax',
+        'exchange_rate',
     ];
 
     public function orderpart() {

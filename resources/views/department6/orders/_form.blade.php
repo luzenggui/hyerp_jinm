@@ -148,7 +148,7 @@
 
         <div class='col-xs-6'>
             <a href="#" class="thumbnail">
-                <img  alt="产品缩略图" style="width:500px; height:100px" id="showImg" />
+                <img  alt="产品缩略图" style="width:200px; height:100px" id="showImg" />
             </a>
         </div>
     </div>

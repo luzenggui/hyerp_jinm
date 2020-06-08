@@ -86,16 +86,14 @@
                 {!! Form::label('prod_qty', '产品数量', ['class' => 'control-label']) !!}
                 <div class="row">
                     <div class="col-xs-12">
-                        {!! Form::text('prod_qty',  null, ['class' => 'form-control',  $attr]) !!}
+                        {!! Form::text('prod_qty', isset($inquiry_sheet->prod_qty) ? $inquiry_sheet->prod_qty : 1, ['class' => 'form-control',  $attr]) !!}
                     </div>
                 </div>
-
             </div>
         </div>
 
 
     </div>
-
     <div class="row">
         <div class='col-xs-3 '>
             <div class="form-group">
@@ -146,9 +144,9 @@
             </div>
         </div>
 
-        <div class='col-xs-6'>
+        <div class='col-xs-3'>
             <a href="#" class="thumbnail">
-                <img  alt="产品缩略图" style="width:500px; height:100px" id="showImg" />
+                <img  alt="产品缩略图" style="width:200px; height:100px" id="showImg" />
             </a>
         </div>
     </div>
@@ -974,6 +972,18 @@
               </div>
           </div>
       </div>
+    <div class="row">
+        <div class='col-xs-3'>
+            <div class="form-group">
+                {!! Form::label('exchange_rate', '汇率', ['class' => 'control-label']) !!}
+                <div class="row">
+                    <div class="col-xs-12">
+                        {!! Form::text('exchange_rate',  null, ['class' => 'form-control',  $attr]) !!}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="form-group">

@@ -153,8 +153,13 @@
 					 alert('每箱数量必须整形类型');
 					 return false;
 				 }
+				 if( $('#exchange_rate').val().trim() !="" && !$.isNumeric($('#exchange_rate').val()))
+				 {
+					 alert('汇率必须数字类型');
+					 return false;
+				 }
 				 // if( $('#import_rate').val().trim() !="" && !$.isNumeric($('#import_rate').val()))
-				 if( !validationNumber(document.getElementById("import_rate"),4,2))
+				 if( !validationNumber(document.getElementById("import_rate"),6,3))
 				 {
 					 // alert('进口税率必须数字类型');
 					 return false;
@@ -545,7 +550,7 @@
 				});
 			});
 
-			$('#formMain').on('keyup change','.qty, .price,#length_carton,#width_carton,#high_carton,#qty_percarton,#process_tax ', function () {
+			$('#formMain').on('keyup change','.qty, .price,#length_carton,#width_carton,#high_carton,#qty_percarton,#process_tax,#exchange_rate,#risk_rate', function () {
 				var quantity = $(this).closest('.item-row').find('.qty').val();
 
 				var perItemCost = $(this).closest('.item-row').find('.price').val();
@@ -655,7 +660,9 @@
 				$('#atc_ocean_freight').val(parseFloat(atc_ocean_freight).toFixed(2));
 
 				var inland_freight =$('#inland_freight').val();
-				var fob_shanghai = (parseFloat(vtotalCost) /7.15 + parseFloat(inland_freight))/0.95;
+				var exchange_rate=$('#exchange_rate').val();
+				var risk_rate=$('#risk_rate').val();
+				var fob_shanghai = (parseFloat(vtotalCost) /exchange_rate + parseFloat(inland_freight))/(1-risk_rate);
 				if(isNaN(fob_shanghai) || fob_shanghai=="" || fob_shanghai=="Infinity")
 					fob_shanghai=0;
 				$('#fob_shanghai').val(fob_shanghai.toFixed(2));

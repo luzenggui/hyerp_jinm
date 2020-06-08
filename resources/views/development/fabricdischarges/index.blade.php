@@ -161,6 +161,7 @@
 
                 var checkvalues = [];
                 var textvalues = [];
+                var isok=true;
                 var ids="";
                 $("#tbMain").find("input[type='checkbox']:checked").each(function (i) {
                     var rownum=$(this).parents("tr").index() +1;
@@ -168,6 +169,7 @@
                     if(textvalue==0 || typeof(textvalue)=="undefined" || textvalue=='' || textvalue==null)
                     {
                         alert("第" + rownum + "行的制版数量请输入值！");
+                        isok=false;
                         return;
                     }
 
@@ -176,25 +178,25 @@
                 });
 
                  // alert(checkvalues.join(","));
-
-                {{--window.open("{{ url('/shipment/shipments/updatefinished') }}" + "?ids=" + checkvalues.join(","));--}}
-                $.ajax({
-                type: "GET",
-                url: "{{ url('/development/fabricdischarges/updatefinishedzb') }}",
-                data: "ids=" + checkvalues.join(",") + "&num1=" + textvalues.join(","),
-                // contentType: false,
-                // processData: false,
-                //                    dataType: "json",
-                error:function(xhr, ajaxOptions, thrownError){
-                    alert('thrownError');
-                },
-                success:function(result){
-                    // alert(request.url.toString());
-                    alert("保存成功。");
-                    window.location.reload();
-                //                        $('#sendAsnModal').modal('toggle');
-                    }
+                if(isok){
+                    $.ajax({
+                        type: "GET",
+                        url: "{{ url('/development/fabricdischarges/updatefinishedzb') }}",
+                        data: "ids=" + checkvalues.join(",") + "&num1=" + textvalues.join(","),
+                        // contentType: false,
+                        // processData: false,
+                        //                    dataType: "json",
+                        error:function(xhr, ajaxOptions, thrownError){
+                            alert('thrownError');
+                        },
+                        success:function(result){
+                            // alert(request.url.toString());
+                            alert("保存成功。");
+                            window.location.reload();
+                            //                        $('#sendAsnModal').modal('toggle');
+                        }
                     });
+                }
                 });
 
             $("#btnFinishedPl").click(function(e) {
@@ -202,37 +204,40 @@
                 var checkvalues = [];
                 var checknumbers = [];
                 var ids="";
+                var isok=true;
                 $("#tbMain").find("input[type='checkbox']:checked").each(function (i) {
                     var rownum=$(this).parents("tr").index() +1;
                     var textvalue=$(this).parents("tr").find("td:eq(13)").find("#txtnum2").val();
                     if(textvalue==0 || typeof(textvalue)=="undefined" || textvalue=='' || textvalue==null)
                     {
                         alert("第" + rownum  + "行的排版数量请输入值！");
+                        isok=false;
                         return;
                     }
                     checkvalues[i] =$(this).val();
                     checknumbers[i] = $(this).attr('data-id');
                 });
 
-                alert(checkvalues.join(","));
-
-                {{--window.open("{{ url('/shipment/shipments/updatefinished') }}" + "?ids=" + checkvalues.join(","));--}}
-                $.ajax({
-                    type: "GET",
-                    url: "{{ url('/development/fabricdischarges/updatefinishedpl') }}",
-                    data: "ids=" + checkvalues.join(",")+ "&num2=" + textvalues.join(","),
-                    // contentType: false,
-                    // processData: false,
-                    //                    dataType: "json",
-                    error:function(xhr, ajaxOptions, thrownError){
-                        alert('thrownError');
-                    },
-                    success:function(result){
-                        alert("保存成功。");
-                        window.location.reload();
-                        //                        $('#sendAsnModal').modal('toggle');
-                    }
-                });
+                // alert(checkvalues.join(","));
+                if(isok)
+                {
+                    $.ajax({
+                        type: "GET",
+                        url: "{{ url('/development/fabricdischarges/updatefinishedpl') }}",
+                        data: "ids=" + checkvalues.join(",")+ "&num2=" + textvalues.join(","),
+                        // contentType: false,
+                        // processData: false,
+                        //                    dataType: "json",
+                        error:function(xhr, ajaxOptions, thrownError){
+                            alert('thrownError');
+                        },
+                        success:function(result){
+                            alert("保存成功。");
+                            window.location.reload();
+                            //                        $('#sendAsnModal').modal('toggle');
+                        }
+                    });
+                }
             });
         });
     </script>

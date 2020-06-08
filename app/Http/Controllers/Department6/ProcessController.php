@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Department6;
 
+use App\Helper\Reply;
 use App\Models\Department6\Process;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -49,7 +50,9 @@ class ProcessController extends Controller
         Process::create($input);
 
         return redirect('department6/process');
+//        return Reply::redirect(route('department6/process'),__('messages.ProcessSuccess'));
     }
+
 
     /**
      * Display the specified resource.

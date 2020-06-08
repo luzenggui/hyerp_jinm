@@ -22,7 +22,7 @@ class CreateInquirySheetsTables extends Migration
             $table->string('customer_item_name')->nullable();
             $table->string('supplier_stock_number');
             $table->string('UPC')->nullable();
-            $table->integer('prod_qty')->nullable();
+            $table->integer('prod_qty')->nullable()->default(1);
             $table->decimal('FOB_SH_price',8,2)->nullable();
             $table->string('ingredients_note')->nullable();
             $table->string('packing_note')->nullable();
@@ -43,10 +43,11 @@ class CreateInquirySheetsTables extends Migration
             $table->decimal('atc_ocean_freight',8,2)->nullable()->default(0);
             $table->decimal('risk_rate',4,2)->nullable()->default(0);
             $table->decimal('fob_shanghai',8,2)->nullable()->default(0);
-            $table->decimal('import_rate',4,2)->nullable()->default(0);
+            $table->decimal('import_rate',6,3)->nullable()->default(0);
             $table->decimal('arlington_ldp',8,2)->nullable()->default(0);
             $table->decimal('atc_ldp',8,2)->nullable()->default(0);
             $table->decimal('process_tax',8,2)->nullable()->default(0);
+            $table->decimal('exchange_rate',5,2)->nullable()->default(0);
             $table->timestamps();
         });
     }

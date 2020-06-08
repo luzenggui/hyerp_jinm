@@ -133,7 +133,8 @@ class Inquiry_sheetsController extends Controller
                           'import_rate'=>isset($input['import_rate'])? $input['import_rate']:null,
                           'arlington_ldp'=>isset($input['arlington_ldp'])? $input['arlington_ldp']:null,
                           'atc_ldp'=>isset($input['atc_ldp'])? $input['atc_ldp']:null,
-                          'process_tax'=>isset($input['process_tax'])? $input['process_tax']:null
+                          'process_tax'=>isset($input['process_tax'])? $input['process_tax']:null,
+                          'exchange_rate'=>isset($input['exchange_rate'])? $input['exchange_rate']:null,
           ));
         $inquiry_sheetid=$inquiry_sheet->id;
 ////        dd($mcitempurchase);
@@ -250,6 +251,7 @@ class Inquiry_sheetsController extends Controller
         $inquiry_sheet->arlington_ldp=$input['arlington_ldp'];
         $inquiry_sheet->atc_ldp=$input['atc_ldp'];
         $inquiry_sheet->process_tax=$input['process_tax'];
+        $inquiry_sheet->exchange_rate=$input['exchange_rate'];
         $inquiry_sheet->save();
 
         $purchasedetails = json_decode($input['items_string1']);
@@ -361,7 +363,8 @@ class Inquiry_sheetsController extends Controller
             'import_rate'=>isset($inquiry_sheet->import_rate)? $inquiry_sheet->import_rate:null,
             'arlington_ldp'=>isset($inquiry_sheet->arlington_ldp)? $inquiry_sheet->arlington_ldp:null,
             'atc_ldp'=>isset($inquiry_sheet->atc_ldp)? $inquiry_sheet->atc_ldp:null,
-            'process_tax'=>isset($inquiry_sheet->process_tax)? $inquiry_sheet->process_tax:null
+            'process_tax'=>isset($inquiry_sheet->process_tax)? $inquiry_sheet->process_tax:null,
+            'exchange_rate'=>isset($inquiry_sheet->exchange_rate)? $inquiry_sheet->exchange_rate:null,
         ));
 
         $orderid=$order->id;

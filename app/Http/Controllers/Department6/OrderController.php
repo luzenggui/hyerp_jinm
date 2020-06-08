@@ -129,7 +129,8 @@ class OrderController extends Controller
             'import_rate'=>isset($input['import_rate'])? $input['import_rate']:null,
             'arlington_ldp'=>isset($input['arlington_ldp'])? $input['arlington_ldp']:null,
             'atc_ldp'=>isset($input['atc_ldp'])? $input['atc_ldp']:null,
-            'process_tax'=>isset($input['process_tax'])? $input['process_tax']:null
+            'process_tax'=>isset($input['process_tax'])? $input['process_tax']:null,
+            'exchange_rate'=>isset($input['exchange_rate'])? $input['exchange_rate']:null
         ));
         $orderid=$order->id;
 
@@ -246,6 +247,7 @@ class OrderController extends Controller
         $order->arlington_ldp=$input['arlington_ldp'];
         $order->atc_ldp=$input['atc_ldp'];
         $order->process_tax=$input['process_tax'];
+        $order->eachange_rate=$input['eachange_rate'];
         $order->save();
 
         $orderparts = json_decode($input['items_string1']);
