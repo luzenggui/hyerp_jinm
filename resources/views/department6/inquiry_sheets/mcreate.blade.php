@@ -522,7 +522,7 @@
 							<div class="form-group">\
 								<label for="total_price" class="control-label">工厂费用合计</label>\
 								<div class="row">\
-									<div class="col-xs-10">\
+									<div class="col-xs-12">\
 										<input class="form-control total_price"  type="text" id="total_price_' + String(item_num2) + '" name="total_price" disabled="disabled">\
 									</div>\
 								</div>\
@@ -532,7 +532,7 @@
 							<div class="form-group">\
 								<label for="total_outprice" class="control-label">报出费用合计</label>\
 								<div class="row">\
-									<div class="col-xs-10">\
+									<div class="col-xs-12">\
 										<input class="form-control total_outprice"  type="text" id="total_outprice_' + String(item_num2) + '" name="total_outprice" disabled="disabled">\
 									</div>\
 								</div>\
