@@ -82,7 +82,10 @@
                     </td>
                     <td>
                         <a href="{{ URL::to('/department6/inquiry_sheets/'.$inquiry_sheet->id.'/edit') }}" class="btn btn-success btn-sm pull-left">编辑</a>
-
+                        <a href="{{ URL::to('/department6/inquiry_sheets/'.$inquiry_sheet->id.'/export') }}" class="btn btn-success btn-sm pull-left">导出</a>
+                        {!! Form::open(array('url' => url('/department6/inquiry_sheets/copywinbidding/'. $inquiry_sheet->id), 'onsubmit' => 'return confirm("确定复制此询价？");')) !!}
+                        {!! Form::submit('复制', ['class' => 'btn btn-success btn-sm pull-left']) !!}
+                        {!! Form::close() !!}
                         {!! Form::open(array('url' => url('/department6/inquiry_sheets/winbidding/'. $inquiry_sheet->id), 'onsubmit' => 'return confirm("确定此询价中标了！");')) !!}
                             {!! Form::submit('中标', ['class' => 'btn btn-warning btn-sm pull-left']) !!}
                         {!! Form::close() !!}

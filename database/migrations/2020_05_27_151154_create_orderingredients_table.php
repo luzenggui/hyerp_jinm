@@ -18,9 +18,11 @@ class CreateOrderingredientsTable extends Migration
             $table->integer('orderid');
             $table->integer('ingredientid');
             $table->decimal('price',8,2)->nullable()->default(0);
+            $table->decimal('outprice',8,2)->nullable()->default(0);
             $table->decimal('qty',8,2)->nullable()->default(0);
             $table->decimal('total_qty',8,2)->nullable()->default(0);
             $table->decimal('total_price',8,2)->nullable()->default(0);
+            $table->decimal('total_outprice',8,2)->nullable()->default(0);
             $table->string('ingredient_desc')->nullable();
             $table->string('remark_factory')->nullable();
             $table->timestamps();

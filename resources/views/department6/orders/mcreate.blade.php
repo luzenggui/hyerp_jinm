@@ -153,16 +153,12 @@
 					alert('每箱数量必须整形类型');
 					return false;
 				}
-				if( $('#qty_percarton').val().trim() !="" && !$.isNumeric($('#qty_percarton').val()))
-				{
-					alert('每箱数量必须整形类型');
-					return false;
-				}
 				if( $('#exchange_rate').val().trim() !="" && !$.isNumeric($('#exchange_rate').val()))
 				{
 					alert('汇率必须数字类型');
 					return false;
 				}
+				// if( $('#import_rate').val().trim() !="" && !$.isNumeric($('#import_rate').val()))
 				// if( !validationNumber(document.getElementById("import_rate"),6,3))
 				if ($('#import_rate').val().trim() !="" && !$.isNumeric($('#import_rate').val()))
 				{
@@ -188,8 +184,10 @@
 					itemObject.edge_to_edge_width = container.find("input[name='edge_to_edge_width']").val();
 					itemObject.qty = container.find("input[name='qty']").val();
 					itemObject.price = container.find("input[name='price']").val();
+					itemObject.outprice = container.find("input[name='outprice']").val();
 					itemObject.total_qty = container.find("input[name='total_qty']").val();
 					itemObject.total_price = container.find("input[name='total_price']").val();
+					itemObject.total_outprice = container.find("input[name='total_outprice']").val();
 					itemObject.factoryname = container.find("input[name='factoryname']").val();
 
 					itemArray1.push(itemObject);
@@ -210,8 +208,10 @@
 					itemObject.ingredientid = container.find("select[name='ingredientid']").val();
 					itemObject.qty = container.find("input[name='qty']").val();
 					itemObject.price = container.find("input[name='price']").val();
+					itemObject.outprice = container.find("input[name='outprice']").val();
 					itemObject.total_qty = container.find("input[name='total_qty']").val();
 					itemObject.total_price = container.find("input[name='total_price']").val();
+					itemObject.total_outprice = container.find("input[name='total_outprice']").val();
 					itemObject.remark_factory = container.find("input[name='remark_factory']").val();
 					itemObject.ingredient_desc = container.find("input[name='ingredient_desc']").val();
 
@@ -248,6 +248,13 @@
 					$("form#formMain").submit();
 				}
 				else { return false;}
+				// else
+				// {
+				// 	alert('数据有问题，无法提交');
+				// 	return false;
+				// }
+				//
+
 			});
 
 			function validationNumber(e, len,num) {
@@ -282,105 +289,124 @@
 				return true;
 			};
 
-
-            $('#btnAddPurchasedetialItem').click(function() {
+			$('#btnAddPurchasedetialItem').click(function() {
 				item_num1++;
 
-                var  itemHtml = '<div class="item-row margin-top-5">\
+				var  itemHtml = '<div class="item-row margin-top-5">\
                 <div name="container_item_purchasedetail">\
-                		<div class="row">\
-                	<div class="col-xs-3">\
-						<div class="form-group">\
-							<label for="partid" class="control-label">部位</label>\
-							<div class="row">\
-								<div class="col-xs-12">\
-									<select id="partid_' + String(item_num1) + '" class="form-control" name="partid" >\
-										<option value="" disabled selected>--请选择--</option>\
-										@foreach($parts as $part)
-												 <option  value="{{ $part->id }}">{{ $part->name }}</option>\
-										@endforeach
-									</select>\
-								</div>\
-							</div>\
-                    	</div>\
+                	<div class="row">\
+						<div class="col-xs-3">\
+							<div class="form-group">\
+								<label for="partid" class="control-label">部位</label>\
+								<div class="row">\
+									<div class="col-xs-12">\
+										<select id="partid_' + String(item_num1) + '" class="form-control" name="partid" >\
+											<option value="" disabled selected>--请选择--</option>\
+											@foreach($parts as $part)
+						<option  value="{{ $part->id }}">{{ $part->name }}</option>\
+                                                                    @endforeach
+						</select>\
                     </div>\
-                    <div class="col-xs-3">\
-						<div class="form-group">\
-							<label for="fabric_desc" class="control-label">面料</label>\
-							<div class="row">\
-								<div class="col-xs-12">\
-									<input class="form-control"  name="fabric_desc" type="text" id="fabric_desc_' + String(item_num1) + '">\
-                				</div>\
+                </div>\
+            </div>\
+        </div>\
+        <div class="col-xs-3">\
+            <div class="form-group">\
+                <label for="fabric_desc" class="control-label">面料</label>\
+                <div class="row">\
+                    <div class="col-xs-12">\
+                        <input class="form-control"  name="fabric_desc" type="text" id="fabric_desc_' + String(item_num1) + '">\
+                                        </div>\
+                                    </div>\
+                                </div>\
+                            </div>\
+						<div class="col-xs-3">\
+							<div class="form-group">\
+								<label for="composition" class="control-label">成分</label>\
+								<div class="row">\
+									<div class="col-xs-12">\
+										<input class="form-control"  name="composition" type="text" id="composition_' + String(item_num1) + '">\
+									</div>\
+								</div>\
 							</div>\
 						</div>\
-					</div>\
-					<div class="col-xs-3">\
-						<div class="form-group">\
-							<label for="composition" class="control-label">成分</label>\
-							<div class="row">\
-								<div class="col-xs-12">\
-									<input class="form-control"  name="composition" type="text" id="composition_' + String(item_num1) + '">\
-                				</div>\
-							</div>\
-						</div>\
-					</div>\
-					<div class="col-xs-3">\
-						<div class="form-group">\
-							<label for="valid_width" class="control-label">有效门幅</label>\
-							<div class="row">\
-								<div class="col-xs-10">\
-									<input class="form-control"  type="text" id="valid_width_' + String(item_num1) + '" name="valid_width" >\
-                				</div>\
-                				<div class="col-xs-1 text-right ">\
-									<button type="button" class="btn btn-circle remove-item" aria-label="Close"><span aria-hidden="true">&times;</span></button>\
+						<div class="col-xs-3">\
+							<div class="form-group">\
+								<label for="valid_width" class="control-label">有效门幅</label>\
+								<div class="row">\
+									<div class="col-xs-10">\
+										<input class="form-control"  type="text" id="valid_width_' + String(item_num1) + '" name="valid_width" >\
+									</div>\
+									<div class="col-xs-1 text-right ">\
+										<button type="button" class="btn btn-circle remove-item" aria-label="Close"><span aria-hidden="true">&times;</span></button>\
+									</div>\
 								</div>\
 							</div>\
 						</div>\
 					</div>\
+					<div class="row">\
+						<div class="col-xs-3">\
+							<div class="form-group">\
+								<label for="edge_to_edge_width" class="control-label">边到边门幅</label>\
+								<div class="row">\
+									<div class="col-xs-12">\
+										<input class="form-control"  type="text" id="edge_to_edge_width_' + String(item_num1) + '" name="edge_to_edge_width" >\
+									</div>\
+								</div>\
+							</div>\
+						</div>\
+						<div class="col-xs-3">\
+							<div class="form-group">\
+								<label for="qty" class="control-label">用料</label>\
+								<div class="row">\
+									<div class="col-xs-12">\
+										<input class="form-control qty"   type="text" id="qty_' + String(item_num1) + '" name="qty" >\
+									</div>\
+								</div>\
+							</div>\
+						</div>\
+						<div class="col-xs-3">\
+							<div class="form-group">\
+								<label for="price" class="control-label">工厂单价</label>\
+								<div class="row">\
+									<div class="col-xs-12">\
+										<input class="form-control price"  type="text" id="price_' + String(item_num1) + '" name="price" >\
+									</div>\
+								</div>\
+							</div>\
+						</div>\
+						<div class="col-xs-3">\
+							<div class="form-group">\
+								<label for="outprice" class="control-label">报出单价</label>\
+								<div class="row">\
+									<div class="col-xs-12">\
+										<input class="form-control outprice"  type="text" id="price_' + String(item_num1) + '" name="outprice" >\
+									</div>\
+								</div>\
+							</div>\
+						</div>\
 					</div>\
 					<div class="row">\
-					<div class="col-xs-3">\
-						<div class="form-group">\
-							<label for="edge_to_edge_width" class="control-label">边到边门幅</label>\
-							<div class="row">\
-								<div class="col-xs-12">\
-									<input class="form-control"  type="text" id="edge_to_edge_width_' + String(item_num1) + '" name="edge_to_edge_width" >\
-                				</div>\
+					    <div class="col-xs-3">\
+							<div class="form-group">\
+								<label for="total_price" class="control-label">工厂费用合计</label>\
+								<div class="row">\
+									<div class="col-xs-12">\
+										<input class="form-control total_price"  type="text" id="total_price_' + String(item_num1) + '" name="total_price" disabled="disabled" >\
+									</div>\
+								</div>\
 							</div>\
 						</div>\
-					</div>\
-					<div class="col-xs-3">\
-						<div class="form-group">\
-							<label for="qty" class="control-label">用料</label>\
-							<div class="row">\
-								<div class="col-xs-12">\
-									<input class="form-control qty"   type="text" id="qty_' + String(item_num1) + '" name="qty" >\
-                				</div>\
+						<div class="col-xs-3">\
+							<div class="form-group">\
+								<label for="total_outprice" class="control-label">报出费用合计</label>\
+								<div class="row">\
+									<div class="col-xs-12">\
+										<input class="form-control total_outprice"  type="text" id="total_outprice_' + String(item_num1) + '" name="total_outprice" disabled="disabled" >\
+									</div>\
+								</div>\
 							</div>\
 						</div>\
-					</div>\
-					<div class="col-xs-3">\
-						<div class="form-group">\
-							<label for="price" class="control-label">面料单价</label>\
-							<div class="row">\
-								<div class="col-xs-12">\
-									<input class="form-control price"  type="text" id="price_' + String(item_num1) + '" name="price" >\
-                				</div>\
-							</div>\
-						</div>\
-					</div>\
-					<div class="col-xs-3">\
-						<div class="form-group">\
-							<label for="total_price" class="control-label">费用合计</label>\
-							<div class="row">\
-								<div class="col-xs-12">\
-									<input class="form-control total_price"  type="text" id="total_price_' + String(item_num1) + '" name="total_price" disabled="disabled" >\
-                				</div>\
-							</div>\
-						</div>\
-					</div>\
-					</div>\
-					<div class="row">\
 						<div class="col-xs-3">\
 							<div class="form-group">\
 								<label for="total_qty" class="control-label">用料合计</label>\
@@ -391,22 +417,22 @@
 									</div>\
 							</div>\
 						</div>\
-					<div class="col-xs-3">\
-						<div class="form-group">\
-							<label for="factoryname" class="control-label">工厂</label>\
-							<div class="row">\
-								<div class="col-xs-12">\
-									<input class="form-control"  type="text" id="factoryname_' + String(item_num1) + '" name="factoryname" >\
-                				</div>\
+						<div class="col-xs-3">\
+							<div class="form-group">\
+								<label for="factoryname" class="control-label">工厂</label>\
+								<div class="row">\
+									<div class="col-xs-12">\
+										<input class="form-control"  type="text" id="factoryname_' + String(item_num1) + '" name="factoryname" >\
+									</div>\
+								</div>\
 							</div>\
 						</div>\
-					</div>\
 					</div>\
 				</div>\
 				</div>\
 			</div>';
 				$(itemHtml).hide().appendTo("#sortable1").fadeIn(500);
-            });
+			});
 
 			$("#btnAddIngedientdetailItem").click(function() {
 				item_num2++;
@@ -422,26 +448,26 @@
 									<select id="ingredientid_' + String(item_num2) + '" class="form-control" name="ingredientid" >\
 									<option value="" disabled selected>--请选择--</option>\
 									@foreach($ingredients as $ingredient)
-										<option  value="{{ $ingredient->id }}">{{ $ingredient->name }}</option>\
-									@endforeach
-									</select>\
-								</div>\
-							</div>\
-						</div>\
-					</div>\
-					<div class="col-xs-3">\
-						<div class="form-group">\
-							<label for="qty" class="control-label">用料</label>\
-								<div class="row">\
-									<div class="col-xs-12">\
-										<input class="form-control qty"  type="text" id="qty_' + String(item_num2) + '" name="qty" >\
+						<option  value="{{ $ingredient->id }}">{{ $ingredient->name }}</option>\
+                                                    @endforeach
+						</select>\
+                    </div>\
+                </div>\
+            </div>\
+        </div>\
+        <div class="col-xs-3">\
+            <div class="form-group">\
+                <label for="qty" class="control-label">用料</label>\
+                    <div class="row">\
+                        <div class="col-xs-12">\
+                            <input class="form-control qty"  type="text" id="qty_' + String(item_num2) + '" name="qty" >\
 									</div>\
 								</div>\
 						</div>\
 					</div>\
 					<div class="col-xs-3">\
 						<div class="form-group">\
-							<label for="price" class="control-label">单价</label>\
+							<label for="price" class="control-label">工厂单价</label>\
 							<div class="row">\
 								<div class="col-xs-12">\
 									<input class="form-control price"  type="text" id="price_' + String(item_num2) + '" name="price" >\
@@ -451,19 +477,39 @@
 					</div>\
 					<div class="col-xs-3">\
 						<div class="form-group">\
-							<label for="total_price" class="control-label">费用合计</label>\
+							<label for="outprice" class="control-label">报出单价</label>\
 							<div class="row">\
-								<div class="col-xs-10">\
-									<input class="form-control total_price"  type="text" id="total_price_\' + String(item_num2) + \'" name="total_price" disabled="disabled">\
+								<div class="col-xs-11">\
+									<input class="form-control outprice"  type="text" id="price_' + String(item_num2) + '" name="outprice" >\
                 				</div>\
                 				<div class="col-xs-1 text-right ">\
-										<button type="button" class="btn btn-circle remove-item" aria-label="Close"><span aria-hidden="true">&times;</span></button>\
+									<button type="button" class="btn btn-circle remove-item" aria-label="Close"><span aria-hidden="true">&times;</span></button>\
 								</div>\
 							</div>\
 						</div>\
 					</div>\
 					</div>\
 					<div class="row">\
+						<div class="col-xs-3">\
+							<div class="form-group">\
+								<label for="total_price" class="control-label">工厂费用合计</label>\
+								<div class="row">\
+									<div class="col-xs-10">\
+										<input class="form-control total_price"  type="text" id="total_price_' + String(item_num2) + '" name="total_price" disabled="disabled">\
+									</div>\
+								</div>\
+							</div>\
+						</div>\
+						<div class="col-xs-3">\
+							<div class="form-group">\
+								<label for="total_outprice" class="control-label">报出费用合计</label>\
+								<div class="row">\
+									<div class="col-xs-10">\
+										<input class="form-control total_outprice"  type="text" id="total_outprice_' + String(item_num2) + '" name="total_outprice" disabled="disabled">\
+									</div>\
+								</div>\
+							</div>\
+						</div>\
 						<div class="col-xs-3">\
 							<div class="form-group">\
 								<label for="total_qty" class="control-label">用料合计</label>\
@@ -484,6 +530,8 @@
 								</div>\
 							</div>\
 						</div>\
+					</div>\
+					<div class="row">\
 						<div class="col-xs-3">\
 							<div class="form-group">\
 								<label for="ingredient_desc" class="control-label">辅料说明</label>\
@@ -503,7 +551,7 @@
 
 			$("#btnAddProcessdetailItem").click(function() {
 				item_num3++;
-				{{--{{$processes}};--}}
+						{{--{{$processes}};--}}
 				var itemHtml = '<div class="item-row margin-top-5">\
 				<div name="container_item_processdetail">\
 					<div class="row">\
@@ -515,19 +563,19 @@
 										<select id="processid_' + String(item_num3) + '" class="form-control" name="processid"  >\
 										<option value="" disabled selected>--请选择--</option> \
 										@foreach($processes as $process)
-											<option  value="{{ $process->id }}">{{ $process->name }}</option>\
-										@endforeach
-										</select>\
-									</div>\
-								</div>\
-							</div>\
-						</div>\
-						<div class="col-xs-3">\
-							<div class="form-group">\
-								<label for="price" class="control-label">费用价格</label>\
-									<div class="row">\
-										<div class="col-xs-11">\
-											<input class="form-control price"  type="text" id="price_' + String(item_num3) + '" name="price" >\
+								<option  value="{{ $process->id }}">{{ $process->name }}</option>\
+                                                        @endforeach
+								</select>\
+                            </div>\
+                        </div>\
+                    </div>\
+                </div>\
+                <div class="col-xs-3">\
+                    <div class="form-group">\
+                        <label for="price" class="control-label">费用价格</label>\
+                            <div class="row">\
+                                <div class="col-xs-11">\
+                                    <input class="form-control price"  type="text" id="price_' + String(item_num3) + '" name="price" >\
 										</div>\
 										<div class="col-xs-1 text-right ">\
 											<button type="button" class="btn btn-circle remove-item" aria-label="Close"><span aria-hidden="true">&times;</span></button>\
@@ -545,20 +593,23 @@
 			$('#formMain').on('click','.remove-item', function () {
 				$(this).closest('.item-row').fadeOut(300, function() {
 					$(this).remove();
-					// calculateTotal();
+					calculateTotal();
 				});
 			});
 
-			$('#formMain').on('keyup change','.qty, .price,#length_carton,#width_carton,#high_carton,#qty_percarton,#process_tax,#exchange_rate,#risk_rate ', function () {
+			$('#formMain').on('keyup change','.qty, .price,.outprice,#length_carton,#width_carton,#high_carton,#qty_percarton,#process_tax,#exchange_rate,#risk_rate', function () {
 				var quantity = $(this).closest('.item-row').find('.qty').val();
 
 				var perItemCost = $(this).closest('.item-row').find('.price').val();
+				var perItemOutCost = $(this).closest('.item-row').find('.outprice').val();
 				var  prod_qty =$('#prod_qty').val();
 				var amount = (quantity*perItemCost);
+				var outamount= (quantity * perItemOutCost);
 				var perItemQty =parseFloat(quantity) * parseFloat(prod_qty);
 
 				$(this).closest('.item-row').find('.total_price').val(amount.toFixed(2));
 				$(this).closest('.item-row').find('.total_qty').val(perItemQty.toFixed(2));
+				$(this).closest('.item-row').find('.total_outprice').val(outamount.toFixed(2));
 				// alert($(this).closest('.item-row').children('div').attr('name'));
 
 				calculateTotal();
@@ -569,7 +620,9 @@
 				var vamount=0;
 				var vprod_qty =$('#prod_qty').val();
 				var vamountPurchase=0;
+				var vamountOutPurchase=0;
 				var vamountIngredient=0;
+				var vamountOutIngredient=0;
 				var vamountCost=0;
 				var vprocessCost=0;
 				var vpurchaseCost=0;
@@ -588,13 +641,17 @@
 					if($(this).closest('.item-row').children('div').attr('name') == 'container_item_purchasedetail')
 					{
 						var perPurchaseItemCost = $(this).closest('.item-row').find('.total_price').val();
+						var perPurchaseItemOutCost = $(this).closest('.item-row').find('.total_outprice').val();
 						vamountPurchase = parseFloat(perPurchaseItemCost) + parseFloat(vamountPurchase);
+						vamountOutPurchase = parseFloat(perPurchaseItemOutCost) + parseFloat(vamountOutPurchase);
 					}
 					//
 					if($(this).closest('.item-row').children('div').attr('name') == 'container_item_ingredientdetail')
 					{
 						var perIngredientItemCost = $(this).closest('.item-row').find('.total_price').val();
+						var perIngredientItemOutCost = $(this).closest('.item-row').find('.total_outprice').val();
 						vamountIngredient = parseFloat(perIngredientItemCost) + parseFloat(vamountIngredient);
+						vamountOutIngredient = parseFloat(perIngredientItemOutCost) + parseFloat(vamountOutIngredient);
 					}
 
 				});
@@ -606,15 +663,32 @@
 				{
 					vamountPurchase=0;
 				}
+				if(isNaN(vamountOutIngredient))
+				{
+					vamountOutIngredient=0;
+				}
+				if(isNaN(vamountOutPurchase))
+				{
+					vamountOutPurchase=0;
+				}
 				vamountCost= parseFloat(vamountPurchase) + parseFloat(vamountIngredient);
+				var vamountOutCost= parseFloat(vamountOutPurchase) + parseFloat(vamountOutIngredient);
 				// alert(vamountCost);
 				$('#process_costs').val(vamount.toFixed(2));
 				$('#purchase_costs').val(vamountCost.toFixed(2));
+				$('#purchase_outcosts').val(vamountOutCost.toFixed(2));
 				vprocessCost=$('#process_costs').val();
 				vpurchaseCost=$('#purchase_costs').val();
+				var vpurchaseOutCost=$('#purchase_outcosts').val();
 				vtotalCost=parseFloat(vprocessCost) + parseFloat(vpurchaseCost);
+				var vtotalOutCost=parseFloat(vprocessCost) + parseFloat(vpurchaseOutCost);
 				if(isNaN(vtotalCost )|| vtotalCost=="" || vtotalCost=="Infinity" )
-					$('#total_costs').val(vtotalCost.toFixed(2));
+					vtotalCost=0
+				$('#total_costs').val(vtotalCost.toFixed(2));
+
+				if(isNaN(vtotalOutCost )|| vtotalOutCost=="" || vtotalOutCost=="Infinity" )
+					vtotalOutCost=0
+				$('#total_outcosts').val(vtotalOutCost.toFixed(2));
 
 				var processtax=$('#process_tax').val();
 				if(isNaN(processtax )|| processtax=="" || processtax=="Infinity" )
@@ -683,9 +757,9 @@
 			$('#prod_qty').on('keyup change',function () {
 				var prod_qty=$(this).val();
 				$('.total_qty').each(function (index,element) {
-				var quantity = $(this).closest('.item-row').find('.qty').val();
-				var perItemQty =(parseFloat(quantity) * parseFloat(prod_qty));
-				$(this).val(perItemQty.toFixed(2));
+					var quantity = $(this).closest('.item-row').find('.qty').val();
+					var perItemQty =(parseFloat(quantity) * parseFloat(prod_qty));
+					$(this).val(perItemQty.toFixed(2));
 				})
 				calculateTotal();
 			})

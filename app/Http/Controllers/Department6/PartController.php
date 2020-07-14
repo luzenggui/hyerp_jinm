@@ -62,6 +62,15 @@ class PartController extends Controller
         //
     }
 
+    public function copypart($id)
+    {
+//        dd($id);
+        $newpart=Part::find($id)->replicate();
+        $newpart->save();
+
+        return redirect('department6/part');
+
+    }
     /**
      * Show the form for editing the specified resource.
      *

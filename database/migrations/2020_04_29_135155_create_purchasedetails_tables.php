@@ -23,8 +23,10 @@ class CreatePurchasedetailsTables extends Migration
             $table->string('edge_to_edge_width')->nullable();
             $table->decimal('qty',8,2)->nullable()->default(0);
             $table->decimal('price',8,2)->nullable()->default(0);
+            $table->decimal('outprice',8,2)->nullable()->default(0);
             $table->decimal('total_qty',8,2)->nullable()->default(0);
             $table->decimal('total_price',8,2)->nullable()->default(0);
+            $table->decimal('total_outprice',8,2)->nullable()->default(0);
             $table->string('factoryname')->nullable();
             $table->timestamps();
 

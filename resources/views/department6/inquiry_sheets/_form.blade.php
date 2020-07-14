@@ -1,5 +1,5 @@
 <div class="form-body">
-    <div class="row">
+    <div class="row" >
         <div class='col-xs-3'>
             <div class="form-group">
                 {!! Form::label('customername', '客户', ['class' => 'control-label']) !!}
@@ -123,7 +123,7 @@
                 {!! Form::label('remark_factory', '工厂提供', ['class' => 'control-label' ]) !!}
                 <div class="row">
                     <div class="col-xs-12">
-                        {!! Form::text('remark_factory', null, ['class' => 'form-control', $attr,  'id' => 'total_qty_1']) !!}
+                        {!! Form::text('remark_factory', null, ['class' => 'form-control', $attr]) !!}
                     </div>
                 </div>
             </div>
@@ -157,15 +157,15 @@
      @if(isset($inquiry_sheet->purchasedetail))
          @foreach($inquiry_sheet->purchasedetail as $purchasedetail)
 
-                <div class="item-row margin-top-5">
-                    <div name="container_item_purchasedetail">
-                        <div class="row">
+                <div class="item-row margin-top-5 " >
+                    <div name="container_item_purchasedetail" >
+                        <div class="row" >
                             <div class='col-xs-3'>
                                 <div class="form-group">
                                     {!! Form::label('partid', '部位', ['class' => ' control-label']) !!}
                                     <div class="row">
                                         <div class="col-xs-12">
-                                                <select class="form-control" name="partid" >
+                                                <select class="form-control" name="partid" id="selectPartid" >
                                                     @foreach($parts as $part)
                                                         @if($part->id==$purchasedetail->partid)
                                                         <option  value="{{ $part->id }} " selected >{{ $part->name }}</option>
@@ -256,10 +256,10 @@
 
                             <div class='col-xs-3'>
                                 <div class="form-group">
-                                    {!! Form::label('total_price', '费用合计', ['class' => 'control-label' ]) !!}
+                                    {!! Form::label('outprice', '报出单价', ['class' => 'control-label']) !!}
                                     <div class="row">
                                         <div class="col-xs-12">
-                                            {!! Form::text('total_price', $purchasedetail->total_price, ['class' => 'form-control total_price', $attr,$attrdisable]) !!}
+                                            {!! Form::text('outprice', $purchasedetail->outprice, ['class' => 'form-control outprice', $attr]) !!}
                                         </div>
                                     </div>
                                 </div>
@@ -268,6 +268,28 @@
                         </div>
 
                         <div class="row">
+                            <div class='col-xs-3'>
+                                <div class="form-group">
+                                    {!! Form::label('total_price', '工厂费用合计', ['class' => 'control-label' ]) !!}
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            {!! Form::text('total_price', $purchasedetail->total_price, ['class' => 'form-control total_price', $attr,$attrdisable]) !!}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class='col-xs-3'>
+                                <div class="form-group">
+                                    {!! Form::label('total_outprice', '报出费用合计', ['class' => 'control-label' ]) !!}
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            {!! Form::text('total_outprice', $purchasedetail->total_outprice, ['class' => 'form-control total_outprice', $attr,$attrdisable]) !!}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class='col-xs-3'>
                                 <div class="form-group">
                                     {!! Form::label('total_qty', '用料合计', ['class' => 'control-label' ]) !!}
@@ -296,15 +318,16 @@
         @endforeach
 
     @else
-            <div class="item-row margin-top-5">
-                <div name="container_item_purchasedetail">
+            <div class="item-row margin-top-5" style="background-color:#C0C0C0;">
+                <div name="container_item_purchasedetail" >
                     <div class="row">
                         <div class='col-xs-3'>
                             <div class="form-group">
                                 {!! Form::label('partid', '部位', ['class' => ' control-label']) !!}
                                 <div class="row">
                                     <div class="col-xs-12">
-                                            {!! Form::select('partid', $partList,null, ['class' => 'form-control', 'placeholder' => '--请选择--', $attr, ]) !!}
+                                            {!! Form::select('partid', $partList,null, ['class' => 'form-control', 'placeholder' => '--请选择--', 'id'=>'selectPartid' ]) !!}
+{{--                                            {!! Form::hidden('part_id', null, ['id' => 'part_id']) !!}--}}
                                     </div>
                                 </div>
                             </div>
@@ -385,7 +408,21 @@
 
                         <div class='col-xs-3'>
                             <div class="form-group">
-                                {!! Form::label('total_price', '费用合计', ['class' => 'control-label' ]) !!}
+                                {!! Form::label('outprice', '报出单价', ['class' => 'control-label']) !!}
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        {!! Form::text('outprice', null, ['class' => 'form-control outprice', $attr]) !!}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class='col-xs-3'>
+                            <div class="form-group">
+                                {!! Form::label('total_price', '工厂费用合计', ['class' => 'control-label' ]) !!}
                                 <div class="row">
                                     <div class="col-xs-12">
                                         {!! Form::text('total_price', null, ['class' => 'form-control total_price', $attr,$attrdisable]) !!}
@@ -393,9 +430,18 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="row">
+                        <div class='col-xs-3'>
+                            <div class="form-group">
+                                {!! Form::label('total_outprice', '报出费用合计', ['class' => 'control-label' ]) !!}
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        {!! Form::text('total_outprice', null, ['class' => 'form-control total_outprice', $attr,$attrdisable]) !!}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class='col-xs-3'>
                             <div class="form-group">
                                 {!! Form::label('total_qty', '用料合计', ['class' => 'control-label' ]) !!}
@@ -431,8 +477,8 @@
     <div id="sortable2">
     @if(isset($inquiry_sheet->ingredientdetail))
         @foreach($inquiry_sheet->ingredientdetail as $ingredientdetail)
-          <div class="item-row margin-top-5">
-            <div name="container_item_ingredientdetail">
+          <div class="item-row margin-top-5" >
+            <div name="container_item_ingredientdetail" >
                 <div class="row">
                     <div class='col-xs-3'>
                         <div class="form-group">
@@ -467,7 +513,7 @@
 
                     <div class='col-xs-3'>
                         <div class="form-group">
-                            {!! Form::label('price', '单价', ['class' => 'control-label' ]) !!}
+                            {!! Form::label('price', '工厂单价', ['class' => 'control-label' ]) !!}
                             <div class="row">
                                 <div class="col-xs-12">
                                     {!! Form::text('price', $ingredientdetail->price, ['class' => 'form-control price', $attr]) !!}
@@ -478,10 +524,10 @@
 
                     <div class='col-xs-3'>
                         <div class="form-group">
-                            {!! Form::label('total_price', '费用合计', ['class' => 'control-label' ]) !!}
+                            {!! Form::label('outprice', '报出单价', ['class' => 'control-label' ]) !!}
                             <div class="row">
                                 <div class="col-xs-10">
-                                    {!! Form::text('total_price', $ingredientdetail->total_price, ['class' => 'form-control total_price', $attr,$attrdisable]) !!}
+                                    {!! Form::text('outprice', $ingredientdetail->outprice, ['class' => 'form-control outprice', $attr]) !!}
                                 </div>
 
                                 <div class="col-xs-1 text-right ">
@@ -490,10 +536,31 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
 
                 <div class="row">
+                    <div class='col-xs-3'>
+                        <div class="form-group">
+                            {!! Form::label('total_price', '工厂费用合计', ['class' => 'control-label' ]) !!}
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    {!! Form::text('total_price', $ingredientdetail->total_price, ['class' => 'form-control total_price', $attr,$attrdisable]) !!}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class='col-xs-3'>
+                        <div class="form-group">
+                            {!! Form::label('total_outprice', '报出费用合计', ['class' => 'control-label' ]) !!}
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    {!! Form::text('total_outprice', $ingredientdetail->total_outprice, ['class' => 'form-control total_outprice', $attr,$attrdisable]) !!}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class='col-xs-3'>
                         <div class="form-group">
                             {!! Form::label('total_qty', '用料合计', ['class' => 'control-label' ]) !!}
@@ -515,7 +582,8 @@
                             </div>
                         </div>
                     </div>
-
+                </div>
+                <div class="row">
                     <div class='col-xs-3'>
                         <div class="form-group">
                             {!! Form::label('ingredient_desc', '辅料说明', ['class' => 'control-label']) !!}
@@ -526,15 +594,14 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
                 </div>
     @endforeach
 
     @else
-            <div class="item-row margin-top-5">
-                <div name="container_item_ingredientdetail">
+            <div class="item-row margin-top-5" style="background-color:#C0C0C0;">
+                <div name="container_item_ingredientdetail" >
                     <div class="row">
                     <div class='col-xs-3'>
                         <div class="form-group">
@@ -560,7 +627,7 @@
 
                     <div class='col-xs-3'>
                         <div class="form-group">
-                            {!! Form::label('price', '单价', ['class' => 'control-label' ]) !!}
+                            {!! Form::label('price', '工厂单价', ['class' => 'control-label' ]) !!}
                             <div class="row">
                                 <div class="col-xs-12">
                                     {!! Form::text('price', null, ['class' => 'form-control price', $attr]) !!}
@@ -571,57 +638,79 @@
 
                     <div class='col-xs-3'>
                         <div class="form-group">
-                            {!! Form::label('total_price', '费用合计', ['class' => 'control-label' ]) !!}
+                            {!! Form::label('outprice', '报出单价', ['class' => 'control-label' ]) !!}
                             <div class="row">
                                 <div class="col-xs-10">
-                                    {!! Form::text('total_price', null, ['class' => 'form-control total_price', $attr,$attrdisable]) !!}
+                                    {!! Form::text('outprice', null, ['class' => 'form-control outprice', $attr]) !!}
                                 </div>
-
                                 <div class="col-xs-1 text-right ">
                                     <button type="button" class="btn btn-circle remove-item" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
 
+                <div class="row">
+                    <div class='col-xs-3'>
+                        <div class="form-group">
+                            {!! Form::label('total_price', '工厂费用合计', ['class' => 'control-label' ]) !!}
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    {!! Form::text('total_price', null, ['class' => 'form-control total_price', $attr,$attrdisable]) !!}
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="row">
-                        <div class='col-xs-3'>
-                            <div class="form-group">
-                                {!! Form::label('total_qty', '用料合计', ['class' => 'control-label' ]) !!}
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        {!! Form::text('total_qty', null, ['class' => 'form-control total_qty', $attr,$attrdisable]) !!}
-                                    </div>
+                    <div class='col-xs-3'>
+                        <div class="form-group">
+                            {!! Form::label('total_outprice', '报出费用合计', ['class' => 'control-label' ]) !!}
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    {!! Form::text('total_outprice', null, ['class' => 'form-control total_outprice', $attr,$attrdisable]) !!}
                                 </div>
                             </div>
                         </div>
+                    </div>
 
-                        <div class='col-xs-3'>
-                            <div class="form-group">
-                                {!! Form::label('remark_factory', '工厂提供', ['class' => 'control-label']) !!}
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        {!! Form::text('remark_factory',  null, ['class' => 'form-control',  $attr]) !!}
-                                    </div>
+                    <div class='col-xs-3'>
+                        <div class="form-group">
+                            {!! Form::label('total_qty', '用料合计', ['class' => 'control-label' ]) !!}
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    {!! Form::text('total_qty', null, ['class' => 'form-control total_qty', $attr,$attrdisable]) !!}
                                 </div>
                             </div>
                         </div>
+                    </div>
 
-                        <div class='col-xs-3'>
-                            <div class="form-group">
-                                {!! Form::label('ingredient_desc', '辅料说明', ['class' => 'control-label']) !!}
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        {!! Form::text('ingredient_desc',  null, ['class' => 'form-control',  $attr]) !!}
-                                    </div>
+                    <div class='col-xs-3'>
+                        <div class="form-group">
+                            {!! Form::label('remark_factory', '工厂提供', ['class' => 'control-label']) !!}
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    {!! Form::text('remark_factory',  null, ['class' => 'form-control',  $attr]) !!}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class='col-xs-3'>
+                        <div class="form-group">
+                            {!! Form::label('ingredient_desc', '辅料说明', ['class' => 'control-label']) !!}
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    {!! Form::text('ingredient_desc',  null, ['class' => 'form-control',  $attr]) !!}
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
     @endif
     </div>
     {{--{!! Form::button('+增加明细', ['class' => 'btn btn-sm', 'id' => 'btnAddTravel']) !!}--}}
@@ -635,7 +724,7 @@
      @if(isset($inquiry_sheet->processdetail))
 
     @foreach($inquiry_sheet->processdetail as $processdetail)
-                <div class="item-row margin-top-5">
+                <div class="item-row margin-top-5" >
                       <div name="container_item_processdetail">
                           <div class="row">
                               <div class='col-xs-3'>
@@ -660,7 +749,7 @@
 
                               <div class='col-xs-3'>
                                   <div class="form-group">
-                                      {!! Form::label('price', '费用价格', ['class' => 'control-label' ]) !!}
+                                      {!! Form::label('price', '工厂费用', ['class' => 'control-label' ]) !!}
                                       <div class="row">
                                           <div class="col-xs-12">
                                               {!! Form::text('price', $processdetail->price, ['class' => 'form-control price', $attr]) !!}
@@ -669,25 +758,25 @@
                                   </div>
                               </div>
 
-                              {{--<div class='col-xs-3'>--}}
-                                  {{--<div class="form-group">--}}
-                                      {{--{!! Form::label('total_price', '费用合计', ['class' => 'control-label' ]) !!}--}}
-                                      {{--<div class="row">--}}
-                                          {{--<div class="col-xs-11">--}}
-                                              {{--{!! Form::text('total_price', $processdetail->total_price, ['class' => 'form-control total_price', $attr,$attrdisable]) !!}--}}
-                                          {{--</div>--}}
-                                          {{--<div class="col-xs-1 text-right ">--}}
-                                              {{--<button type="button" class="btn btn-circle remove-item" aria-label="Close"><span aria-hidden="true">&times;</span></button>--}}
-                                          {{--</div>--}}
-                                      {{--</div>--}}
-                                  {{--</div>--}}
-                              {{--</div>--}}
+                              <div class='col-xs-3'>
+                                  <div class="form-group">
+                                      {!! Form::label('outprice', '报出费用', ['class' => 'control-label' ]) !!}
+                                      <div class="row">
+                                          <div class="col-xs-11">
+                                              {!! Form::text('outprice', $processdetail->outprice, ['class' => 'form-control outprice', $attr]) !!}
+                                          </div>
+                                          <div class="col-xs-1 text-right ">
+                                              <button type="button" class="btn btn-circle remove-item" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
                           </div>
                       </div>
                 </div>
     @endforeach
     @else
-        <div class="item-row margin-top-5">
+        <div class="item-row margin-top-5" style="background-color:#C0C0C0;">
                 <div name="container_item_processdetail">
                     <div class="row">
                         <div class='col-xs-3'>
@@ -703,7 +792,7 @@
 
                         <div class='col-xs-3'>
                             <div class="form-group">
-                                {!! Form::label('price', '费用价格', ['class' => 'control-label' ]) !!}
+                                {!! Form::label('price', '工厂费用', ['class' => 'control-label' ]) !!}
                                 <div class="row">
                                     <div class="col-xs-11">
                                         {!! Form::text('price', null, ['class' => 'form-control price', $attr]) !!}
@@ -714,20 +803,6 @@
                                 </div>
                             </div>
                         </div>
-
-                        {{--<div class='col-xs-3'>--}}
-                            {{--<div class="form-group">--}}
-                                {{--{!! Form::label('total_price', '费用合计', ['class' => 'control-label' ]) !!}--}}
-                                {{--<div class="row">--}}
-                                    {{--<div class="col-xs-11">--}}
-                                        {{--{!! Form::text('total_price', null, ['class' => 'form-control total_price', $attr,$attrdisable]) !!}--}}
-                                    {{--</div>--}}
-                                    {{--<div class="col-xs-1 text-right ">--}}
-                                        {{--<button type="button" class="btn btn-circle remove-item" aria-label="Close"><span aria-hidden="true">&times;</span></button>--}}
-                                    {{--</div>--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
 
                     </div>
             </div>
@@ -758,7 +833,7 @@
 
          <div class='col-xs-3'>
              <div class="form-group">
-                 {!! Form::label('process_costs', '加工费合计', ['class' => 'control-label']) !!}
+                 {!! Form::label('process_costs', '工厂加工费合计', ['class' => 'control-label']) !!}
                  <div class="row">
                      <div class="col-xs-12">
                          {!! Form::text('process_costs',  null, ['class' => 'form-control',  $attr,$attrdisable,'id' =>'process_costs']) !!}
@@ -769,7 +844,7 @@
 
          <div class='col-xs-3'>
              <div class="form-group">
-                 {!! Form::label('process_taxcosts', '加工费(含税)合计', ['class' => 'control-label']) !!}
+                 {!! Form::label('process_taxcosts', '工厂加工费(含税)合计', ['class' => 'control-label']) !!}
                  <div class="row">
                      <div class="col-xs-12">
                          {!! Form::text('process_taxcosts',  null, ['class' => 'form-control',  $attr,$attrdisable,'id' =>'process_taxcosts']) !!}
@@ -780,7 +855,7 @@
 
          <div class='col-xs-3'>
              <div class="form-group">
-                 {!! Form::label('purchase_costs', '采购费合计', ['class' => 'control-label']) !!}
+                 {!! Form::label('purchase_costs', '工厂采购费合计', ['class' => 'control-label']) !!}
                  <div class="row">
                      <div class="col-xs-12">
                          {!! Form::text('purchase_costs',  null, ['class' => 'form-control',  $attr,$attrdisable,'id' =>'purchase_costs']) !!}
@@ -791,6 +866,17 @@
      </div>
 
       <div class="row">
+          <div class='col-xs-3'>
+              <div class="form-group">
+                  {!! Form::label('purchase_outcosts', '报出采购费合计', ['class' => 'control-label']) !!}
+                  <div class="row">
+                      <div class="col-xs-12">
+                          {!! Form::text('purchase_outcosts',  null, ['class' => 'form-control',  $attr,$attrdisable,'id' =>'purchase_outcosts']) !!}
+                      </div>
+                  </div>
+              </div>
+          </div>
+
           <div class='col-xs-3'>
               <div class="form-group">
                   {!! Form::label('remark', '备注', ['class' => 'control-label']) !!}
@@ -823,7 +909,9 @@
                   </div>
               </div>
           </div>
+      </div>
 
+      <div class="row">
           <div class='col-xs-3'>
               <div class="form-group">
                   {!! Form::label('high_carton', 'H', ['class' => 'control-label']) !!}
@@ -834,9 +922,6 @@
                   </div>
               </div>
           </div>
-      </div>
-
-      <div class="row">
           <div class='col-xs-3'>
               <div class="form-group">
                   {!! Form::label('qty_percarton', '每箱数量', ['class' => 'control-label']) !!}
@@ -847,42 +932,6 @@
                   </div>
               </div>
           </div>
-
-          <div class='col-xs-3'>
-              <div class="form-group">
-                  {!! Form::label('vol_total', '总体积', ['class' => 'control-label']) !!}
-                  <div class="row">
-                      <div class="col-xs-12">
-                          {!! Form::text('vol_total',  null, ['class' => 'form-control',  $attr,$attrdisable]) !!}
-                      </div>
-                  </div>
-              </div>
-          </div>
-
-          <div class='col-xs-3'>
-              <div class="form-group">
-                  {!! Form::label('qty_container', '每个集装箱可装数量', ['class' => 'control-label']) !!}
-                  <div class="row">
-                      <div class="col-xs-12">
-                          {!! Form::text('qty_container',  null, ['class' => 'form-control',  $attr,$attrdisable]) !!}
-                      </div>
-                  </div>
-              </div>
-          </div>
-
-          <div class='col-xs-3'>
-              <div class="form-group">
-                  {!! Form::label('inland_freight', '内陆运费$（40HQ）', ['class' => 'control-label']) !!}
-                  <div class="row">
-                      <div class="col-xs-12">
-                          {!! Form::text('inland_freight',  null, ['class' => 'form-control',  $attr,$attrdisable]) !!}
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </div>
-
-      <div class="row">
           <div class='col-xs-3'>
               <div class="form-group">
                   {!! Form::label('arlington_ocean_freight', '海运费$(Arlington，USA-FCL40HQ)', ['class' => 'control-label']) !!}
@@ -904,10 +953,12 @@
                   </div>
               </div>
           </div>
+      </div>
 
+      <div class="row">
           <div class='col-xs-3'>
               <div class="form-group">
-                  {!! Form::label('risk_rate', '风险率', ['class' => 'control-label']) !!}
+                  {!! Form::label('risk_rate', '风险率(<1)', ['class' => 'control-label']) !!}
                   <div class="row">
                       <div class="col-xs-12">
                           {!! Form::text('risk_rate',  null, ['class' => 'form-control',  $attr]) !!}
@@ -926,9 +977,6 @@
                   </div>
               </div>
           </div>
-      </div>
-
-      <div class="row">
           <div class='col-xs-3'>
               <div class="form-group">
                   {!! Form::label('import_rate', '进口税率', ['class' => 'control-label']) !!}
@@ -950,7 +998,9 @@
                   </div>
               </div>
           </div>
+      </div>
 
+      <div class="row">
           <div class='col-xs-3'>
               <div class="form-group">
                   {!! Form::label('atc_ldp', 'LDP ATC,CA,USA(FCL40HQ)', ['class' => 'control-label']) !!}
@@ -961,9 +1011,10 @@
                   </div>
               </div>
           </div>
+
           <div class='col-xs-3'>
               <div class="form-group">
-                  {!! Form::label('total_costs', '合计总价', ['class' => 'control-label']) !!}
+                  {!! Form::label('total_costs', '工厂合计总价', ['class' => 'control-label']) !!}
                   <div class="row">
                       <div class="col-xs-12">
                           {!! Form::text('total_costs',  null, ['class' => 'form-control',  $attr,$attrdisable]) !!}
@@ -971,14 +1022,59 @@
                   </div>
               </div>
           </div>
+
+          <div class='col-xs-3'>
+              <div class="form-group">
+                  {!! Form::label('total_outcosts', '报出合计总价', ['class' => 'control-label']) !!}
+                  <div class="row">
+                      <div class="col-xs-12">
+                          {!! Form::text('total_outcosts',  null, ['class' => 'form-control',  $attr,$attrdisable]) !!}
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+          <div class='col-xs-3'>
+              <div class="form-group">
+                  {!! Form::label('exchange_rate', '汇率', ['class' => 'control-label']) !!}
+                  <div class="row">
+                      <div class="col-xs-12">
+                          {!! Form::text('exchange_rate',  null, ['class' => 'form-control',  $attr]) !!}
+                      </div>
+                  </div>
+              </div>
+          </div>
+
       </div>
     <div class="row">
         <div class='col-xs-3'>
             <div class="form-group">
-                {!! Form::label('exchange_rate', '汇率', ['class' => 'control-label']) !!}
+                {!! Form::label('vol_total', '总体积', ['class' => 'control-label']) !!}
                 <div class="row">
                     <div class="col-xs-12">
-                        {!! Form::text('exchange_rate',  null, ['class' => 'form-control',  $attr]) !!}
+                        {!! Form::text('vol_total',  null, ['class' => 'form-control',  $attr,$attrdisable]) !!}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class='col-xs-3'>
+            <div class="form-group">
+                {!! Form::label('qty_container', '每个集装箱可装数量', ['class' => 'control-label']) !!}
+                <div class="row">
+                    <div class="col-xs-12">
+                        {!! Form::text('qty_container',  null, ['class' => 'form-control',  $attr,$attrdisable]) !!}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class='col-xs-3'>
+            <div class="form-group">
+                {!! Form::label('inland_freight', '内陆运费$（40HQ）', ['class' => 'control-label']) !!}
+                <div class="row">
+                    <div class="col-xs-12">
+                        {!! Form::text('inland_freight',  null, ['class' => 'form-control',  $attr,$attrdisable]) !!}
                     </div>
                 </div>
             </div>

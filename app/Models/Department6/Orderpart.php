@@ -16,8 +16,10 @@ class Orderpart extends Model
         'edge_to_edge_width',
         'qty',
         'price',
+        'outprice',
         'total_qty',
         'total_price',
+        'total_outprice',
         'factoryname'
     ];
 

@@ -63,6 +63,8 @@ Route::group(['prefix' => 'department6', 'namespace' => 'Department6', 'middlewa
         Route::post('upload_images','\App\Http\Controllers\ArticlesController@uploadImage')->name('upload.images');
         Route::post('winbidding/{id}', 'Inquiry_sheetsController@winbidding');
         Route::post('search',  'Inquiry_sheetsController@search');
+        Route::post('copywinbidding/{id}',  'Inquiry_sheetsController@copywinbidding');
+        Route::get('{id}/export',  'Inquiry_sheetsController@export');
     });
     Route::group(['prefix' => 'orders'], function () {
         Route::get('mcreate', 'OrderController@mcreate');
@@ -72,6 +74,11 @@ Route::group(['prefix' => 'department6', 'namespace' => 'Department6', 'middlewa
         Route::get('{id}/byprocessexport',  'OrderController@byprocessexport');
         Route::get('{id}/byfabircexport',  'OrderController@byfabircexport');
         Route::get('{id}/byingredientexport',  'OrderController@byingredientexport');
+    });
+
+    Route::group(['prefix' => 'part'], function () {
+
+        Route::post('copypart/{id}',  'PartController@copypart');
     });
 
     Route::resource('inquiry_sheets', 'Inquiry_sheetsController');

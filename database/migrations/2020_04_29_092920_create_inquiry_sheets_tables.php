@@ -32,11 +32,11 @@ class CreateInquirySheetsTables extends Migration
             $table->decimal('purchase_costs')->nullable()->default(0);
             $table->decimal('total_costs')->nullable()->default(0);
             $table->string('remark')->nullable();
-            $table->integer('length_carton')->nullable()->default(0);
-            $table->integer('width_carton')->nullable()->default(0);
-            $table->integer('high_carton')->nullable()->default(0);
+            $table->decimal('length_carton',5,2)->nullable()->default(0);
+            $table->decimal('width_carton',5,2)->nullable()->default(0);
+            $table->decimal('high_carton',5,2)->nullable()->default(0);
             $table->integer('qty_percarton')->nullable()->default(0);
-            $table->integer('vol_total')->nullable()->default(0);
+            $table->decimal('vol_total',8,2)->nullable()->default(0);
             $table->integer('qty_container')->nullable()->default(0);
             $table->decimal('inland_freight',8,2)->nullable()->default(0);
             $table->decimal('arlington_ocean_freight',8,2)->nullable()->default(0);
