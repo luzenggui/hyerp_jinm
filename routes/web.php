@@ -133,8 +133,15 @@ Route::group(['prefix' => 'finance', 'namespace' => 'Finance', 'middleware' => [
         Route::post('importstore', 'ShipmentinfoController@importstore');
         Route::post('export', 'ShipmentinfoController@export');
     });
+    Route::group(['prefix' => 'invoice'], function () {
+        Route::post('search', 'InvoiceController@search');
+        Route::get('import', 'InvoiceController@import');
+        Route::post('importstore', 'InvoiceController@importstore');
+        Route::post('export', 'InvoiceController@export');
+    });
     Route::resource('shipmentinfo', 'ShipmentinfoController');
     Route::resource('packinfo', 'PackinfoController');
+    Route::resource('invoice', 'InvoiceController');
 });
 
 

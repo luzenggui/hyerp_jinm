@@ -51,6 +51,14 @@
                 {!! Form::label('applydatelabel', '缺勤日期:', ['class' => 'control-label']) !!}
                 {!! Form::date('missday', date('Y-m-d',time()), ['class' => 'form-control']) !!}
             @endif
+            @if ($report->name == "pgetinvoicedata")
+                {!! Form::label('startlabel', '日期:', ['class' => 'control-label']) !!}
+                {!! Form::date('invdatestart', null, ['class' => 'form-control']) !!}
+                {!! Form::label('labelto', '-', ['class' => 'control-label']) !!}
+                {!! Form::date('invdateend', null, ['class' => 'form-control']) !!}
+                {!! Form::text('departno', null, ['class' => 'form-control','placeholder'=>'部门']) !!}
+                {!! Form::text('customer', null, ['class' => 'form-control','placeholder'=>'客户']) !!}
+            @endif
             {!! Form::submit('查找(Search)', ['class' => 'btn btn-default btn-sm','id'=>'btnSearch']) !!}
         </div>
         {!! Form::close() !!}
@@ -77,7 +85,7 @@
         @can('module_personal')
             <?php $hasright = true; ?>
         @endcan
-    @elseif ($report->name == "pgetbudgetdata" or $report->name == "pgetfinancedata" )
+    @elseif ($report->name == "pgetbudgetdata" or $report->name == "pgetfinancedata" or $report->name == "pgetinvoicedata"  )
         @can('module_finance')
             <?php $hasright = true; ?>
         @endcan
