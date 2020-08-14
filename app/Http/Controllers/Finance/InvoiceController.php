@@ -152,7 +152,8 @@ class InvoiceController extends Controller
     {
         $file = $request->file('file');
 
-//        config('excel.import.startRow',1);
+        config(['excel.import.heading'=>'slugged']);
+        Log::info(config('excel.import.heading'));
         Excel::load($file->getRealPath(), function ($reader) use ($request) {
             $reader->each(function ($sheet) use (&$reader, $request) {
                 Log::info('sheet: ' . $sheet->getTitle());
@@ -162,7 +163,7 @@ class InvoiceController extends Controller
 //                dd($data);
                 $sheetname=$sheet->getTitle();
                 $rowheading=$sheet->getHeading();
-//                dd($rowheading);
+                Log::info($rowheading);
                 $rowhead=['发票号','部门','客户','date','制单人','品名原因','合同号','生产工厂','目的港','出运日','核销单号','船公司','运单号','结汇方式','数量','pmjjintex收钱金额','wuxi收钱金额','预计收汇日期','收汇日','运费rmb','备注'];
 
                 $i=0;

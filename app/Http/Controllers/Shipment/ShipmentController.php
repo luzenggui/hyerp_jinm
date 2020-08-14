@@ -250,7 +250,7 @@ class ShipmentController extends Controller
                         Log::info($rowindex);
                         Log::info($row);
                         $input = array_values($row->toArray());
-//                        dd($input);
+                        Log::info($input);
 //                        Log::info(count($input));
                         if (count($input) >= 68)
                         {
