@@ -153,7 +153,7 @@ class InvoiceController extends Controller
         $file = $request->file('file');
 
         config(['excel.import.heading'=>'slugged']);
-        Log::info(config('excel.import.heading'));
+//        Log::info(config('excel.import.heading'));
         Excel::load($file->getRealPath(), function ($reader) use ($request) {
             $reader->each(function ($sheet) use (&$reader, $request) {
                 Log::info('sheet: ' . $sheet->getTitle());
@@ -183,7 +183,7 @@ class InvoiceController extends Controller
 //                    dd($input);
 
 //                    Log::info($rowindex);
-                    Log::info($input);
+//                    Log::info($input);
                     if ($rowindex >= 1 && !empty($input[0]))
                     {
                         $v_invno=$input[0];
@@ -250,8 +250,8 @@ class InvoiceController extends Controller
             $sheet = $objExcel->getSheet(0);
             $highestRow = $sheet->getHighestRow();
             $highestColumn = $sheet->getHighestColumn();
-            Log::info('highestRow: ' . $highestRow);
-            Log::info('highestColumn: ' . $highestColumn);
+//            Log::info('highestRow: ' . $highestRow);
+//            Log::info('highestColumn: ' . $highestColumn);
 
         });
 

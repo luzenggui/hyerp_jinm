@@ -6,7 +6,7 @@ use App\Http\Controllers\HelperController;
 use App\Models\Personal\CheckRecord;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Log,Excel;
+use Log,Excel,Carbon\Carbon;
 use DB;
 
 class CheckRecordController extends Controller
@@ -215,33 +215,34 @@ class CheckRecordController extends Controller
 
         Excel::load($file->getRealPath(), function ($reader) use ($request) {
             $reader->each(function ($sheet) use (&$reader, $request) {
-                Log::info('sheet: ' . $sheet->getTitle());
-                $rowindex = 3;
+//                Log::info('sheet: ' . $sheet->getTitle());
+                $rowindex = 1;
 //                $reader->skip(3);
 //                $sheet->skip(2);
                 $shipment = null;
                 $sheet->each(function ($row) use (&$rowindex, &$shipment, &$reader, $request) {
-//                    Log::info('importstore 1: ');
+//                    Log::info($rowindex);
+//                    Log::info($row->all());
                     if ($rowindex > 3)
                     {
 //                        dd($row->all());
 //                        $input = array_values($row->toArray());
 //                        $reader->skip(3);
                         $input = $row->all();
-//                        dd($input);
+//                        Log::info(Carbon::parse($input[10])->toDateString());
                                     $data = [];
-                                    $data['inputdate'] = isset($input[0]) ? $input[0] : date('Y-m-d',time());
-                                    $data['name']               = $input[1];
-                                    $data['telno']            = $input[2];
-                                    $data['department']            = $input[3];
-                                    $data['address']            = $input[4];
-                                    $data['temperature']            = $input[5];
-                                    $data['stuation_self']            = $input[6];
-                                    $data['stuation_family']            = $input[7];
-                                    $data['contactname_merg']            = $input[8];
-                                    $data['contacttelno_merg']            = $input[9];
-                                    $data['other_note']            = $input[10];
-                                    $data['creator']            = $input[11];
+                                    $data['inputdate'] = isset($input[10]) ? Carbon::parse($input[10])->toDateString() : date('Y-m-d',time());
+                                    $data['name']               = $input[0];
+                                    $data['telno']            = $input[1];
+                                    $data['department']            = $input[2];
+                                    $data['address']            = $input[3];
+                                    $data['temperature']            = $input[4];
+                                    $data['stuation_self']            = $input[5];
+                                    $data['stuation_family']            = $input[6];
+                                    $data['contactname_merg']            = $input[7];
+                                    $data['contacttelno_merg']            = $input[8];
+                                    $data['other_note']            = $input[9];
+//                                    $data['creator']            = $input[11];
                                     CheckRecord::create($data);
                     }
                     $rowindex++;
@@ -252,8 +253,8 @@ class CheckRecordController extends Controller
             $sheet = $objExcel->getSheet(0);
             $highestRow = $sheet->getHighestRow();
             $highestColumn = $sheet->getHighestColumn();
-            Log::info('highestRow: ' . $highestRow);
-            Log::info('highestColumn: ' . $highestColumn);
+//            Log::info('highestRow: ' . $highestRow);
+//            Log::info('highestColumn: ' . $highestColumn);
 
 //            //  Loop through each row of the worksheet in turn
 //            for ($row = 1; $row <= $highestRow; $row++)
