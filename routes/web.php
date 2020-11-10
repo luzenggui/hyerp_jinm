@@ -48,7 +48,11 @@ Route::group(['prefix' => 'development', 'namespace' => 'Development', 'middlewa
         Route::get('updatefinishedpl', 'FabricdischargeController@updatefinishedpl');
         Route::get('updatefinishedzb', 'FabricdischargeController@updatefinishedzb');
     });
+    Route::group(['prefix' => 'genbarcode'], function () {
+        route::post('changebarcode','GenbarcodeController@changebarcode');
+    });
     Route::resource('fabricdischarges', 'FabricdischargeController');
+    Route::resource('genbarcode', 'GenbarcodeController');
 });
 
 

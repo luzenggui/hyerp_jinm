@@ -223,13 +223,14 @@ class CheckRecordController extends Controller
                 $sheet->each(function ($row) use (&$rowindex, &$shipment, &$reader, $request) {
 //                    Log::info($rowindex);
 //                    Log::info($row->all());
-                    if ($rowindex > 3)
+                    if ($rowindex > 2)
                     {
 //                        dd($row->all());
 //                        $input = array_values($row->toArray());
 //                        $reader->skip(3);
                         $input = $row->all();
-//                        Log::info(Carbon::parse($input[10])->toDateString());
+                        Log::info($input);
+                        Log::info(Carbon::parse($input[10])->toDateString());
                                     $data = [];
                                     $data['inputdate'] = isset($input[10]) ? Carbon::parse($input[10])->toDateString() : date('Y-m-d',time());
                                     $data['name']               = $input[0];
