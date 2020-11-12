@@ -17,7 +17,7 @@ class GenbarcodeController extends Controller
     public function index()
     {
         //
-        return view('development.genbarcode.index', compact('checkrecords', 'inputs'));
+        return view('development.genbarcode.index');
     }
 
     /**
