@@ -211,7 +211,7 @@ class OrderController extends Controller
 //        $processdetailids=array();
 
         $input = $request->all();
-        Log::info($input);
+//        Log::info($input);
 
         $order = Order::findOrFail($id);
 //        Log::info($order);

@@ -118,6 +118,19 @@
                             @endcan
                         </ul>
                     </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">JPTE单证<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            @can('module_vouch')
+                                <li><a href="/vouch/materials">原材料代码表</a></li>
+                                <li><a href="/vouch/finishproducts">成品代码表</a></li>
+                                <li><a href="/vouch/boms">BOM表</a></li>
+                                <li><a href="/vouch/materialsheets">原材料表单</a></li>
+                                <li><a href="/vouch/finishproductsheets">成品表单</a></li>
+                                <li><a href="/vouch/report">报表</a></li>
+                            @endcan
+                        </ul>
+                    </li>
                 {{--<li class="dropdown">--}}
                     {{--<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">采购<span class="caret"></span></a>--}}
                     {{--<ul class="dropdown-menu">--}}

@@ -59,6 +59,14 @@
                 {!! Form::text('departno', null, ['class' => 'form-control','placeholder'=>'部门']) !!}
                 {!! Form::text('customer', null, ['class' => 'form-control','placeholder'=>'客户']) !!}
             @endif
+            @if ($report->name == "pgetinventory")
+                {!! Form::text('mtcode', null, ['class' => 'form-control','placeholder'=>'物料编码']) !!}
+            @endif
+            @if ($report->name == "pgetinventoryacc")
+
+                {!! Form::text('mtcode', null, ['class' => 'form-control','placeholder'=>'物料编码']) !!}
+                {!! Form::text('sheetno', null, ['class' => 'form-control','placeholder'=>'合同号']) !!}
+            @endif
             {!! Form::submit('查找(Search)', ['class' => 'btn btn-default btn-sm','id'=>'btnSearch']) !!}
         </div>
         {!! Form::close() !!}
@@ -87,6 +95,10 @@
         @endcan
     @elseif ($report->name == "pgetbudgetdata" or $report->name == "pgetfinancedata" or $report->name == "pgetinvoicedata"  )
         @can('module_finance')
+            <?php $hasright = true; ?>
+        @endcan
+    @elseif ($report->name == "pgetinventory" or $report->name == "pgetinventoryacc"  )
+        @can('module_vouch')
             <?php $hasright = true; ?>
         @endcan
     @else

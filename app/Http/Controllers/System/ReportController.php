@@ -98,6 +98,12 @@ class ReportController extends Controller
     {
         return $this->indexmodule('第六分公司');
     }
+
+    public function indexvouch()
+    {
+        return $this->indexmodule('JPTE出运');
+    }
+
     /**
      * Show the form for creating a new resource.
      *

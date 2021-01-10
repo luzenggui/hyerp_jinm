@@ -112,7 +112,45 @@ Route::group(['prefix' => 'personal', 'namespace' => 'Personal', 'middleware' =>
     Route::resource('checkrecords', 'CheckRecordController');
 });
 
+Route::group(['prefix' => 'vouch', 'namespace' => 'Vouch', 'middleware' => ['web', 'auth']], function() {
 
+    Route::get('report', '\App\Http\Controllers\System\ReportController@indexvouch');
+    Route::group(['prefix' => 'materials'], function () {
+        Route::post('search', 'MaterialController@search');
+        Route::get('import', 'MaterialController@import');
+        Route::post('importstore', 'MaterialController@importstore');
+        Route::post('export', 'MaterialController@export');
+    });
+    Route::group(['prefix' => 'finishproducts'], function () {
+        Route::post('search', 'FinishproductController@search');
+        Route::get('import', 'FinishproductController@import');
+        Route::post('importstore', 'FinishproductController@importstore');
+        Route::post('export', 'FinishproductController@export');
+    });
+    Route::group(['prefix' => 'boms'], function () {
+        Route::post('search', 'BomController@search');
+        Route::get('import', 'BomController@import');
+        Route::post('importstore', 'BomController@importstore');
+        Route::post('export', 'BomController@export');
+    });
+    Route::group(['prefix' => 'materialsheets'], function () {
+        Route::post('search', 'MaterialsheetController@search');
+        Route::get('import', 'MaterialsheetController@import');
+        Route::post('importstore', 'MaterialsheetController@importstore');
+        Route::post('export', 'MaterialsheetController@export');
+    });
+    Route::group(['prefix' => 'finishproductsheets'], function () {
+        Route::post('search', 'FinishproductsheetController@search');
+        Route::get('import', 'FinishproductsheetController@import');
+        Route::post('importstore', 'FinishproductsheetController@importstore');
+        Route::post('export', 'FinishproductsheetController@export');
+    });
+    Route::resource('boms', 'BomController');
+    Route::resource('finishproducts', 'FinishproductController');
+    Route::resource('materials', 'MaterialController');
+    Route::resource('materialsheets', 'MaterialsheetController');
+    Route::resource('finishproductsheets', 'FinishproductsheetController');
+});
 Route::group(['prefix' => 'my', 'namespace' => 'My', 'middleware' => ['web', 'auth']], function() {
     Route::group(['prefix' => 'report'], function() {
           Route::get('fabricdata', 'MyController@index_fabricdata');
