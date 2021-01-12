@@ -1,7 +1,7 @@
 @extends('navbarerp')
 
 @section('main')
-    <h1>导入物料资料</h1>
+    <h1>导入成品表单</h1>
     <hr/>
 
     {!! Form::open(['url' => '/vouch/finishproductsheets/importstore', 'class' => 'form-horizontal', 'files' => true]) !!}

@@ -115,103 +115,64 @@ class MaterialsheetController extends Controller
                 $contractno=substr(trim($sheet->getCell('F17')),15);
 //                $rowData = $sheet->rangeToArray('A' . 1 . ':' . $highestColumn . 1,NULL, TRUE, FALSE);
 //                Log::info($invoiceno);
+                for($i=$startcell;$i<$highestRow;$i++) {
+                    $qty = $sheet->getCell('F' . $i);
+                    $materialcode = trim($sheet->getCell('D' . $i));
+                    $materialrm = substr($materialcode, 0, 2);
+//                        Log::info($materialrm);
+                    if ($qty == '' || $materialcode == '' || $materialrm <> 'RM')
+                        continue;
+                    else {
+
+                        $material = Material::where('code', $materialcode)->first();
+                        if (!$material)
+                            dd('第' . $i . '行的物料编码不存在！');
+                    }
+                }
+
                 $materialsheet=Materialsheet::where('sheetno',$contractno)->where('invoiceno',$invoiceno)->first();
                 if($materialsheet)
                 {
-                    for($i=$startcell;$i<$highestRow;$i++)
-                    {
-                        $qty=$sheet->getCell('F'.$i);
-                        $materialcode=trim($sheet->getCell('D'.$i));
-                        $materialrm=substr($materialcode,0,2);
-//                        Log::info($materialrm);
-                        if($qty== '' ||  $materialcode =='' || $materialrm <> 'RM')
+
+                    for($i=$startcell;$i<$highestRow;$i++) {
+                        $qty = $sheet->getCell('F' . $i);
+                        $materialcode = trim($sheet->getCell('D' . $i));
+                        $materialrm = substr($materialcode, 0, 2);
+                        if ($qty == '' || $materialcode == '' || $materialrm <> 'RM')
                             continue;
                         else
                         {
-
-                            $material=Material::where('code',$materialcode)->first();
-                            if(!$material)
-                                dd('第'.$i.'行的物料编码不存在！');
-                            else
-                            {
-                                $materialsheetcode=Materialsheet::where('sheetno',$contractno)->where('mtid',$material->id)->first();
+                            $materialsheetcode=Materialsheet::where('sheetno',$contractno)->where('mtid',$material->id)->first();
 //                                Log::info($materialsheetcode);
-                                if($materialsheetcode)
-                                {
+                            if($materialsheetcode)
+                            {
 //                                    Log::info($materialsheetcode->qty);
-                                    $materialsheetcode->qty=$sheet->getCell('F'.$i);
-                                    $materialsheetcode->unitprice=$sheet->getCell('H'.$i);
+                                $materialsheetcode->qty=$qty;
+                                $materialsheetcode->unitprice=$sheet->getCell('H'.$i);
 //                                    dd($sheet->getCell('I'.$i)->getCalculatedValue());
-                                    $materialsheetcode->amount=$sheet->getCell('I'.$i)->getCalculatedValue();
-                                    $materialsheetcode->save();
+                                $materialsheetcode->amount=$sheet->getCell('I'.$i)->getCalculatedValue();
+                                $materialsheetcode->save();
 
-                                    $inventoryacc=Inventoryacc::where('sheetno',$contractno)->where('mtid',$material->id)->first();
-                                    $inventory=Inventory::where('mtid',$material->id)->first();
+                                $inventoryacc=Inventoryacc::where('sheetno',$contractno)->where('mtid',$material->id)->first();
+                                $inventory=Inventory::where('mtid',$material->id)->first();
 //                                    Log::info($inventoryacc);
-                                    $sheetqty=$sheet->getCell('F'.$i)->getValue();
+                                $sheetqty=$sheet->getCell('F'.$i)->getValue();
 //                                    Log::info(floatval($sheetqty));
-                                    $inventory->qty=$inventory->qty - $inventoryacc->qty + floatval($sheetqty);
-                                    $inventory->save();
-                                    $inventoryacc->qty=$sheet->getCell('F'.$i);
-                                    $inventoryacc->save();
-                                }
-                                else
-                                {
-                                    $input['sheetno']=$contractno;
-                                    $input['invoice']=$invoiceno;
-                                    $input['mtid']=$material->id;
-                                    $input['type']=1;
-                                    $input['qty']=$sheet->getCell('F'.$i);
-                                    $input['unitprice']=$sheet->getCell('H'.$i);
-                                    $input['amount']=$sheet->getCell('I'.$i)->getCalculatedValue();
-//                                    dd($sheet->getCell('I'.$i)->getCalculatedValue());
-                                    Materialsheet::create($input);
-
-                                    $inputacc['mtid']=$material->id;
-                                    $inputacc['qty']=$sheet->getCell('F'.$i);
-                                    $inputacc['sheetno']=$contractno;
-                                    $inputacc['type']=1;
-                                    Inventoryacc::create($inputacc);
-
-                                    $inputstock['mtid']=$material->id;
-                                    $inputstock['qty']=$sheet->getCell('F'.$i);;
-                                    Inventory::create($inputstock);
-                                }
+                                $inventory->qty=$inventory->qty - $inventoryacc->qty + floatval($sheetqty);
+                                $inventory->save();
+                                $inventoryacc->qty=$qty;
+                                $inventoryacc->save();
                             }
-                        }
-
-                    }
-                }
-                else
-                {
-                    for($i=$startcell;$i<$highestRow;$i++)
-                    {
-                        $qty=$sheet->getCell('F'.$i);
-                        $materialcode=trim($sheet->getCell('D'.$i));
-                        $materialrm=substr($materialcode,0,2);
-//                        Log::info($materialrm);
-//                        Log::info($invoiceno);
-//                        Log::Info($qty.'    '.$materialcode);
-                        if($qty== '' ||  $materialcode =='' || $materialrm <> 'RM')
-                            continue;
-                        else
-                        {
-
-                            $material=Material::where('code',$materialcode)->first();
-//                        Log::info($materialcode);
-//                        Log::info($material);
-                            if(!$material)
-                                dd('第'.$i.'行的物料编码不存在！');
                             else
                             {
-
                                 $input['sheetno']=$contractno;
-                                $input['invoiceno']=$invoiceno;
+                                $input['invoice']=$invoiceno;
                                 $input['mtid']=$material->id;
                                 $input['type']=1;
                                 $input['qty']=$sheet->getCell('F'.$i);
-                                $input['unitprice']=$sheet->getCell('H'.$i);;
+                                $input['unitprice']=$sheet->getCell('H'.$i);
                                 $input['amount']=$sheet->getCell('I'.$i)->getCalculatedValue();
+//                                    dd($sheet->getCell('I'.$i)->getCalculatedValue());
                                 Materialsheet::create($input);
 
                                 $inputacc['mtid']=$material->id;
@@ -225,7 +186,36 @@ class MaterialsheetController extends Controller
                                 Inventory::create($inputstock);
                             }
                         }
+                     }  
+                 }
+                else
+                {
+                    for($i=$startcell;$i<$highestRow;$i++) {
+                        $qty = $sheet->getCell('F' . $i);
+                        $materialcode = trim($sheet->getCell('D' . $i));
+                        $materialrm = substr($materialcode, 0, 2);
+                        if ($qty == '' || $materialcode == '' || $materialrm <> 'RM')
+                            continue;
+                        else {
+                            $input['sheetno'] = $contractno;
+                            $input['invoiceno'] = $invoiceno;
+                            $input['mtid'] = $material->id;
+                            $input['type'] = 1;
+                            $input['qty'] = $sheet->getCell('F' . $i);
+                            $input['unitprice'] = $sheet->getCell('H' . $i);;
+                            $input['amount'] = $sheet->getCell('I' . $i)->getCalculatedValue();
+                            Materialsheet::create($input);
 
+                            $inputacc['mtid'] = $material->id;
+                            $inputacc['qty'] = $sheet->getCell('F' . $i);
+                            $inputacc['sheetno'] = $contractno;
+                            $inputacc['type'] = 1;
+                            Inventoryacc::create($inputacc);
+
+                            $inputstock['mtid'] = $material->id;
+                            $inputstock['qty'] = $sheet->getCell('F' . $i);;
+                            Inventory::create($inputstock);
+                        }
                     }
                 }
 //                Log::info($sheet->getCell('F17'));
