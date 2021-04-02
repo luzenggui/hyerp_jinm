@@ -7,6 +7,7 @@
             <a href="{{ URL::to('system/depts') }}" class="btn btn-sm btn-success"><i class="fa fa-plus"></i> {{'部门管理', [], 'layouts'}}</a>
         </div>
         --}}
+
     </div>
 
     <div class="panel-body">
@@ -67,6 +68,14 @@
                 {!! Form::text('mtcode', null, ['class' => 'form-control','placeholder'=>'物料编码']) !!}
                 {!! Form::text('sheetno', null, ['class' => 'form-control','placeholder'=>'合同号']) !!}
             @endif
+            @if ($report->name == "pgencydata")
+                {!! Form::label('date_vanning', '装箱日期:', ['class' => 'control-label']) !!}
+                {!! Form::date('startdate_vanning', null, ['class' => 'form-control']) !!}
+                {!! Form::label('labelto', '-', ['class' => 'control-label']) !!}
+                {!! Form::date('enddate_vanning', null, ['class' => 'form-control']) !!}
+
+                {!! Form::text('factoryname', null, ['class' => 'form-control','placeholder'=>'工厂名']) !!}
+            @endif
             {!! Form::submit('查找(Search)', ['class' => 'btn btn-default btn-sm','id'=>'btnSearch']) !!}
         </div>
         {!! Form::close() !!}
@@ -97,7 +106,7 @@
         @can('module_finance')
             <?php $hasright = true; ?>
         @endcan
-    @elseif ($report->name == "pgetinventory" or $report->name == "pgetinventoryacc"  )
+    @elseif ($report->name == "pgetinventory" or $report->name == "pgetinventoryacc"  or $report->name == "pgencydata")
         @can('module_vouch')
             <?php $hasright = true; ?>
         @endcan

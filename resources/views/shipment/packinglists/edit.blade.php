@@ -4,8 +4,8 @@
     <h1>编辑</h1>
     <hr/>
     
-    {!! Form::model($nxshipment, ['method' => 'PATCH', 'action' => ['Finance\nxshipmentController@update', $nxshipment->id], 'class' => 'form-horizontal']) !!}
-        @include('finance.nxshipment._form',
+    {!! Form::model($packinglist, ['method' => 'PATCH', 'action' => ['Shipment\PackinglistController@update', $packinglist->id], 'class' => 'form-horizontal']) !!}
+        @include('shipment.packinglists._form',
         [
             'submitButtonText' => '保存',
             'attr' => '',

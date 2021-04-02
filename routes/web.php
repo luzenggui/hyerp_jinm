@@ -181,9 +181,17 @@ Route::group(['prefix' => 'finance', 'namespace' => 'Finance', 'middleware' => [
         Route::post('importstore', 'InvoiceController@importstore');
         Route::post('export', 'InvoiceController@export');
     });
+    Route::group(['prefix' => 'nxshipment'], function () {
+        Route::post('search', 'nxshipmentController@search');
+        Route::get('import', 'nxshipmentController@import');
+        Route::post('importstore', 'nxshipmentController@importstore');
+        Route::post('export', 'nxshipmentController@export');
+    });
+
     Route::resource('shipmentinfo', 'ShipmentinfoController');
     Route::resource('packinfo', 'PackinfoController');
     Route::resource('invoice', 'InvoiceController');
+    Route::resource('nxshipment', 'nxshipmentController');
 });
 
 
@@ -342,6 +350,9 @@ Route::group(['prefix' => 'shipment', 'namespace' => 'Shipment', 'middleware' =>
         Route::get('editshipmenttracking', 'ShipmentController@editshipmenttracking');
         Route::patch('updateshipmenttracking', 'ShipmentController@updateshipmenttracking');
     });
+    Route::group(['prefix' => 'packinglists'], function () {
+        Route::post('search', 'PackinglistController@search');
+    });
     Route::resource('shipments', 'ShipmentController');
     Route::group(['prefix' => 'shipmentitems/{shipment}'], function () {
         Route::get('create', 'ShipmentitemController@create');
@@ -349,6 +360,7 @@ Route::group(['prefix' => 'shipment', 'namespace' => 'Shipment', 'middleware' =>
     Route::resource('shipmentitems', 'ShipmentitemController');
     Route::resource('userforwarders', 'UserforwarderController');
     Route::resource('shipmentattachmentrecords', 'ShipmentattachmentrecordController');
+    Route::resource('packinglists', 'PackinglistController');
     Route::get('report', '\App\Http\Controllers\System\ReportController@indexshipment');
 });
 

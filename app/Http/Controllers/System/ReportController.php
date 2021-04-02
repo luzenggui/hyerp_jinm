@@ -232,6 +232,7 @@ class ReportController extends Controller
         }
 //        dd($sumvalues_total);
 //        dd($sumcols);
+//        dd(1);
         return view('system.reports.statisticsindex', compact('items', 'report', 'input', 'titleshows', 'sumcols', 'sumvalues_total'));
     }
 

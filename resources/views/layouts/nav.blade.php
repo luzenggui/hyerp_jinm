@@ -114,6 +114,7 @@
                                 <li><a href="/finance/shipmentinfo">出运明细信息维护</a></li>
                                 <li><a href="/finance/packinfo">装箱信息维护</a></li>
                                 <li><a href="/finance/invoice">发票信息维护</a></li>
+                                <li><a href="/finance/nxshipment">内销出运明细信息维护</a></li>
                                 <li><a href="/finance/report">报表</a></li>
                             @endcan
                         </ul>
@@ -127,6 +128,7 @@
                                 <li><a href="/vouch/boms">BOM表</a></li>
                                 <li><a href="/vouch/materialsheets">原材料表单</a></li>
                                 <li><a href="/vouch/finishproductsheets">成品表单</a></li>
+                                <li><a href="/shipment/packinglists">宠物单证装箱明细</a></li>
                                 <li><a href="/vouch/report">报表</a></li>
                             @endcan
                         </ul>
