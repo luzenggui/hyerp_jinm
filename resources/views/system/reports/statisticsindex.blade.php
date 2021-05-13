@@ -81,7 +81,6 @@
                 {!! Form::text('year', date('Y',time()), ['class' => 'form-control','id'=>'txtYr']) !!}
                 {!! Form::label('applydatelabel', '月份', ['class' => 'control-label']) !!}
                 {!! Form::text('mon', date('m',time()), ['class' => 'form-control','id'=>'txtMon']) !!}
-                {!! Form::label('applylabel_depart', '部门', ['class' => 'control-label']) !!}
                 {!! Form::text('depart',  null,['class' => 'form-control','placeholder' => '部门']) !!}
             @endif
             {!! Form::submit('查找(Search)', ['class' => 'btn btn-default btn-sm','id'=>'btnSearch']) !!}

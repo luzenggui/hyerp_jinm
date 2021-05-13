@@ -190,7 +190,6 @@ class ReportController extends Controller
     public function statistics($id, $autostatistics = 1)
     {
         //
-        return view('system.reports.statisticsindex');
         $report = Report::findOrFail($id);
 //        dd($report);
         $request = Request();
@@ -235,7 +234,7 @@ class ReportController extends Controller
 //        dd($sumcols);
 //        dd(1);
 //        return view('system.reports.statisticsindex');
-        return view('system.users.index');
+        return view('system.reports.statisticsindex' , compact('items', 'report', 'input', 'titleshows', 'sumcols', 'sumvalues_total'));
     }
 
     public function export($id)
